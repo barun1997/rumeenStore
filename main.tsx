@@ -6,6 +6,15 @@ import * as React from 'react';
 import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import App from './src/App';
 
+declare global {
+	//TODO: Find a better solution to this lint error
+	// eslint-disable-next-line @typescript-eslint/no-namespace
+	namespace ReactNativePaper {
+		interface ThemeColors {
+			onPrimary: string;
+		}
+	}
+}
 const theme = {
 	...PaperDefaultTheme,
 	...NavigationDefaultTheme,
@@ -14,6 +23,8 @@ const theme = {
 		...NavigationDefaultTheme.colors,
 		primary: 'tomato',
 		accent: 'yellow',
+		background: 'white',
+		onPrimary: 'white',
 	},
 };
 

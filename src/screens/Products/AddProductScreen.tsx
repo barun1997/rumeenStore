@@ -1,0 +1,12 @@
+import React from 'react';
+import { Text, View } from 'react-native';
+
+function AddProductScreen(): JSX.Element {
+	return (
+		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+			<Text>Add Product!</Text>
+		</View>
+	);
+}
+
+export default AddProductScreen;
