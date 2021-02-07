@@ -1,11 +1,17 @@
+import {
+	NavigationContainer,
+	DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native';
 import * as React from 'react';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import App from './src/App';
 
 const theme = {
-	...DefaultTheme,
+	...PaperDefaultTheme,
+	...NavigationDefaultTheme,
 	colors: {
-		...DefaultTheme.colors,
+		...PaperDefaultTheme.colors,
+		...NavigationDefaultTheme.colors,
 		primary: 'tomato',
 		accent: 'yellow',
 	},
@@ -14,7 +20,9 @@ const theme = {
 const Main: React.FC<Record<string, never>> = () => {
 	return (
 		<PaperProvider theme={theme}>
-			<App />
+			<NavigationContainer theme={theme}>
+				<App />
+			</NavigationContainer>
 		</PaperProvider>
 	);
 };
