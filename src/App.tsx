@@ -1,24 +1,34 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
-import { SafeAreaView, Text, StatusBar } from 'react-native';
+import { Text, View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 
-const App = () => {
+function HomeScreen() {
 	return (
-		<>
-			<StatusBar barStyle="dark-content" />
-			<SafeAreaView>
-				<Text>Hello</Text>
-			</SafeAreaView>
-		</>
+		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+			<Text>Home!</Text>
+		</View>
+	);
+}
+
+function SettingsScreen() {
+	return (
+		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+			<Text>Settings!</Text>
+		</View>
+	);
+}
+
+const Tab = createBottomTabNavigator();
+
+const App: React.FC<Record<string, never>> = () => {
+	return (
+		<NavigationContainer>
+			<Tab.Navigator>
+				<Tab.Screen name="Home" component={HomeScreen} />
+				<Tab.Screen name="Settings" component={SettingsScreen} />
+			</Tab.Navigator>
+		</NavigationContainer>
 	);
 };
 
