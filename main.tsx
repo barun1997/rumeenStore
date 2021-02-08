@@ -21,7 +21,7 @@ const theme = {
 	colors: {
 		...PaperDefaultTheme.colors,
 		...NavigationDefaultTheme.colors,
-		primary: 'tomato',
+		primary: 'teal',
 		accent: 'yellow',
 		background: 'white',
 		onPrimary: 'white',

@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import AddProductScreen from './AddProductScreen';
 import ProductsScreen from './ProductsScreen';
-import NavigationBar from './components/NavigationBar/NavigationBar';
+import NavigationBar from '../../components/NavigationBar';
 import { IconButton, useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
