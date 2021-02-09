@@ -1,12 +1,43 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import NavigationBar from '../../components/NavigationBar';
+import { IconButton, useTheme } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import AddCategoryScreen from './AddCategoryScreen';
+import CategoriesScreen from './CategoriesScreen';
 
-function CategoriesScreen(): JSX.Element {
+const Stack = createStackNavigator();
+
+function Products(): JSX.Element {
+	const navigation = useNavigation();
+	const { colors } = useTheme();
 	return (
-		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-			<Text>Category!</Text>
-		</View>
+		<Stack.Navigator
+			initialRouteName="ProductsScreen"
+			screenOptions={{
+				header: (props) => <NavigationBar {...props} />,
+			}}>
+			<Stack.Screen
+				name="CategoriesScreen"
+				component={CategoriesScreen}
+				options={{
+					title: 'Categories',
+					headerRight: () => (
+						<IconButton
+							icon="plus"
+							color={colors.onPrimary}
+							onPress={() => navigation.navigate('AddCategoryScreen')}
+						/>
+					),
+				}}
+			/>
+			<Stack.Screen
+				name="AddCategoryScreen"
+				component={AddCategoryScreen}
+				options={{ title: 'Add a Category' }}
+			/>
+		</Stack.Navigator>
 	);
 }
 
-export default CategoriesScreen;
+export default Products;

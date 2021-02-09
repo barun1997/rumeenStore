@@ -1,12 +1,27 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import NavigationBar from '../../components/NavigationBar';
 
-function OrdersScreen(): JSX.Element {
+import OrdersScreen from './OrdersScreen';
+
+const Stack = createStackNavigator();
+
+function Orders(): JSX.Element {
 	return (
-		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-			<Text>Orders!</Text>
-		</View>
+		<Stack.Navigator
+			initialRouteName="OrdersScreen"
+			screenOptions={{
+				header: (props) => <NavigationBar {...props} />,
+			}}>
+			<Stack.Screen
+				name="OrdersScreen"
+				component={OrdersScreen}
+				options={{
+					title: 'Orders',
+				}}
+			/>
+		</Stack.Navigator>
 	);
 }
 
-export default OrdersScreen;
+export default Orders;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import { Avatar, Text, TextInput } from 'react-native-paper';
+import { Avatar, Button, Text, TextInput, useTheme } from 'react-native-paper';
 import {
 	ImageLibraryOptions,
 	ImagePickerResponse,
@@ -10,6 +10,7 @@ import {
 import { Picker } from '@react-native-picker/picker';
 
 function AddProductScreen(): JSX.Element {
+	const { colors } = useTheme();
 	const [photo, setPhoto] = useState<ImagePickerResponse | null>(null);
 
 	const handleChoosePhoto: () => void = () => {
@@ -68,6 +69,9 @@ function AddProductScreen(): JSX.Element {
 					<Picker.Item label="Food" value="food"></Picker.Item>
 				</Picker>
 			</View>
+			<Button mode="contained" style={{ width: '50%', alignSelf: 'center' }}>
+				<Text style={{ color: colors.onPrimary }}>Add Product</Text>
+			</Button>
 		</View>
 	);
 }

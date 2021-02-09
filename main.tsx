@@ -23,7 +23,9 @@ const theme = {
 		...NavigationDefaultTheme.colors,
 		primary: 'teal',
 		accent: 'yellow',
-		background: 'white',
+		surface: 'white',
+
+		background: '#F1F1F1',
 		onPrimary: 'white',
 	},
 };
