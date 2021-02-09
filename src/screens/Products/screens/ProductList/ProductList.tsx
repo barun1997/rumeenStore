@@ -1,11 +1,11 @@
 import React from 'react';
 import { ImageSourcePropType, StyleSheet, View } from 'react-native';
-import { ProductCard } from './components/ProductCard/ProductCard';
+import { ProductCard } from '../../components/ProductCard/ProductCard';
 
-import sausage from '../../../static/sausage.jpg';
-import kiwi from '../../../static/kiwi.jpg';
+import sausage from '../../../../../static/sausage.jpg';
+import kiwi from '../../../../../static/kiwi.jpg';
 
-function ProductsScreen(): JSX.Element {
+function ProductList(): JSX.Element {
 	return (
 		<View style={styles.container}>
 			<ProductCard
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
 	container: { flex: 1, justifyContent: 'flex-start', padding: 20 },
 });
 
-export default ProductsScreen;
+export default ProductList;

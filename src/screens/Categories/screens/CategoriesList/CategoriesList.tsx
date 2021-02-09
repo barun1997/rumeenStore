@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { CategoryCard } from './components/CategoryCard/CategoryCard';
+import { CategoryCard } from '../../components/CategoryCard/CategoryCard';
 
-function CategoriesScreen(): JSX.Element {
+function CategoriesList(): JSX.Element {
 	return (
 		<View style={styles.container}>
 			<CategoryCard title="Meat Product" numberOfProducts={1} />
@@ -14,4 +14,4 @@ function CategoriesScreen(): JSX.Element {
 const styles = StyleSheet.create({
 	container: { flex: 1, justifyContent: 'flex-start', padding: 20 },
 });
-export default CategoriesScreen;
+export default CategoriesList;

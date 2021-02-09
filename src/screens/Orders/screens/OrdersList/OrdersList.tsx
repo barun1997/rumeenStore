@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { OrderCard } from './components/OrderCard/OrderCard';
+import { OrderCard } from '../../components/OrderCard/OrderCard';
 
 function OrdersScreen(): JSX.Element {
 	return (

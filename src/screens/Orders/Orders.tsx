@@ -2,20 +2,20 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import NavigationBar from '../../components/NavigationBar';
 
-import OrdersScreen from './OrdersScreen';
+import OrdersList from './screens/OrdersList/OrdersList';
 
 const Stack = createStackNavigator();
 
 function Orders(): JSX.Element {
 	return (
 		<Stack.Navigator
-			initialRouteName="OrdersScreen"
+			initialRouteName="OrdersList"
 			screenOptions={{
 				header: (props) => <NavigationBar {...props} />,
 			}}>
 			<Stack.Screen
-				name="OrdersScreen"
-				component={OrdersScreen}
+				name="OrdersList"
+				component={OrdersList}
 				options={{
 					title: 'Orders',
 				}}
