@@ -6,10 +6,12 @@ import OrdersScreen from './screens/Orders';
 import AccountScreen from './screens/Account';
 import CategoriesScreen from './screens/Categories';
 import ProductsScreen from './screens/Products';
+import Config from 'react-native-config';
 
 const Tab = createBottomTabNavigator();
 
 const App: React.FC<Record<string, never>> = () => {
+	console.log(Config.ENVIRONMENT);
 	return (
 		<Tab.Navigator
 			screenOptions={({ route }) => ({

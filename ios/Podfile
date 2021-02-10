@@ -5,15 +5,24 @@ platform :ios, '10.0'
 
 pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-target 'RumeenStore' do
+
+abstract_target 'Rumeen' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
 
-  target 'RumeenStoreTests' do
-    inherit! :complete
-    # Pods for testing
+  target 'RumeenStore' do
+    #Production-specific pods
+  
+    target 'RumeenStoreTests' do
+      inherit! :complete
+      # Pods for testing
+    end
+  end
+  
+  target 'RumeenStoreDevelopment' do
+    #Development-specific pods
   end
 
   # Enables Flipper.
