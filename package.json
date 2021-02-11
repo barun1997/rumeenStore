@@ -7,6 +7,7 @@
 		"ios": "react-native run-ios",
 		"start": "react-native start",
 		"test": "jest",
+		"ios-dev": "npx react-native run-ios --scheme 'RumeenStoreDevelopment'",
 		"format": "prettier --check ./src",
 		"lint": "eslint --ext .tsx --ext .ts src/"
 	},
