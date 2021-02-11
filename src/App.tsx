@@ -12,6 +12,7 @@ const Tab = createBottomTabNavigator();
 
 const App: React.FC<Record<string, never>> = () => {
 	console.log(Config.ENVIRONMENT);
+
 	return (
 		<Tab.Navigator
 			screenOptions={({ route }) => ({
