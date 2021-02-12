@@ -1,21 +1,40 @@
+import { Formik } from 'formik';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
-
-function AddCategoryScreen(): JSX.Element {
-	return (
-		<View style={styles.container}>
-			<TextInput style={styles.input} label="Category Name" value="New Category" />
-			<Button mode="contained" style={{ width: '50%', alignSelf: 'center' }}>
-				<Text>Add category</Text>
-			</Button>
-		</View>
-	);
+import AddCategoryForm from './components/AddCategoryForm';
+import { addCategory } from '../../../../services/categoryService';
+import { useNavigation } from '@react-navigation/native';
+interface CategoryType {
+	name: string;
 }
 
-const styles = StyleSheet.create({
-	container: { flex: 1, justifyContent: 'space-between', marginHorizontal: 30, marginVertical: 30 },
-	input: { marginVertical: 15 },
-});
+const initialCategory: CategoryType = {
+	name: '',
+};
+function AddCategoryScreen(): JSX.Element {
+	const navigation = useNavigation();
+
+	const handleSubmit = async (values: CategoryType) => {
+		try {
+			await addCategory(values);
+			navigation.goBack();
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	return (
+		<Formik initialValues={initialCategory} onSubmit={handleSubmit}>
+			{({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
+				<AddCategoryForm
+					{...values}
+					handleChange={handleChange}
+					handleBlur={handleBlur}
+					setFieldValue={setFieldValue}
+					handleSubmit={handleSubmit}
+				/>
+			)}
+		</Formik>
+	);
+}
 
 export default AddCategoryScreen;
