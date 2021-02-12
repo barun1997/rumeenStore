@@ -5,6 +5,7 @@
 yarn.lock
 package-lock.json
 
+
 # Xcode
 #
 build/
@@ -64,3 +65,11 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+#plist 
+
+/ios/GoogleService-Info.plist
+
+/ios/RumeenStore/GoogleService-Info.plist 
+
+/ios/RumeenStoreDevelopment/GoogleService-Info.plist
