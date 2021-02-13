@@ -2,13 +2,10 @@ import { Picker } from '@react-native-picker/picker';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import {
-	ImageLibraryOptions,
-	ImagePickerResponse,
-	launchImageLibrary,
-} from 'react-native-image-picker';
+import { ImageLibraryOptions, launchImageLibrary } from 'react-native-image-picker';
 import { Avatar, Button, TextInput, useTheme } from 'react-native-paper';
 import { CategoryType } from '../../../../../interfaces/Category';
+import { ProductType } from '../../../../../interfaces/Product';
 import { getCategories } from '../../../../../services/categoryService';
 
 interface ProductFormProps {
@@ -24,26 +21,18 @@ interface ProductFormProps {
 			: (e: string | React.ChangeEvent<unknown>) => void;
 	};
 	setFieldValue: (field: string, value: unknown, shouldValidate?: boolean | undefined) => void;
-	photo: ImagePickerResponse | null;
-	name: string;
-	category: string;
-	description: string;
-	price: number;
+	product: ProductType;
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({
 	handleBlur,
 	handleChange,
 	handleSubmit,
-	photo,
-	name,
-	description,
-	category,
-	price,
+	product,
 	setFieldValue,
 }) => {
 	const { colors } = useTheme();
-
+	const { photo, name, description, category, price } = product;
 	const handleChoosePhoto: () => void = () => {
 		const options: ImageLibraryOptions = {
 			mediaType: 'photo',

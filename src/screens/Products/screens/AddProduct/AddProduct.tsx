@@ -1,22 +1,34 @@
+import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import React from 'react';
-import { ImagePickerResponse } from 'react-native-image-picker';
+import { ProductType } from '../../../../interfaces/Product';
+import { addProduct } from '../../../../services/productService';
 import ProductForm from './components/ProductForm';
 
-const initialProduct = {
+const initialProduct: ProductType = {
 	name: '',
-	photo: null as ImagePickerResponse | null,
+	photo: null,
 	price: 0.0,
 	description: '',
 	category: '',
 };
 
 function AddProductScreen(): JSX.Element {
+	const navigation = useNavigation();
+
+	const handleSubmit = async (values: ProductType): Promise<void> => {
+		try {
+			await addProduct(values);
+			navigation.goBack();
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	return (
-		<Formik initialValues={initialProduct} onSubmit={(values) => console.log(values)}>
+		<Formik initialValues={initialProduct} onSubmit={handleSubmit}>
 			{({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
 				<ProductForm
-					{...values}
+					product={values}
 					handleChange={handleChange}
 					handleBlur={handleBlur}
 					setFieldValue={setFieldValue}
