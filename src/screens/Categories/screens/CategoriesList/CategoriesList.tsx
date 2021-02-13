@@ -1,15 +1,14 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { StyleSheet, View, FlatList, ListRenderItem } from 'react-native';
+import { CategoryType } from '../../../../interfaces/Category';
 import { getCategories } from '../../../../services/categoryService';
 import { CategoryCard } from '../../components/CategoryCard/CategoryCard';
 
 function CategoriesList(): JSX.Element {
-	interface CategoryType {
-		name: string;
-	}
 	const [categories, setCategories] = React.useState<CategoryType[]>([]);
 	const isFocused = useIsFocused();
+
 	useEffect(() => {
 		const fetchCategories = async () => {
 			const result = await getCategories();

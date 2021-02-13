@@ -1,11 +1,9 @@
 import { Formik } from 'formik';
 import React from 'react';
-import AddCategoryForm from './components/AddCategoryForm';
+import CategoryForm from './components/CategoryForm';
 import { addCategory } from '../../../../services/categoryService';
 import { useNavigation } from '@react-navigation/native';
-interface CategoryType {
-	name: string;
-}
+import { CategoryType } from '../../../../interfaces/Category';
 
 const initialCategory: CategoryType = {
 	name: '',
@@ -25,7 +23,7 @@ function AddCategoryScreen(): JSX.Element {
 	return (
 		<Formik initialValues={initialCategory} onSubmit={handleSubmit}>
 			{({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
-				<AddCategoryForm
+				<CategoryForm
 					{...values}
 					handleChange={handleChange}
 					handleBlur={handleBlur}
