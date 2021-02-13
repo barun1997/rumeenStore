@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 
-interface AddCategoryFormProps {
+interface CategoryFormProps {
 	handleBlur: {
 		(e: React.FocusEvent<never>): void;
 		<T = unknown>(fieldOrEvent: T): T extends string ? (e: unknown) => void : void;
@@ -18,7 +18,7 @@ interface AddCategoryFormProps {
 	name: string;
 }
 
-const AddCategoryForm: React.FC<AddCategoryFormProps> = ({
+const CategoryForm: React.FC<CategoryFormProps> = ({
 	handleBlur,
 	handleChange,
 	handleSubmit,
@@ -40,7 +40,7 @@ const AddCategoryForm: React.FC<AddCategoryFormProps> = ({
 	);
 };
 
-export default AddCategoryForm;
+export default CategoryForm;
 
 const styles = StyleSheet.create({
 	container: { flex: 1, justifyContent: 'space-between', marginHorizontal: 30, marginVertical: 30 },

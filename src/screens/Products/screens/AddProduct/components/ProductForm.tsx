@@ -1,5 +1,5 @@
 import { Picker } from '@react-native-picker/picker';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import {
@@ -8,8 +8,10 @@ import {
 	launchImageLibrary,
 } from 'react-native-image-picker';
 import { Avatar, Button, TextInput, useTheme } from 'react-native-paper';
+import { CategoryType } from '../../../../../interfaces/Category';
+import { getCategories } from '../../../../../services/categoryService';
 
-interface AddProductFormProps {
+interface ProductFormProps {
 	handleBlur: {
 		(e: React.FocusEvent<never>): void;
 		<T = unknown>(fieldOrEvent: T): T extends string ? (e: unknown) => void : void;
@@ -29,7 +31,7 @@ interface AddProductFormProps {
 	price: number;
 }
 
-export const AddProductForm: React.FC<AddProductFormProps> = ({
+const ProductForm: React.FC<ProductFormProps> = ({
 	handleBlur,
 	handleChange,
 	handleSubmit,
@@ -55,6 +57,17 @@ export const AddProductForm: React.FC<AddProductFormProps> = ({
 			}
 		});
 	};
+
+	const [categories, setCategories] = useState<CategoryType[]>([]);
+
+	useEffect(() => {
+		async function fetchCategories() {
+			const categories = await getCategories();
+			if (!categories) return;
+			setCategories(categories);
+		}
+		void fetchCategories();
+	}, []);
 
 	return (
 		<View style={styles.container}>
@@ -114,8 +127,10 @@ export const AddProductForm: React.FC<AddProductFormProps> = ({
 					mode="dropdown"
 					onValueChange={(category) => setFieldValue('category', category)}
 					selectedValue={category}>
-					<Picker.Item label="Choose Category" value=""></Picker.Item>
-					<Picker.Item label="Food" value="food"></Picker.Item>
+					<Picker.Item label="Choose Category" value="" />
+					{categories.map((category) => (
+						<Picker.Item key={category.name} label={category.name} value={category.name} />
+					))}
 				</Picker>
 			</View>
 			<Button mode="contained" onPress={handleSubmit} style={{ width: '50%', alignSelf: 'center' }}>
@@ -137,3 +152,5 @@ const styles = StyleSheet.create({
 	picker: { height: '100%' },
 	categoryPicker: { height: 75 },
 });
+
+export default ProductForm;
