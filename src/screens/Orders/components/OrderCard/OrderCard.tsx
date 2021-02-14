@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Card, Title, Paragraph, useTheme, Colors } from 'react-native-paper';
+import { Card, Title, Paragraph, useTheme } from 'react-native-paper';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { OrderStatus } from '../OrderStatus/OrderStatus';
 
 interface OrderCardProps {
 	location: string;
-	status: string;
+	status: number;
 	price: string;
 	title: string;
 }
@@ -22,10 +23,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({ title, price, status, loca
 						<MaterialCommunityIcon name="map-marker" color={colors.primary} />
 						<Paragraph style={styles.location}>{location}</Paragraph>
 					</View>
-					<View style={styles.statusView}>
-						<MaterialCommunityIcon name="circle" color={Colors.amber600} />
-						<Paragraph style={styles.status}>{status}</Paragraph>
-					</View>
+					<OrderStatus status={status} />
 				</View>
 				<Title style={styles.price}>Rs {price}</Title>
 			</View>
@@ -46,9 +44,4 @@ const getStyles = (colors: ReactNativePaper.ThemeColors) =>
 			alignItems: 'center',
 		},
 		price: { alignSelf: 'center', color: colors.primary, margin: 20 },
-		statusView: {
-			flexDirection: 'row',
-			alignItems: 'center',
-		},
-		status: { marginHorizontal: 4 },
 	});
