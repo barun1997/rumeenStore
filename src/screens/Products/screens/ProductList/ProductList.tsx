@@ -1,25 +1,34 @@
-import React from 'react';
-import { ImageSourcePropType, StyleSheet, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 
-import sausage from '../../../../../static/sausage.jpg';
-import kiwi from '../../../../../static/kiwi.jpg';
+import { getProducts } from '../../../../services/productService';
+import { ProductType } from '../../../../interfaces/Product';
+import { useIsFocused } from '@react-navigation/native';
 
 function ProductList(): JSX.Element {
+	const [products, setProducts] = useState<ProductType[]>([]);
+	const isFocused = useIsFocused();
+
+	useEffect(() => {
+		async function fetchProducts() {
+			const response = await getProducts();
+
+			setProducts(response);
+		}
+		void fetchProducts();
+	}, [isFocused]);
 	return (
 		<View style={styles.container}>
-			<ProductCard
-				imageSource={sausage as ImageSourcePropType}
-				productPrice="70"
-				productTitle="Sausage"
-				productType="Listed Online"
-			/>
-			<ProductCard
-				imageSource={kiwi as ImageSourcePropType}
-				productPrice="100"
-				productTitle="Kiwi"
-				productType="Listed Online"
-			/>
+			{products.map(({ name, photo, price }) => (
+				<ProductCard
+					key={name}
+					imageSource={photo as string}
+					price={price.toString()}
+					title={name}
+					type="Listed Online"
+				/>
+			))}
 		</View>
 	);
 }

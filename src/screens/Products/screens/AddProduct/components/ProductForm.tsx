@@ -2,7 +2,11 @@ import { Picker } from '@react-native-picker/picker';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import { ImageLibraryOptions, launchImageLibrary } from 'react-native-image-picker';
+import {
+	ImageLibraryOptions,
+	ImagePickerResponse,
+	launchImageLibrary,
+} from 'react-native-image-picker';
 import { Avatar, Button, TextInput, useTheme } from 'react-native-paper';
 import { CategoryType } from '../../../../../interfaces/Category';
 import { ProductType } from '../../../../../interfaces/Product';
@@ -33,6 +37,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
 }) => {
 	const { colors } = useTheme();
 	const { photo, name, description, category, price } = product;
+
 	const handleChoosePhoto: () => void = () => {
 		const options: ImageLibraryOptions = {
 			mediaType: 'photo',
@@ -42,6 +47,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
 		};
 		launchImageLibrary(options, (response) => {
 			if (response.uri) {
+				console.log(response.uri);
+
 				setFieldValue('photo', response);
 			}
 		});
@@ -69,7 +76,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
 						</>
 					) : (
 						<>
-							<Image style={styles.image} source={photo} />
+							<Image style={styles.image} source={photo as ImagePickerResponse} />
 							<Text style={styles.imageInput}>Choose a photo</Text>
 						</>
 					)}

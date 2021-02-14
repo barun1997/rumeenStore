@@ -1,30 +1,25 @@
 import React from 'react';
-import { View, Image, ImageSourcePropType, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import { Card, Title, Subheading, Paragraph, useTheme } from 'react-native-paper';
 
 interface ProductCardProps {
-	imageSource: ImageSourcePropType;
-	productTitle: string;
-	productPrice: string;
-	productType: string;
+	title: string;
+	price: string;
+	type: string;
+	imageSource: string;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({
-	imageSource,
-	productTitle,
-	productPrice,
-	productType,
-}) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ imageSource, title, price, type }) => {
 	const { colors } = useTheme();
 	const styles = getStyles(colors);
 	return (
 		<Card style={styles.container}>
 			<View style={styles.rowView}>
-				<Image style={styles.image} source={imageSource} />
+				<Image style={styles.image} source={{ uri: imageSource }} />
 				<View style={styles.description}>
-					<Title>{productTitle}</Title>
-					<Subheading>Rs. {productPrice}</Subheading>
-					<Paragraph style={styles.productType}>{productType}</Paragraph>
+					<Title>{title}</Title>
+					<Subheading>Rs. {price}</Subheading>
+					<Paragraph style={styles.productType}>{type}</Paragraph>
 				</View>
 			</View>
 		</Card>
