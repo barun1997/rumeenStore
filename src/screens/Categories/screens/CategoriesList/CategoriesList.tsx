@@ -17,8 +17,8 @@ function CategoriesList(): JSX.Element {
 		void fetchCategories();
 	}, [isFocused]);
 
-	const renderItem: ListRenderItem<CategoryType> = ({ item }) => (
-		<CategoryCard title={item.name} numberOfProducts={item.count ?? 0} />
+	const renderItem: ListRenderItem<CategoryType> = ({ item: { name, count } }) => (
+		<CategoryCard title={name} numberOfProducts={count ?? 0} />
 	);
 	return (
 		<View style={styles.container}>
