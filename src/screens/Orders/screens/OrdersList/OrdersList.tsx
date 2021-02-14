@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { ListRenderItem, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import { OrderType } from '../../../../interfaces/Order';
 import { getOrders } from '../../../../services/orderService';
 import { OrderCard } from '../../components/OrderCard/OrderCard';
@@ -20,17 +21,13 @@ function OrdersScreen(): JSX.Element {
 		}
 		void fetchOrders();
 	}, []);
+
+	const renderItem: ListRenderItem<OrderType> = ({ item: { from, location, total, status } }) => (
+		<OrderCard title={from} location={location} price={total.toString()} status={status} />
+	);
 	return (
 		<View style={{ flex: 1, justifyContent: 'flex-start', padding: 20 }}>
-			{orders.map((order) => (
-				<OrderCard
-					key={order.from}
-					title={order.from}
-					location={order.location}
-					price={order.total.toString()}
-					status={order.status}
-				/>
-			))}
+			<FlatList data={orders} renderItem={renderItem} keyExtractor={(item) => item.from} />
 		</View>
 	);
 }
