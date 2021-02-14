@@ -1,6 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import { CategoryType } from '../interfaces/Category';
 
+//TODO: Implement for individual stores
 const categoryCollection = firestore().collection('stores').doc('barun').collection('categories');
 
 const addCategory = async (category: CategoryType): Promise<boolean> => {
@@ -17,6 +18,8 @@ const getCategories = async (): Promise<CategoryType[]> => {
 	const result = await categoryCollection.get();
 
 	const categories = result.docs.map((doc) => doc.data() as CategoryType);
+
+	if (!categories) return [];
 
 	return categories;
 };

@@ -11,14 +11,14 @@ function CategoriesList(): JSX.Element {
 
 	useEffect(() => {
 		const fetchCategories = async () => {
-			const result = await getCategories();
-			if (result) setCategories(result);
+			const categoryResponse = await getCategories();
+			if (categoryResponse) setCategories(categoryResponse);
 		};
 		void fetchCategories();
 	}, [isFocused]);
 
 	const renderItem: ListRenderItem<CategoryType> = ({ item }) => (
-		<CategoryCard title={item.name} numberOfProducts={1} />
+		<CategoryCard title={item.name} numberOfProducts={item.count ?? 0} />
 	);
 	return (
 		<View style={styles.container}>
