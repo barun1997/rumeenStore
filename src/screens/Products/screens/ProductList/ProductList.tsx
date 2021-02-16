@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ListRenderItem, StyleSheet, View } from 'react-native';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { getProducts } from '../../../../services/productService';
 import { ProductType } from '../../../../interfaces/Product';
 import { useIsFocused } from '@react-navigation/native';
@@ -32,13 +32,18 @@ function ProductList(): JSX.Element {
 
 	return (
 		<View style={styles.container}>
-			<FlatList data={products} renderItem={renderItem} keyExtractor={(item) => item.name} />
+			<FlatList
+				initialNumToRender={7}
+				data={products}
+				renderItem={renderItem}
+				keyExtractor={(item) => item.id as string}
+			/>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: { flex: 1, justifyContent: 'flex-start', padding: 20 },
+	container: { flex: 1, padding: wp('5%') },
 });
 
 export default ProductList;

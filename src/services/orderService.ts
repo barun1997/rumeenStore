@@ -12,9 +12,15 @@ const addorder = async (order: OrderType): Promise<boolean> => {
 const getOrders = async (): Promise<OrderType[]> => {
 	const result = await orderCollection.get();
 
-	const orders = result.docs.map((doc) => doc.data() as OrderType);
-
-	if (!orders) return [];
+	const orders = result.docs.map((doc) => {
+		return {
+			id: doc.id,
+			from: doc.data().from as string,
+			location: doc.data().location as string,
+			status: doc.data().status as number,
+			total: doc.data().total as number,
+		} as OrderType;
+	});
 
 	return orders;
 };

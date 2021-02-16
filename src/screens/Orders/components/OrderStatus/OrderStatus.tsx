@@ -23,5 +23,5 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 	},
-	status: { marginHorizontal: 4 },
+	status: { marginHorizontal: '2%' },
 });
