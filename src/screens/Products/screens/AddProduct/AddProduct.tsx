@@ -21,6 +21,7 @@ function AddProductScreen(): JSX.Element {
 
 	const handleSubmit = async (values: ProductType): Promise<void> => {
 		try {
+			console.log(values);
 			const { photo } = values;
 
 			if (!photo) return;
