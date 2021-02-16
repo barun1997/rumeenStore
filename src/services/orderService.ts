@@ -30,7 +30,10 @@ const getSingleOrder = async (id: string): Promise<OrderType> => {
 		result.products.map(async ({ product, quantity }) => {
 			const productReference = product as FirebaseFirestoreTypes.DocumentReference;
 
-			const productReferred = (await productReference.get())?.data() as ProductType;
+			const productReferred = {
+				...(await productReference.get())?.data(),
+				id: productReference.id,
+			} as ProductType;
 
 			return {
 				product: productReferred,

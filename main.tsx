@@ -18,6 +18,7 @@ declare global {
 const theme = {
 	...PaperDefaultTheme,
 	...NavigationDefaultTheme,
+
 	colors: {
 		...PaperDefaultTheme.colors,
 		...NavigationDefaultTheme.colors,
