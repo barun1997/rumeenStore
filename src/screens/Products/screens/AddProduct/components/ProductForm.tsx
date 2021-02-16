@@ -1,17 +1,22 @@
 import { Picker } from '@react-native-picker/picker';
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
+import {
+	heightPercentageToDP as hp,
+	widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 import {
 	ImageLibraryOptions,
 	ImagePickerResponse,
 	launchImageLibrary,
 } from 'react-native-image-picker';
-import { Avatar, Button, TextInput, useTheme } from 'react-native-paper';
+import { Button, TextInput, useTheme } from 'react-native-paper';
 import { CategoryType } from '../../../../../interfaces/Category';
 import FormProps from '../../../../../interfaces/FormProps';
 import { ProductType } from '../../../../../interfaces/Product';
 import { getCategories } from '../../../../../services/categoryService';
+import placeholder from '../../../../../../static/placeholder.png';
 
 const ProductForm: React.FC<FormProps<ProductType>> = ({
 	handleBlur,
@@ -30,8 +35,6 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 	const handleChoosePhoto: () => void = () => {
 		const options: ImageLibraryOptions = {
 			mediaType: 'photo',
-			maxHeight: 300,
-			maxWidth: 300,
 			quality: 1,
 		};
 		launchImageLibrary(options, (response) => {
@@ -58,23 +61,20 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 		<View style={styles.container}>
 			<TouchableHighlight style={styles.imageInputView} onPress={() => handleChoosePhoto()}>
 				<>
-					{photo === null ? (
-						<>
-							<Avatar.Icon style={styles.imageInput} icon="upload" />
-							<Text style={styles.imageInput}>Add product image</Text>
-						</>
+					<Image
+						style={styles.image}
+						source={(photo as ImagePickerResponse) ?? (placeholder as ImageSourcePropType)}
+					/>
+					{errors.photo && touched.photo ? (
+						<Text style={styles.error}>{errors.photo}</Text>
 					) : (
-						<>
-							<Image style={styles.image} source={photo as ImagePickerResponse} />
-							<Text style={styles.imageInput}>Choose a photo</Text>
-						</>
+						<Text>{photo ? 'Choose an image' : 'Add Product Image'}</Text>
 					)}
 				</>
 			</TouchableHighlight>
-			<View style={{ height: 400 }}>
-				<View>
+			<View style={styles.inputForm}>
+				<View style={styles.input}>
 					<TextInput
-						style={styles.input}
 						onChangeText={handleChange('name')}
 						onBlur={handleBlur('name')}
 						label="Product Name"
@@ -82,7 +82,7 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 					/>
 					{errors.name && touched.name ? <Text style={styles.error}>{errors.name}</Text> : null}
 				</View>
-				<View style={styles.price}>
+				<View style={styles.priceInput}>
 					<TextInput
 						style={styles.priceField}
 						keyboardType="numeric"
@@ -102,11 +102,10 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 					</Picker>
 					{errors.price && touched.price ? <Text style={styles.error}>{errors.price}</Text> : null}
 				</View>
-				<View>
+				<View style={styles.input}>
 					<TextInput
 						onChangeText={handleChange('description')}
 						onBlur={handleBlur('description')}
-						style={styles.input}
 						label="Description"
 						value={description}
 					/>
@@ -114,7 +113,7 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 						<Text style={styles.error}>{errors.description}</Text>
 					) : null}
 				</View>
-				<View>
+				<View style={styles.input}>
 					<Picker
 						itemStyle={styles.categoryPicker}
 						prompt="Choose category"
@@ -132,30 +131,37 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 					) : null}
 				</View>
 			</View>
-			<Button
-				loading={isSubmitting}
-				mode="contained"
-				onPress={handleSubmit}
-				style={styles.buttonContainer}>
-				<Text style={styles.submitButton}>Add Product</Text>
-			</Button>
+			<View>
+				<Button
+					loading={isSubmitting}
+					mode="contained"
+					onPress={handleSubmit}
+					style={styles.buttonContainer}>
+					<Text style={styles.submitButton}>Add Product</Text>
+				</Button>
+			</View>
 		</View>
 	);
 };
 
 const useStyles = (colors: ReactNativePaper.ThemeColors) =>
 	StyleSheet.create({
-		container: { flex: 1, justifyContent: 'center', marginHorizontal: 30 },
-		input: { marginVertical: 15 },
-		imageInput: { marginVertical: 15 },
-		error: { marginHorizontal: 10, color: colors.error },
-		imageInputView: { alignItems: 'center' },
-		image: { height: 200, width: 200 },
-		price: { marginVertical: 15, flexDirection: 'row', height: 75 },
+		container: {
+			flex: 1,
+			justifyContent: 'space-around',
+			padding: wp('5%'),
+			backgroundColor: colors.surface,
+		},
+		imageInputView: { justifyContent: 'space-evenly', alignItems: 'center', height: hp('20%') },
+		error: { marginHorizontal: wp('5%'), color: colors.error },
+		image: { height: '80%', width: '80%' },
+		inputForm: { height: hp('40%'), justifyContent: 'space-around' },
+		input: { height: '17%' },
+		priceInput: { flexDirection: 'row', height: '17%' },
 		priceUnitContainer: { width: '35%' },
 		priceField: { width: '65%' },
 		picker: { height: '100%' },
-		categoryPicker: { height: 75 },
+		categoryPicker: { height: hp('5%') },
 		buttonContainer: { width: '50%', alignSelf: 'center' },
 		submitButton: { color: colors.onPrimary },
 	});
