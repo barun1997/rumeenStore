@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 interface CategoryCardProps {
 	title: string;
@@ -21,9 +22,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ title, numberOfProdu
 };
 
 const styles = StyleSheet.create({
-	container: {
-		marginTop: 20,
-	},
-	description: { margin: 20 },
+	container: { marginVertical: heightPercentageToDP('1%') },
+	description: { padding: '5%' },
 	rowView: { flexDirection: 'row', justifyContent: 'space-between' },
 });

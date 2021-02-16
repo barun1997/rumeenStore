@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { Card, Title, Subheading, Paragraph, useTheme } from 'react-native-paper';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 interface ProductCardProps {
 	title: string;
@@ -28,11 +29,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ imageSource, title, pr
 
 const getStyles = (colors: ReactNativePaper.ThemeColors) =>
 	StyleSheet.create({
-		container: {
-			marginTop: 20,
-		},
+		container: { marginVertical: heightPercentageToDP('1%') },
 		rowView: { flexDirection: 'row' },
-		image: { width: 100, height: 100, alignSelf: 'center', margin: 10 },
-		description: { margin: 20 },
+		image: {
+			width: widthPercentageToDP('20%'),
+			height: heightPercentageToDP('10%'),
+			alignSelf: 'center',
+		},
+		description: { padding: '5%' },
 		productType: { color: colors.primary },
 	});

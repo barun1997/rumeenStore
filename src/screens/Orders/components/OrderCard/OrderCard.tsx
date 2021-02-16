@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Title, Paragraph, useTheme } from 'react-native-paper';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { OrderStatus } from '../OrderStatus/OrderStatus';
 
@@ -17,7 +18,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({ title, price, status, loca
 	return (
 		<Card style={styles.container}>
 			<View style={styles.rowView}>
-				<View style={styles.leftSide}>
+				<View>
 					<Title>{title}</Title>
 					<View style={styles.locationView}>
 						<MaterialCommunityIcon name="map-marker" color={colors.primary} />
@@ -34,14 +35,13 @@ export const OrderCard: React.FC<OrderCardProps> = ({ title, price, status, loca
 const getStyles = (colors: ReactNativePaper.ThemeColors) =>
 	StyleSheet.create({
 		container: {
-			marginTop: 20,
+			marginVertical: heightPercentageToDP('1%'),
 		},
-		leftSide: { margin: 20 },
-		rowView: { flexDirection: 'row', justifyContent: 'space-between' },
-		location: { marginHorizontal: 4 },
+		rowView: { flexDirection: 'row', justifyContent: 'space-between', padding: '5%' },
+		location: { marginHorizontal: '2%' },
 		locationView: {
 			flexDirection: 'row',
 			alignItems: 'center',
 		},
-		price: { alignSelf: 'center', color: colors.primary, margin: 20 },
+		price: { alignSelf: 'center', color: colors.primary },
 	});

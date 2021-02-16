@@ -22,9 +22,12 @@ const addCategory = async (category: CategoryType): Promise<boolean> => {
 const getCategories = async (): Promise<CategoryType[]> => {
 	const result = await categoryCollection.get();
 
-	const categories = result.docs.map((doc) => doc.data() as CategoryType);
-
-	if (!categories) return [];
+	const categories = result.docs.map((doc) => {
+		return {
+			id: doc?.id,
+			name: doc.data()?.name as string,
+		} as CategoryType;
+	});
 
 	return categories;
 };
