@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import { CategoryType } from '../../../../../interfaces/Category';
 import FormProps from '../../../../../interfaces/FormProps';
-
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 const CategoryForm: React.FC<FormProps<CategoryType>> = ({
 	handleBlur,
 	handleChange,
@@ -19,7 +19,6 @@ const CategoryForm: React.FC<FormProps<CategoryType>> = ({
 		<View style={styles.container}>
 			<View>
 				<TextInput
-					style={styles.input}
 					onChangeText={handleChange('name')}
 					onBlur={handleBlur('name')}
 					label="Category Name"
@@ -28,11 +27,7 @@ const CategoryForm: React.FC<FormProps<CategoryType>> = ({
 				/>
 				{errors.name && touched.name ? <Text style={styles.error}>{errors.name}</Text> : null}
 			</View>
-			<Button
-				loading={isSubmitting}
-				onPress={handleSubmit}
-				mode="contained"
-				style={{ width: '50%', alignSelf: 'center' }}>
+			<Button loading={isSubmitting} onPress={handleSubmit} mode="contained" style={styles.button}>
 				<Text>Add category</Text>
 			</Button>
 		</View>
@@ -45,10 +40,10 @@ const useStyles = (colors: ReactNativePaper.ThemeColors) =>
 	StyleSheet.create({
 		container: {
 			flex: 1,
+			backgroundColor: colors.surface,
 			justifyContent: 'space-between',
-			marginHorizontal: 30,
-			marginVertical: 30,
+			padding: wp('5%'),
 		},
-		input: { marginVertical: 15 },
-		error: { marginHorizontal: 10, color: colors.error },
+		error: { marginHorizontal: '2%', color: colors.error },
+		button: { width: '50%', alignSelf: 'center' },
 	});

@@ -37,7 +37,7 @@ function AddCategoryScreen(): JSX.Element {
 				isSubmitting,
 			}) => (
 				<CategoryForm
-					{...values}
+					values={values}
 					errors={errors}
 					touched={touched}
 					handleChange={handleChange}
