@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import React from 'react';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import { ProductType } from '../../../../interfaces/Product';
+import ProductSchema from '../../../../schemas/Product';
 import { uploadCoverImage } from '../../../../services/imageService';
 import { addProduct } from '../../../../services/productService';
 import ProductForm from './components/ProductForm';
@@ -37,12 +38,24 @@ function AddProductScreen(): JSX.Element {
 		}
 	};
 	return (
-		<Formik initialValues={initialProduct} onSubmit={handleSubmit}>
-			{({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
+		<Formik initialValues={initialProduct} validationSchema={ProductSchema} onSubmit={handleSubmit}>
+			{({
+				handleChange,
+				handleBlur,
+				handleSubmit,
+				isSubmitting,
+				values,
+				setFieldValue,
+				errors,
+				touched,
+			}) => (
 				<ProductForm
-					product={values}
+					errors={errors}
+					touched={touched}
+					values={values}
 					handleChange={handleChange}
 					handleBlur={handleBlur}
+					isSubmitting={isSubmitting}
 					setFieldValue={setFieldValue}
 					handleSubmit={handleSubmit}
 				/>

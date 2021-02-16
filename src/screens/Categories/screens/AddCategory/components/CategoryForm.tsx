@@ -1,37 +1,17 @@
-import { FormikErrors, FormikTouched } from 'formik';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Button, Caption, TextInput, useTheme } from 'react-native-paper';
+import { Button, TextInput, useTheme } from 'react-native-paper';
 import { CategoryType } from '../../../../../interfaces/Category';
+import FormProps from '../../../../../interfaces/FormProps';
 
-interface CategoryFormProps {
-	handleBlur: {
-		(e: React.FocusEvent<never>): void;
-		<T = unknown>(fieldOrEvent: T): T extends string ? (e: unknown) => void : void;
-	};
-	handleSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void;
-	handleChange: {
-		(e: React.ChangeEvent<unknown>): void;
-		<T = string | React.ChangeEvent<unknown>>(field: T): T extends React.ChangeEvent<unknown>
-			? void
-			: (e: string | React.ChangeEvent<unknown>) => void;
-	};
-	setFieldValue: (field: string, value: unknown, shouldValidate?: boolean | undefined) => void;
-	name: string;
-	isSubmitting: boolean;
-	errors: FormikErrors<CategoryType>;
-	touched: FormikTouched<CategoryType>;
-}
-
-const CategoryForm: React.FC<CategoryFormProps> = ({
+const CategoryForm: React.FC<FormProps<CategoryType>> = ({
 	handleBlur,
 	handleChange,
-
 	handleSubmit,
 	isSubmitting,
 	touched,
 	errors,
-	name,
+	values: { name },
 }) => {
 	const colors = useTheme().colors;
 	const styles = useStyles(colors);
@@ -46,7 +26,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
 					error={!!errors.name && touched.name}
 					value={name}
 				/>
-				{errors.name && touched.name ? <Caption style={styles.error}>{errors.name}</Caption> : null}
+				{errors.name && touched.name ? <Text style={styles.error}>{errors.name}</Text> : null}
 			</View>
 			<Button
 				loading={isSubmitting}
