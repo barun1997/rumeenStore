@@ -1,6 +1,8 @@
+import { FormikErrors, FormikTouched } from 'formik';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import { Button, Caption, TextInput, useTheme } from 'react-native-paper';
+import { CategoryType } from '../../../../../interfaces/Category';
 
 interface CategoryFormProps {
 	handleBlur: {
@@ -16,24 +18,41 @@ interface CategoryFormProps {
 	};
 	setFieldValue: (field: string, value: unknown, shouldValidate?: boolean | undefined) => void;
 	name: string;
+	isSubmitting: boolean;
+	errors: FormikErrors<CategoryType>;
+	touched: FormikTouched<CategoryType>;
 }
 
 const CategoryForm: React.FC<CategoryFormProps> = ({
 	handleBlur,
 	handleChange,
+
 	handleSubmit,
+	isSubmitting,
+	touched,
+	errors,
 	name,
 }) => {
+	const colors = useTheme().colors;
+	const styles = useStyles(colors);
 	return (
 		<View style={styles.container}>
-			<TextInput
-				style={styles.input}
-				onChangeText={handleChange('name')}
-				onBlur={handleBlur('name')}
-				label="Category Name"
-				value={name}
-			/>
-			<Button onPress={handleSubmit} mode="contained" style={{ width: '50%', alignSelf: 'center' }}>
+			<View>
+				<TextInput
+					style={styles.input}
+					onChangeText={handleChange('name')}
+					onBlur={handleBlur('name')}
+					label="Category Name"
+					error={!!errors.name && touched.name}
+					value={name}
+				/>
+				{errors.name && touched.name ? <Caption style={styles.error}>{errors.name}</Caption> : null}
+			</View>
+			<Button
+				loading={isSubmitting}
+				onPress={handleSubmit}
+				mode="contained"
+				style={{ width: '50%', alignSelf: 'center' }}>
 				<Text>Add category</Text>
 			</Button>
 		</View>
@@ -42,7 +61,14 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
 
 export default CategoryForm;
 
-const styles = StyleSheet.create({
-	container: { flex: 1, justifyContent: 'space-between', marginHorizontal: 30, marginVertical: 30 },
-	input: { marginVertical: 15 },
-});
+const useStyles = (colors: ReactNativePaper.ThemeColors) =>
+	StyleSheet.create({
+		container: {
+			flex: 1,
+			justifyContent: 'space-between',
+			marginHorizontal: 30,
+			marginVertical: 30,
+		},
+		input: { marginVertical: 15 },
+		error: { marginHorizontal: 10, color: colors.error },
+	});
