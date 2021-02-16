@@ -1,5 +1,6 @@
-import firestore from '@react-native-firebase/firestore';
-import { OrderType } from '../interfaces/Order';
+import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import { OrderType, ProductItemForOrder } from '../interfaces/Order';
+import { ProductType } from '../interfaces/Product';
 
 //TODO: Implement for individual stores
 const orderCollection = firestore().collection('stores').doc('barun').collection('orders');
@@ -7,6 +8,37 @@ const orderCollection = firestore().collection('stores').doc('barun').collection
 const addorder = async (order: OrderType): Promise<boolean> => {
 	await orderCollection.add(order);
 	return true;
+};
+
+// const productList = Promise.all(
+// 	products.map(async ({ product, quantity }) => {
+// 		const productReference = product as FirebaseFirestoreTypes.DocumentReference;
+
+// 		const productReferred = (await productReference.get())?.data() as ProductType;
+
+// 		return {
+// 			product: productReferred,
+// 			quantity: quantity,
+// 		} as ProductItemForOrder;
+// 	}),
+// );
+
+const getSingleOrder = async (id: string): Promise<OrderType> => {
+	const result = (await orderCollection.doc(id).get()).data() as OrderType;
+
+	const products = await Promise.all(
+		result.products.map(async ({ product, quantity }) => {
+			const productReference = product as FirebaseFirestoreTypes.DocumentReference;
+
+			const productReferred = (await productReference.get())?.data() as ProductType;
+
+			return {
+				product: productReferred,
+				quantity: quantity,
+			} as ProductItemForOrder;
+		}),
+	);
+	return { ...result, products: products };
 };
 
 const getOrders = async (): Promise<OrderType[]> => {
@@ -19,10 +51,11 @@ const getOrders = async (): Promise<OrderType[]> => {
 			location: doc.data().location as string,
 			status: doc.data().status as number,
 			total: doc.data().total as number,
+			products: doc.data().products as ProductItemForOrder[],
 		} as OrderType;
 	});
 
 	return orders;
 };
 
-export { addorder, getOrders };
+export { addorder, getOrders, getSingleOrder };
