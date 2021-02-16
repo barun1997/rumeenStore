@@ -24,7 +24,7 @@ const theme = {
 		primary: 'teal',
 		accent: 'yellow',
 		surface: 'white',
-
+		onSurface: '#fcfafa',
 		background: '#F1F1F1',
 		onPrimary: 'white',
 	},
