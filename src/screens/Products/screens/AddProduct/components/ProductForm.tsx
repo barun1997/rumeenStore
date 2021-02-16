@@ -11,7 +11,7 @@ import {
 	ImagePickerResponse,
 	launchImageLibrary,
 } from 'react-native-image-picker';
-import { Button, TextInput, useTheme } from 'react-native-paper';
+import { Button, HelperText, TextInput, useTheme } from 'react-native-paper';
 import { CategoryType } from '../../../../../interfaces/Category';
 import FormProps from '../../../../../interfaces/FormProps';
 import { ProductType } from '../../../../../interfaces/Product';
@@ -66,9 +66,9 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 						source={(photo as ImagePickerResponse) ?? (placeholder as ImageSourcePropType)}
 					/>
 					{errors.photo && touched.photo ? (
-						<Text style={styles.error}>{errors.photo}</Text>
+						<HelperText type="error">{errors.photo}</HelperText>
 					) : (
-						<Text>{photo ? 'Choose an image' : 'Add Product Image'}</Text>
+						<HelperText type="info">{photo ? 'Choose an image' : 'Add Product Image'}</HelperText>
 					)}
 				</>
 			</TouchableHighlight>
@@ -80,15 +80,18 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 						label="Product Name"
 						value={name}
 					/>
-					{errors.name && touched.name ? <Text style={styles.error}>{errors.name}</Text> : null}
+					{errors.name && touched.name ? <HelperText type="error">{errors.name}</HelperText> : null}
 				</View>
 				<View style={styles.priceInput}>
 					<TextInput
 						style={styles.priceField}
-						keyboardType="numeric"
 						label="Price"
+						keyboardType="numeric"
 						value={price.toString()}
-						onChangeText={(price) => setFieldValue('price', parseFloat(price))}
+						onChangeText={(price) => {
+							if (!price) return setFieldValue('price', '');
+							setFieldValue('price', price);
+						}}
 						onBlur={handleBlur('price')}
 					/>
 					<Picker
@@ -100,7 +103,9 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 						<Picker.Item label="per kg" value="kg"></Picker.Item>
 						<Picker.Item label="per unit" value="unit"></Picker.Item>
 					</Picker>
-					{errors.price && touched.price ? <Text style={styles.error}>{errors.price}</Text> : null}
+					{errors.price && touched.price ? (
+						<HelperText type="error">{errors.price}</HelperText>
+					) : null}
 				</View>
 				<View style={styles.input}>
 					<TextInput
@@ -110,7 +115,7 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 						value={description}
 					/>
 					{errors.description && touched.description ? (
-						<Text style={styles.error}>{errors.description}</Text>
+						<HelperText type="error">{errors.description}</HelperText>
 					) : null}
 				</View>
 				<View style={styles.input}>
@@ -127,7 +132,7 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 						))}
 					</Picker>
 					{errors.category && touched.category ? (
-						<Text style={styles.error}>{errors.category}</Text>
+						<HelperText type="error">{errors.category}</HelperText>
 					) : null}
 				</View>
 			</View>
