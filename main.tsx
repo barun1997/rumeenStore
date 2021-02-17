@@ -1,6 +1,6 @@
 import {
-	NavigationContainer,
 	DefaultTheme as NavigationDefaultTheme,
+	NavigationContainer,
 } from '@react-navigation/native';
 import * as React from 'react';
 import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';

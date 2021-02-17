@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { Card, Title, Subheading, Paragraph, useTheme } from 'react-native-paper';
+import { Image, StyleSheet, View } from 'react-native';
+import { Card, Paragraph, Subheading, Title, useTheme } from 'react-native-paper';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 interface ProductCardProps {

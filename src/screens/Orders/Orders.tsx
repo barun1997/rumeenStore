@@ -1,7 +1,6 @@
-import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
 import NavigationBar from '../../components/NavigationBar';
-
 import OrdersList from './screens/OrdersList/OrdersList';
 
 const Stack = createStackNavigator();

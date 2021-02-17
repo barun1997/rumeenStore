@@ -1,10 +1,10 @@
+import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import React from 'react';
-import CategoryForm from './components/CategoryForm';
-import { addCategory } from '../../../../services/categoryService';
-import { useNavigation } from '@react-navigation/native';
 import { CategoryType } from '../../../../interfaces/Category';
 import CategorySchema from '../../../../schemas/Category';
+import { addCategory } from '../../../../services/categoryService';
+import CategoryForm from './components/CategoryForm';
 
 const initialCategory: CategoryType = {
 	name: '',

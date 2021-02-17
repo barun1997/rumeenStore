@@ -1,11 +1,11 @@
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ListRenderItem, StyleSheet, View } from 'react-native';
-import { ProductCard } from '../../components/ProductCard/ProductCard';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { getProducts } from '../../../../services/productService';
-import { ProductType } from '../../../../interfaces/Product';
-import { useIsFocused } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { ProductType } from '../../../../interfaces/Product';
+import { getProducts } from '../../../../services/productService';
+import { ProductCard } from '../../components/ProductCard/ProductCard';
 
 function ProductList(): JSX.Element {
 	const [products, setProducts] = useState<ProductType[]>([]);
