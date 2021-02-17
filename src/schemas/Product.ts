@@ -1,6 +1,5 @@
 import * as Yup from 'yup';
-
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
+import SUPPORTED_FORMATS from '../constants/supportedFormats';
 
 const ProductSchema = Yup.object().shape({
 	name: Yup.string().required('Please enter product name'),
