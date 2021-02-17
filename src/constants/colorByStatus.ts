@@ -1,12 +1,14 @@
 import { Colors } from 'react-native-paper';
+import OrderStatus from './orderStatus';
 
 type colorByStatusType = {
 	[key: string]: string;
 };
 
 const colorByStatus: colorByStatusType = {
-	0: Colors.amber600,
-	1: Colors.blue700,
-	2: Colors.green400,
+	[OrderStatus.Pending]: Colors.amber600,
+	[OrderStatus.Processing]: Colors.blue700,
+	[OrderStatus.Finalized]: Colors.green400,
+	[OrderStatus.Cancelled]: Colors.red500,
 };
 export default colorByStatus;
