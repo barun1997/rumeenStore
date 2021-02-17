@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import OrderStatus from '../constants/orderStatus';
 import { OrderType } from '../interfaces/Order';
 
 //TODO: Implement for individual stores
@@ -17,7 +18,7 @@ const getOrders = async (): Promise<OrderType[]> => {
 			id: doc.id,
 			from: doc.data().from as string,
 			location: doc.data().location as string,
-			status: doc.data().status as number,
+			status: doc.data().status as OrderStatus,
 			total: doc.data().total as number,
 		} as OrderType;
 	});
