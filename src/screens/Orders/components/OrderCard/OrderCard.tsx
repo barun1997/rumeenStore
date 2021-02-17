@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Card, Paragraph, Title, useTheme } from 'react-native-paper';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { OrderStatus } from '../OrderStatus/OrderStatus';
+import { OrderStatusComp as OrderStatus } from '../OrderStatus/OrderStatus';
 
 interface OrderCardProps {
 	location: string;

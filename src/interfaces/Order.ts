@@ -1,7 +1,9 @@
+import OrderStatus from '../constants/orderStatus';
+
 export interface OrderType {
 	id: string;
 	from: string;
 	location: string;
-	status: number;
+	status: OrderStatus;
 	total: number;
 }
