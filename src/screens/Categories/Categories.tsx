@@ -1,8 +1,8 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import NavigationBar from '../../components/NavigationBar';
-import { IconButton, useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import { IconButton, useTheme } from 'react-native-paper';
+import NavigationBar from '../../components/NavigationBar';
 import AddCategoryScreen from './screens/AddCategory/AddCategory';
 import CategoriesListScreen from './screens/CategoriesList/CategoriesList';
 

@@ -1,10 +1,10 @@
-import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import { IconButton, useTheme } from 'react-native-paper';
+import NavigationBar from '../../components/NavigationBar';
 import AddProductScreen from './screens/AddProduct/AddProduct';
 import ProductListScreen from './screens/ProductList/ProductList';
-import NavigationBar from '../../components/NavigationBar';
-import { IconButton, useTheme } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 

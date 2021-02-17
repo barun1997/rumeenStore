@@ -1,12 +1,12 @@
-import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
+import Config from 'react-native-config';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import HomeScreen from './screens/Home';
-import OrdersScreen from './screens/Orders';
 import AccountScreen from './screens/Account';
 import CategoriesScreen from './screens/Categories';
+import HomeScreen from './screens/Home';
+import OrdersScreen from './screens/Orders';
 import ProductsScreen from './screens/Products';
-import Config from 'react-native-config';
 const Tab = createBottomTabNavigator();
 
 const App: React.FC<Record<string, never>> = () => {

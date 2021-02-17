@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
-import { ProductType } from '../interfaces/Product';
 import { fieldIncrementByOne } from '../constants/fieldIncrementByOne';
+import { ProductType } from '../interfaces/Product';
 const productCollection = firestore().collection('stores').doc('barun').collection('products');
 const storeDocument = firestore().collection('stores').doc('barun');
 const categoryCollection = firestore().collection('stores').doc('barun').collection('categories');

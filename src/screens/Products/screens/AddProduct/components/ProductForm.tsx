@@ -3,20 +3,20 @@ import React, { useEffect, useState } from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
-import {
 	ImageLibraryOptions,
 	ImagePickerResponse,
 	launchImageLibrary,
 } from 'react-native-image-picker';
 import { Button, HelperText, TextInput, useTheme } from 'react-native-paper';
+import {
+	heightPercentageToDP as hp,
+	widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import placeholder from '../../../../../../static/placeholder.png';
 import { CategoryType } from '../../../../../interfaces/Category';
 import FormProps from '../../../../../interfaces/FormProps';
 import { ProductType } from '../../../../../interfaces/Product';
 import { getCategories } from '../../../../../services/categoryService';
-import placeholder from '../../../../../../static/placeholder.png';
 
 const ProductForm: React.FC<FormProps<ProductType>> = ({
 	handleBlur,

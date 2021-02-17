@@ -1,5 +1,4 @@
 import firebaseStorage from '@react-native-firebase/storage';
-
 import { ImagePickerResponse } from 'react-native-image-picker';
 import ImageResponse from '../interfaces/ImageResponse';
 

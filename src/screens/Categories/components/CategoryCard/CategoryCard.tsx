@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Card, Title, Paragraph } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { Card, Paragraph, Title } from 'react-native-paper';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 interface CategoryCardProps {

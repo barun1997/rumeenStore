@@ -1,11 +1,10 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { StyleSheet, View, FlatList, ListRenderItem } from 'react-native';
+import { FlatList, ListRenderItem, StyleSheet, View } from 'react-native';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { CategoryType } from '../../../../interfaces/Category';
 import { getCategories } from '../../../../services/categoryService';
 import { CategoryCard } from '../../components/CategoryCard/CategoryCard';
-
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 function CategoriesList(): JSX.Element {
 	const [categories, setCategories] = React.useState<CategoryType[]>([]);

@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, TextInput, useTheme } from 'react-native-paper';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { CategoryType } from '../../../../../interfaces/Category';
 import FormProps from '../../../../../interfaces/FormProps';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 const CategoryForm: React.FC<FormProps<CategoryType>> = ({
 	handleBlur,
 	handleChange,
