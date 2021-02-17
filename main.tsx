@@ -3,7 +3,11 @@ import {
 	NavigationContainer,
 } from '@react-navigation/native';
 import * as React from 'react';
-import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import {
+	Colors,
+	DefaultTheme as PaperDefaultTheme,
+	Provider as PaperProvider,
+} from 'react-native-paper';
 import App from './src/App';
 
 declare global {
@@ -12,6 +16,7 @@ declare global {
 	namespace ReactNativePaper {
 		interface ThemeColors {
 			onPrimary: string;
+			textAlternate: string;
 		}
 	}
 }
@@ -27,6 +32,7 @@ const theme = {
 		onSurface: '#fcfafa',
 		background: '#F1F1F1',
 		onPrimary: 'white',
+		textAlternate: Colors.grey700,
 	},
 };
 

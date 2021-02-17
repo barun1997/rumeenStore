@@ -1,11 +1,24 @@
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { Text, View } from 'react-native';
+import NavigationBar from '../../components/NavigationBar';
+import SettingsList from './screens/SettingsList/SettingsList';
 
+const Stack = createStackNavigator();
 function AccountScreen(): JSX.Element {
 	return (
-		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-			<Text>Account!</Text>
-		</View>
+		<Stack.Navigator
+			initialRouteName="SettingsList"
+			screenOptions={{
+				header: (props) => <NavigationBar {...props} />,
+			}}>
+			<Stack.Screen
+				name="SettingsList"
+				component={SettingsList}
+				options={{
+					title: 'Account',
+				}}
+			/>
+		</Stack.Navigator>
 	);
 }
 
