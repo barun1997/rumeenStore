@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
-import { fieldIncrementByOne } from '../constants/fieldIncrementByOne';
 import { CategoryType } from '../interfaces/Category';
+import { fieldIncrementByOne } from '../utils/firebase/fieldIncrementByOne';
 
 //TODO: Implement for individual stores
 const categoryCollection = firestore().collection('stores').doc('barun').collection('categories');
