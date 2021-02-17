@@ -1,12 +1,16 @@
+import OrderStatus from '../constants/orderStatus';
+
 /* eslint-disable indent */
 function statusToString(statusNumber: number): string {
 	switch (statusNumber) {
-		case 0:
+		case OrderStatus.Pending:
 			return 'Pending';
-		case 1:
+		case OrderStatus.Processing:
 			return 'In process';
-		case 2:
+		case OrderStatus.Finalized:
 			return 'Success';
+		case OrderStatus.Cancelled:
+			return 'Cancelled';
 		default:
 			return 'Unavailable';
 	}
