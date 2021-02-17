@@ -2,13 +2,15 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Divider, Headline, Subheading, useTheme } from 'react-native-paper';
+import { Divider, Subheading, useTheme } from 'react-native-paper';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { OrderType } from '../../../../interfaces/Order';
 import { ProductType } from '../../../../interfaces/Product';
 import { getSingleOrder } from '../../../../services/orderService';
 import { OrderStatus } from '../../components/OrderStatus/OrderStatus';
+import { CustomerInfo } from './components/CustomerInfo/CustomerInfo';
 import ProductListing from './components/ProductListing';
+import TotalOrderInfo from './components/TotalOrderInfo/TotalOrderInfo';
 
 type SingleOrderRouteProp = RouteProp<{ params: { id: string } }, 'params'>;
 
@@ -57,30 +59,9 @@ function SingleOrderScreen(): JSX.Element {
 				))}
 			</View>
 			<Divider />
-			<View>
-				<View style={styles.row}>
-					<Subheading>Item Total</Subheading>
-					<Subheading>Rs {order.total}</Subheading>
-				</View>
-				<View style={styles.row}>
-					<Subheading>Delivery</Subheading>
-					<Subheading>Rs 0</Subheading>
-				</View>
-				<View style={styles.row}>
-					<Headline>Grand Total</Headline>
-					<Headline>Rs {order.total}</Headline>
-				</View>
-			</View>
+			<TotalOrderInfo total={order.total} />
 			<Divider style={styles.divider} />
-			<Subheading>Customer Detail</Subheading>
-			<View style={styles.row}>
-				<Subheading>Name</Subheading>
-				<Subheading>{order.from}</Subheading>
-			</View>
-			<View style={styles.row}>
-				<Subheading>Location</Subheading>
-				<Subheading>{order.location}</Subheading>
-			</View>
+			<CustomerInfo from={order.from} location={order.location} />
 		</ScrollView>
 	);
 }
