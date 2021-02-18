@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { DeliverySetting } from '../../../../interfaces/DeliverySetting';
+import DeliverySettingSchema from '../../../../schemas/DeliverySetting';
 import DeliverySettingForm from './components/DeliverySettingForm';
 
 const initialDeliverySetting: DeliverySetting = {
@@ -13,7 +14,10 @@ function DeliverySettingScreen(): JSX.Element {
 	};
 
 	return (
-		<Formik initialValues={initialDeliverySetting} onSubmit={handleSubmit}>
+		<Formik
+			initialValues={initialDeliverySetting}
+			validationSchema={DeliverySettingSchema}
+			onSubmit={handleSubmit}>
 			{({
 				handleChange,
 				handleBlur,

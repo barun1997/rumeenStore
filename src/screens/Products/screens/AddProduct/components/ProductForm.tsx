@@ -1,20 +1,15 @@
 import { Picker } from '@react-native-picker/picker';
 import React, { useEffect, useState } from 'react';
-import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
-import {
-	ImageLibraryOptions,
-	ImagePickerResponse,
-	launchImageLibrary,
-} from 'react-native-image-picker';
-import { Button, HelperText, TextInput, useTheme } from 'react-native-paper';
+import { StyleSheet, Text, View } from 'react-native';
+import { ImageLibraryOptions, launchImageLibrary } from 'react-native-image-picker';
+import { Button, TextInput, useTheme } from 'react-native-paper';
 import {
 	heightPercentageToDP as hp,
 	widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import placeholder from '../../../../../../static/placeholder.png';
 import { ErrorHelperText } from '../../../../../components/ErrorHelperText/ErrorHelperText';
 import { FormikNumInput } from '../../../../../components/FormikNumInput/FormikNumInput';
+import { ImageInput } from '../../../../../components/ImageInput/ImageInput';
 import { CategoryType } from '../../../../../interfaces/Category';
 import FormProps from '../../../../../interfaces/FormProps';
 import { ProductType } from '../../../../../interfaces/Product';
@@ -34,7 +29,7 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 	const styles = useStyles(colors);
 	const { photo, name, description, category, price } = values;
 
-	const handleChoosePhoto: () => void = () => {
+	const handleChoosePhoto = (): void => {
 		const options: ImageLibraryOptions = {
 			mediaType: 'photo',
 			quality: 1,
@@ -61,19 +56,14 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 
 	return (
 		<View style={styles.container}>
-			<TouchableHighlight style={styles.imageInputView} onPress={() => handleChoosePhoto()}>
-				<>
-					<Image
-						style={styles.image}
-						source={(photo as ImagePickerResponse) ?? (placeholder as ImageSourcePropType)}
-					/>
-					{errors.photo && touched.photo ? (
-						<HelperText type="error">{errors.photo}</HelperText>
-					) : (
-						<HelperText type="info">{photo ? 'Choose an image' : 'Add Product Image'}</HelperText>
-					)}
-				</>
-			</TouchableHighlight>
+			<ImageInput
+				handleChoosePhoto={handleChoosePhoto}
+				photo={photo}
+				error={errors.photo}
+				touched={touched.photo}
+				imageContainerStyle={styles.imageInputView}
+				imageStyle={styles.image}
+			/>
 			<View style={styles.inputForm}>
 				<View style={styles.input}>
 					<TextInput
@@ -84,24 +74,26 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 					/>
 					<ErrorHelperText error={errors.name} touched={touched.name} />
 				</View>
-				<View style={styles.priceInput}>
-					<FormikNumInput
-						style={styles.priceField}
-						inputKey="price"
-						label="Price"
-						value={price}
-						handleBlur={handleBlur}
-						setFieldValue={setFieldValue}
-					/>
-					<Picker
-						prompt="per kg"
-						mode="dialog"
-						style={styles.priceUnitContainer}
-						itemStyle={styles.picker}
-						selectedValue="kg">
-						<Picker.Item label="per kg" value="kg"></Picker.Item>
-						<Picker.Item label="per unit" value="unit"></Picker.Item>
-					</Picker>
+				<View style={styles.input}>
+					<View style={styles.row}>
+						<FormikNumInput
+							style={styles.priceField}
+							inputKey="price"
+							label="Price"
+							value={price}
+							handleBlur={handleBlur}
+							setFieldValue={setFieldValue}
+						/>
+						<Picker
+							prompt="per kg"
+							mode="dialog"
+							style={styles.priceUnitContainer}
+							itemStyle={styles.picker}
+							selectedValue="kg">
+							<Picker.Item label="per kg" value="kg"></Picker.Item>
+							<Picker.Item label="per unit" value="unit"></Picker.Item>
+						</Picker>
+					</View>
 					<ErrorHelperText error={errors.price} touched={touched.price} />
 				</View>
 				<View style={styles.input}>
@@ -155,7 +147,7 @@ const useStyles = (colors: ReactNativePaper.ThemeColors) =>
 		image: { height: '80%', width: '80%' },
 		inputForm: { height: hp('40%'), justifyContent: 'space-around' },
 		input: { height: '17%' },
-		priceInput: { flexDirection: 'row', height: '17%' },
+		row: { flexDirection: 'row' },
 		priceUnitContainer: { width: '35%' },
 		priceField: { width: '65%' },
 		picker: { height: '100%' },
