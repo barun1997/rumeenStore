@@ -1,35 +1,55 @@
-import firestore from '@react-native-firebase/firestore';
+import { CATEGORIES_FIRESTORE } from '../constants/firestoreConstants';
 import { CategoryType } from '../interfaces/Category';
+import { StoreContext } from '../interfaces/StoreSetting';
 import { fieldIncrementByOne } from '../utils/firebase/fieldIncrementByOne';
 
-//TODO: Implement for individual stores
-const categoryCollection = firestore().collection('stores').doc('barun').collection('categories');
-const storeDocument = firestore().collection('stores').doc('barun');
+const addCategory = async (
+	{ storeDocInstance }: StoreContext,
+	category: CategoryType,
+): Promise<CategoryType | undefined> => {
+	try {
+		if (!storeDocInstance) return;
 
-const addCategory = async (category: CategoryType): Promise<boolean> => {
-	const categoryDoc = categoryCollection.doc(category.name);
-	const categoryPresent = (await categoryDoc.get()).data();
+		const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
 
-	if (categoryPresent) throw Error('The category is already present');
+		const categoryDoc = categoryCollection.doc(category.name);
 
-	await categoryCollection.doc(category.name).set(category);
-	await storeDocument.update({
-		categoryCount: fieldIncrementByOne,
-	});
-	return true;
+		const categoryPresent = (await categoryDoc.get()).data();
+
+		if (categoryPresent) throw Error('The category is already present');
+
+		await categoryCollection.doc(category.name).set(category);
+		await storeDocInstance.update({
+			categoryCount: fieldIncrementByOne,
+		});
+		return category;
+	} catch (error) {
+		console.log(error);
+		return;
+	}
 };
 
-const getCategories = async (): Promise<CategoryType[]> => {
-	const result = await categoryCollection.get();
+const getCategories = async ({
+	storeDocInstance,
+}: StoreContext): Promise<CategoryType[] | undefined> => {
+	try {
+		if (!storeDocInstance) return;
+		console.log(storeDocInstance);
+		const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
 
-	const categories = result.docs.map((doc) => {
-		return {
-			id: doc?.id,
-			name: doc.data()?.name as string,
-		} as CategoryType;
-	});
+		const result = await categoryCollection.get();
 
-	return categories;
+		const categories = result.docs.map((doc) => {
+			return {
+				id: doc.id,
+				name: doc.data()?.name as string,
+			} as CategoryType;
+		});
+
+		return categories;
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export { addCategory, getCategories };

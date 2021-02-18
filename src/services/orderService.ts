@@ -1,29 +1,41 @@
-import firestore from '@react-native-firebase/firestore';
+import { ORDERS_FIRESTORE } from '../constants/firestoreConstants';
 import OrderStatus from '../constants/orderStatus';
 import { OrderType } from '../interfaces/Order';
+import { StoreContext } from '../interfaces/StoreSetting';
 
-//TODO: Implement for individual stores
-const orderCollection = firestore().collection('stores').doc('barun').collection('orders');
-
-const addorder = async (order: OrderType): Promise<boolean> => {
-	await orderCollection.add(order);
-	return true;
+const addOrder = async (
+	{ storeDocInstance }: StoreContext,
+	order: OrderType,
+): Promise<OrderType | undefined> => {
+	try {
+		const orderCollection = storeDocInstance?.collection(ORDERS_FIRESTORE);
+		await orderCollection?.add(order);
+		return order;
+	} catch (error) {
+		console.log(error);
+		return;
+	}
 };
 
-const getOrders = async (): Promise<OrderType[]> => {
-	const result = await orderCollection.get();
+const getOrders = async ({ storeDocInstance }: StoreContext): Promise<OrderType[] | undefined> => {
+	try {
+		const orderCollection = storeDocInstance?.collection(ORDERS_FIRESTORE);
+		const result = await orderCollection?.get();
 
-	const orders = result.docs.map((doc) => {
-		return {
-			id: doc.id,
-			from: doc.data().from as string,
-			location: doc.data().location as string,
-			status: doc.data().status as OrderStatus,
-			total: doc.data().total as number,
-		} as OrderType;
-	});
+		const orders = result?.docs.map((doc) => {
+			return {
+				id: doc.id,
+				from: doc.data().from as string,
+				location: doc.data().location as string,
+				status: doc.data().status as OrderStatus,
+				total: doc.data().total as number,
+			} as OrderType;
+		});
 
-	return orders;
+		return orders;
+	} catch (error) {
+		return;
+	}
 };
 
-export { addorder, getOrders };
+export { addOrder, getOrders };

@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
-import React from 'react';
+import React, { useContext } from 'react';
+import StoreSettingsContext from '../../../../contexts/StoreSettingsContext';
 import { CategoryType } from '../../../../interfaces/Category';
 import CategorySchema from '../../../../schemas/Category';
 import { addCategory } from '../../../../services/categoryService';
@@ -12,9 +13,12 @@ const initialCategory: CategoryType = {
 function AddCategoryScreen(): JSX.Element {
 	const navigation = useNavigation();
 
+	const storeContext = useContext(StoreSettingsContext);
+
 	const handleSubmit = async (values: CategoryType) => {
 		try {
-			await addCategory(values);
+			if (!storeContext) return;
+			await addCategory(storeContext, values);
 			navigation.goBack();
 		} catch (error) {
 			console.log(error);
