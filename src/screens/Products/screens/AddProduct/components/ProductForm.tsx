@@ -13,6 +13,8 @@ import {
 	widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import placeholder from '../../../../../../static/placeholder.png';
+import { ErrorHelperText } from '../../../../../components/ErrorHelperText/ErrorHelperText';
+import { FormikNumInput } from '../../../../../components/FormikNumInput/FormikNumInput';
 import { CategoryType } from '../../../../../interfaces/Category';
 import FormProps from '../../../../../interfaces/FormProps';
 import { ProductType } from '../../../../../interfaces/Product';
@@ -80,19 +82,16 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 						label="Product Name"
 						value={name}
 					/>
-					{errors.name && touched.name ? <HelperText type="error">{errors.name}</HelperText> : null}
+					<ErrorHelperText error={errors.name} touched={touched.name} />
 				</View>
 				<View style={styles.priceInput}>
-					<TextInput
+					<FormikNumInput
 						style={styles.priceField}
+						inputKey="price"
 						label="Price"
-						keyboardType="numeric"
-						value={price.toString()}
-						onChangeText={(price) => {
-							if (!price) return setFieldValue('price', '');
-							setFieldValue('price', price);
-						}}
-						onBlur={handleBlur('price')}
+						value={price}
+						handleBlur={handleBlur}
+						setFieldValue={setFieldValue}
 					/>
 					<Picker
 						prompt="per kg"
@@ -103,9 +102,7 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 						<Picker.Item label="per kg" value="kg"></Picker.Item>
 						<Picker.Item label="per unit" value="unit"></Picker.Item>
 					</Picker>
-					{errors.price && touched.price ? (
-						<HelperText type="error">{errors.price}</HelperText>
-					) : null}
+					<ErrorHelperText error={errors.price} touched={touched.price} />
 				</View>
 				<View style={styles.input}>
 					<TextInput
@@ -114,9 +111,7 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 						label="Description"
 						value={description}
 					/>
-					{errors.description && touched.description ? (
-						<HelperText type="error">{errors.description}</HelperText>
-					) : null}
+					<ErrorHelperText error={errors.description} touched={touched.description} />
 				</View>
 				<View style={styles.input}>
 					<Picker
@@ -131,9 +126,7 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 							<Picker.Item key={category.name} label={category.name} value={category.name} />
 						))}
 					</Picker>
-					{errors.category && touched.category ? (
-						<HelperText type="error">{errors.category}</HelperText>
-					) : null}
+					<ErrorHelperText error={errors.category} touched={touched.category} />
 				</View>
 			</View>
 			<View>

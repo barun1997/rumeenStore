@@ -1,7 +1,9 @@
 import React from 'react';
+import { StyleProp, TextStyle } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
 interface FormikNumInputProps {
+	style?: StyleProp<TextStyle>;
 	value: number;
 	inputKey: string;
 	label: string;
@@ -13,6 +15,7 @@ interface FormikNumInputProps {
 }
 
 export const FormikNumInput: React.FC<FormikNumInputProps> = ({
+	style,
 	value,
 	inputKey,
 	label,
@@ -21,6 +24,7 @@ export const FormikNumInput: React.FC<FormikNumInputProps> = ({
 }) => {
 	return (
 		<TextInput
+			style={style}
 			label={label}
 			keyboardType="numeric"
 			value={value.toString()}
