@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import React from 'react';
 import { ImagePickerResponse } from 'react-native-image-picker';
+import useStoreContext from '../../../../hooks/useStoreContext';
 import { ProductType } from '../../../../interfaces/Product';
 import ProductSchema from '../../../../schemas/Product';
 import { uploadCoverImage } from '../../../../services/imageService';
@@ -18,6 +19,7 @@ const initialProduct: ProductType = {
 
 function AddProductScreen(): JSX.Element {
 	const navigation = useNavigation();
+	const storeContext = useStoreContext();
 
 	const handleSubmit = async (values: ProductType): Promise<void> => {
 		try {
@@ -26,13 +28,13 @@ function AddProductScreen(): JSX.Element {
 
 			if (!photo) return;
 
-			const image = await uploadCoverImage(photo as ImagePickerResponse);
+			const image = await uploadCoverImage(storeContext, photo as ImagePickerResponse);
 
 			if (!image?.downloadUrl) return;
 
 			const productToBeUploaded: ProductType = { ...values, photo: image?.downloadUrl };
 
-			await addProduct(productToBeUploaded);
+			await addProduct(storeContext, productToBeUploaded);
 			navigation.goBack();
 		} catch (error) {
 			console.log(error);

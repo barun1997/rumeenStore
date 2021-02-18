@@ -10,6 +10,7 @@ import {
 import { ErrorHelperText } from '../../../../../components/ErrorHelperText/ErrorHelperText';
 import { FormikNumInput } from '../../../../../components/FormikNumInput/FormikNumInput';
 import { ImageInput } from '../../../../../components/ImageInput/ImageInput';
+import useStoreContext from '../../../../../hooks/useStoreContext';
 import { CategoryType } from '../../../../../interfaces/Category';
 import FormProps from '../../../../../interfaces/FormProps';
 import { ProductType } from '../../../../../interfaces/Product';
@@ -28,6 +29,7 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 	const { colors } = useTheme();
 	const styles = useStyles(colors);
 	const { photo, name, description, category, price } = values;
+	const storeContext = useStoreContext();
 
 	const handleChoosePhoto = (): void => {
 		const options: ImageLibraryOptions = {
@@ -47,7 +49,7 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 
 	useEffect(() => {
 		async function fetchCategories() {
-			const categories = await getCategories();
+			const categories = await getCategories(storeContext);
 			if (!categories) return;
 			setCategories(categories);
 		}

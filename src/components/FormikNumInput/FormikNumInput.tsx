@@ -7,7 +7,7 @@ interface FormikNumInputProps {
 	value: number;
 	inputKey: string;
 	label: string;
-	setFieldValue: (field: string, value: unknown, shouldValidate?: boolean | undefined) => void;
+	setFieldValue: (field: string, value: number, shouldValidate?: boolean | undefined) => void;
 	handleBlur: {
 		(e: React.FocusEvent<never>): void;
 		<T = unknown>(fieldOrEvent: T): T extends string ? (e: unknown) => void : void;
@@ -29,8 +29,8 @@ export const FormikNumInput: React.FC<FormikNumInputProps> = ({
 			keyboardType="numeric"
 			value={value.toString()}
 			onChangeText={(value) => {
-				if (!value) return setFieldValue(inputKey, '');
-				setFieldValue(inputKey, value);
+				if (!value) return setFieldValue(inputKey, 0);
+				setFieldValue(inputKey, parseFloat(value));
 			}}
 			onBlur={handleBlur(inputKey)}
 		/>

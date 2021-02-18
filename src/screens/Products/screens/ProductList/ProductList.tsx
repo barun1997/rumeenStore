@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ListRenderItem, StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import useStoreContext from '../../../../hooks/useStoreContext';
 import { ProductType } from '../../../../interfaces/Product';
 import { getProducts } from '../../../../services/productService';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
@@ -10,11 +11,12 @@ import { ProductCard } from '../../components/ProductCard/ProductCard';
 function ProductList(): JSX.Element {
 	const [products, setProducts] = useState<ProductType[]>([]);
 	const isFocused = useIsFocused();
+	const storeContext = useStoreContext();
 
 	useEffect(() => {
 		async function fetchProducts() {
-			const response = await getProducts();
-
+			const response = await getProducts(storeContext);
+			if (!response) return;
 			setProducts(response);
 		}
 		void fetchProducts();
