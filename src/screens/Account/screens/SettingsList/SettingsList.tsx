@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 import { Button, Divider, List, Subheading, useTheme } from 'react-native-paper';
@@ -8,6 +9,7 @@ import { SettingsRow } from './components/SettingsRow/SettingsRow';
 function SettingsList(): JSX.Element {
 	const { colors } = useTheme();
 	const styles = useStyles(colors);
+	const navigation = useNavigation();
 	return (
 		<View style={styles.container}>
 			<View style={styles.row}>
@@ -28,7 +30,7 @@ function SettingsList(): JSX.Element {
 				<List.Subheader>Account Settings</List.Subheader>
 				<SettingsRow
 					title="Delivery charges"
-					handlePress={() => console.log('delivery charges')}
+					handlePress={() => navigation.navigate('DeliverySettings')}
 					leftIcon="moped"
 					right
 				/>
