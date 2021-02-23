@@ -1,3 +1,4 @@
+import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
@@ -5,7 +6,6 @@ import { Button, Divider, List, Subheading, useTheme } from 'react-native-paper'
 import { heightPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import placeholder from '../../../../../../static/placeholder.png';
 import { SettingsRow } from './components/SettingsRow/SettingsRow';
-
 function SettingsList(): JSX.Element {
 	const { colors } = useTheme();
 	const styles = useStyles(colors);
@@ -51,7 +51,7 @@ function SettingsList(): JSX.Element {
 					handlePress={() => console.log('Terms of Service')}
 					leftIcon="file"
 				/>
-				<SettingsRow title="Log out" handlePress={() => console.log('Log out')} leftIcon="logout" />
+				<SettingsRow title="Log out" handlePress={() => auth().signOut()} leftIcon="logout" />
 			</List.Section>
 		</View>
 	);
