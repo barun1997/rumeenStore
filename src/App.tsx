@@ -5,10 +5,8 @@ import {
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import { useGuestOptions, useMainOptions } from './app.options';
-import GuestStack from './screens/Guest/Guest';
-import Initializing from './screens/Initializing';
-import Main from './screens/Main/main';
+import { useAuthNavigatorOptions } from './app.options';
+import AuthNavigator from './screens/AuthNavigator';
 
 declare global {
 	//TODO: Find a better solution to this lint error
@@ -39,15 +37,16 @@ const theme = {
 const Stack = createStackNavigator();
 
 const App: React.FC<Record<string, never>> = () => {
-	const mainOptions = useMainOptions();
-	const guestOptions = useGuestOptions();
+	const authNavigatorOptions = useAuthNavigatorOptions();
 	return (
 		<PaperProvider theme={theme}>
 			<NavigationContainer theme={theme}>
 				<Stack.Navigator>
-					<Stack.Screen name="Initializing" component={Initializing} options={mainOptions} />
-					<Stack.Screen name="Guest" component={GuestStack} options={guestOptions} />
-					<Stack.Screen name="Main" component={Main} options={mainOptions} />
+					<Stack.Screen
+						name="AuthNavigator"
+						component={AuthNavigator}
+						options={authNavigatorOptions}
+					/>
 				</Stack.Navigator>
 			</NavigationContainer>
 		</PaperProvider>
