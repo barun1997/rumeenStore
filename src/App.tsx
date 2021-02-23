@@ -1,43 +1,51 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React from 'react';
-import Config from 'react-native-config';
-import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AccountScreen from './screens/Main/Account';
-import CategoriesScreen from './screens/Main/Categories';
-import HomeScreen from './screens/Main/Home';
-import OrdersScreen from './screens/Main/Orders';
-import ProductsScreen from './screens/Main/Products';
-const Tab = createBottomTabNavigator();
+import {
+	DefaultTheme as NavigationDefaultTheme,
+	NavigationContainer,
+} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import * as React from 'react';
+import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { useMainOptions } from './app.options';
+import Main from './screens/Main/main';
+
+declare global {
+	//TODO: Find a better solution to this lint error
+	// eslint-disable-next-line @typescript-eslint/no-namespace
+	namespace ReactNativePaper {
+		interface ThemeColors {
+			onPrimary: string;
+			textAlternate: string;
+		}
+	}
+}
+const theme = {
+	...PaperDefaultTheme,
+	...NavigationDefaultTheme,
+	colors: {
+		...PaperDefaultTheme.colors,
+		...NavigationDefaultTheme.colors,
+		primary: 'teal',
+		accent: 'yellow',
+		surface: 'white',
+		onSurface: '#fcfafa',
+		background: '#F1F1F1',
+		onPrimary: 'white',
+		textAlternate: 'grey',
+	},
+};
+
+const Stack = createStackNavigator();
 
 const App: React.FC<Record<string, never>> = () => {
-	console.log(Config.ENVIRONMENT);
-
+	const mainOptions = useMainOptions();
 	return (
-		<Tab.Navigator
-			screenOptions={({ route }) => ({
-				tabBarIcon: ({ focused, color, size }) => {
-					let iconName;
-					//TODO: refactor this code
-					if (route.name === 'Home') {
-						iconName = focused ? 'home-variant' : 'home-variant-outline';
-					} else if (route.name === 'Orders') {
-						iconName = focused ? 'ballot' : 'ballot-outline';
-					} else if (route.name === 'Products') {
-						iconName = focused ? 'shape' : 'shape-outline';
-					} else if (route.name === 'Categories') {
-						iconName = focused ? 'rhombus-split' : 'rhombus-split-outline';
-					} else if (route.name === 'Account') {
-						iconName = focused ? 'account' : 'account-outline';
-					}
-					return <MaterialIcons name={iconName as string} size={size} color={color} />;
-				},
-			})}>
-			<Tab.Screen name="Home" component={HomeScreen} />
-			<Tab.Screen name="Orders" component={OrdersScreen} />
-			<Tab.Screen name="Products" component={ProductsScreen} />
-			<Tab.Screen name="Categories" component={CategoriesScreen} />
-			<Tab.Screen name="Account" component={AccountScreen} />
-		</Tab.Navigator>
+		<PaperProvider theme={theme}>
+			<NavigationContainer theme={theme}>
+				<Stack.Navigator>
+					<Stack.Screen name="Main" component={Main} options={mainOptions} />
+				</Stack.Navigator>
+			</NavigationContainer>
+		</PaperProvider>
 	);
 };
 
