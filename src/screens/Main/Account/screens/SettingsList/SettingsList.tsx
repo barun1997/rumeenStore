@@ -3,7 +3,7 @@ import React from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 import { Button, Divider, List, Subheading, useTheme } from 'react-native-paper';
 import { heightPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import placeholder from '../../../../../static/placeholder.png';
+import placeholder from '../../../../../../static/placeholder.png';
 import { SettingsRow } from './components/SettingsRow/SettingsRow';
 
 function SettingsList(): JSX.Element {

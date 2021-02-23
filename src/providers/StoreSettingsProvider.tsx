@@ -27,6 +27,8 @@ export const StoreSettingsProvider: React.FC = ({ children }) => {
 		void getStoreSettings();
 	}, []);
 
+	if (!storeSetting) return null;
+
 	return (
 		<StoreSettingsContext.Provider value={{ ...storeSetting }}>
 			{children}
