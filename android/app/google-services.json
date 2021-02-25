@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "99032798312",
+    "project_id": "rumeen-dev",
+    "storage_bucket": "rumeen-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99032798312:android:b405dc93ea55bd1752d7dd",
+        "android_client_info": {
+          "package_name": "com.rumeenstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99032798312-3de5ealmpo3m5kg2gin8fsogtu55cbnj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTIaqnMoeGC_aVMFriqQZn0d8PlearQBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99032798312-3de5ealmpo3m5kg2gin8fsogtu55cbnj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "99032798312-omom5ok9a6gsmb8rg3fr4bvesc2ol5gg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.RumeenStore.development"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
