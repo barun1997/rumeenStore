@@ -9,7 +9,7 @@ interface OrderStatusProps {
 	status: OrderStatus;
 }
 
-export const OrderStatusComp: React.FC<OrderStatusProps> = ({ status }) => {
+const OrderStatusComp: React.FC<OrderStatusProps> = ({ status }) => {
 	return (
 		<View style={styles.statusView}>
 			<MaterialCommunityIcon name="circle" color={colorByStatus[status]} />
@@ -17,6 +17,8 @@ export const OrderStatusComp: React.FC<OrderStatusProps> = ({ status }) => {
 		</View>
 	);
 };
+
+export default OrderStatusComp;
 
 const styles = StyleSheet.create({
 	statusView: {

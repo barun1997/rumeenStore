@@ -17,6 +17,22 @@ const addOrder = async (
 	}
 };
 
+const getSingleOrder = async (
+	{ storeDocInstance }: StoreContext,
+	id: string,
+): Promise<OrderType | undefined> => {
+	try {
+		const orderCollection = storeDocInstance?.collection(ORDERS_FIRESTORE);
+		const result = await orderCollection?.doc(id).get();
+
+		const order = result?.data() as OrderType;
+		console.log(order);
+		return order;
+	} catch (error) {
+		return;
+	}
+};
+
 const getOrders = async ({ storeDocInstance }: StoreContext): Promise<OrderType[] | undefined> => {
 	try {
 		const orderCollection = storeDocInstance?.collection(ORDERS_FIRESTORE);
@@ -38,4 +54,4 @@ const getOrders = async ({ storeDocInstance }: StoreContext): Promise<OrderType[
 	}
 };
 
-export { addOrder, getOrders };
+export { addOrder, getOrders, getSingleOrder };
