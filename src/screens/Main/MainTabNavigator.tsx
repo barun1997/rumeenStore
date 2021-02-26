@@ -5,7 +5,7 @@ import { StoreSettingsProvider } from '../../providers/StoreSettingsProvider';
 import AccountScreen from './Account';
 import CategoriesScreen from './Categories';
 import HomeScreen from './Home';
-import OrdersScreen from './Orders/screens/OrdersList/OrdersList';
+import Orders from './Orders';
 import ProductsScreen from './Products';
 
 interface MainTabNavigatorProps {
@@ -36,7 +36,7 @@ export const MainTabNavigator: React.FC<MainTabNavigatorProps> = ({ storeName })
 					},
 				})}>
 				<Tab.Screen name="Home" component={HomeScreen} />
-				<Tab.Screen name="Orders" component={OrdersScreen} />
+				<Tab.Screen name="Orders" component={Orders} />
 				<Tab.Screen name="Products" component={ProductsScreen} />
 				<Tab.Screen name="Categories" component={CategoriesScreen} />
 				<Tab.Screen name="Account" component={AccountScreen} />
