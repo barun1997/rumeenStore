@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { STORE_NAME_STORAGE } from '../../constants/storageConstants';
 import { getStoreDetailFromUser } from '../../services/userService';
 import { CreateNewStore } from './CreateNewStore/CreateNewStore';
+import Loading from './Loading';
 import { MainTabNavigator } from './MainTabNavigator';
 
 const Main: React.FC<Record<string, never>> = () => {
@@ -19,6 +20,7 @@ const Main: React.FC<Record<string, never>> = () => {
 
 			if (storePresentInLocal) {
 				setInitializing(false);
+				setStoreSuccess(true);
 				return setStoreName(storePresentInLocal);
 			}
 
@@ -38,7 +40,7 @@ const Main: React.FC<Record<string, never>> = () => {
 		void fetchAndSetStoreId();
 	}, []);
 
-	if (initializing) return null;
+	if (initializing) return <Loading />;
 
 	if (storeName && storeSuccess) return <MainTabNavigator storeName={storeName} />;
 	else
