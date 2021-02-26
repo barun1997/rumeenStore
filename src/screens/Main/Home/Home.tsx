@@ -1,15 +1,26 @@
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
+import NavigationBar from '../../../components/NavigationBar';
+import Dashboard from './screens/Dashboard';
+
+const Stack = createStackNavigator();
 
 function HomeScreen(): JSX.Element {
 	return (
-		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-			<Text>Home!</Text>
-			<Button icon="camera" mode="contained">
-				helo
-			</Button>
-		</View>
+		<Stack.Navigator
+			initialRouteName="Dashboard"
+			screenOptions={{
+				headerStatusBarHeight: 100,
+				header: (props) => <NavigationBar {...props} />,
+			}}>
+			<Stack.Screen
+				name="Dashboard"
+				component={Dashboard}
+				options={{
+					title: 'Rumeen',
+				}}
+			/>
+		</Stack.Navigator>
 	);
 }
 

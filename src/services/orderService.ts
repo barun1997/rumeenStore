@@ -1,6 +1,7 @@
 import { ORDERS_FIRESTORE } from '../constants/firestoreConstants';
 import OrderStatus from '../constants/orderStatus';
 import { OrderType } from '../interfaces/Order';
+import { ProductType } from '../interfaces/Product';
 import { StoreContext } from '../interfaces/StoreSetting';
 
 const addOrder = async (
@@ -45,6 +46,7 @@ const getOrders = async ({ storeDocInstance }: StoreContext): Promise<OrderType[
 				location: doc.data().location as string,
 				status: doc.data().status as OrderStatus,
 				total: doc.data().total as number,
+				products: doc.data().products as ProductType[],
 			} as OrderType;
 		});
 

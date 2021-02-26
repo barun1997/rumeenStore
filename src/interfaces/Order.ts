@@ -7,5 +7,6 @@ export interface OrderType {
 	location: string;
 	status: OrderStatus;
 	total: number;
+	orderCreated: string;
 	products: ProductType[];
 }
