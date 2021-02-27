@@ -4,34 +4,17 @@ import { OrderType } from '../interfaces/Order';
 import { ProductType } from '../interfaces/Product';
 import { StoreContext } from '../interfaces/StoreSetting';
 
-const addOrder = async (
-	{ storeDocInstance }: StoreContext,
-	order: OrderType,
-): Promise<OrderType | undefined> => {
-	try {
-		const orderCollection = storeDocInstance?.collection(ORDERS_FIRESTORE);
-		await orderCollection?.add(order);
-		return order;
-	} catch (error) {
-		console.log(error);
-		return;
-	}
-};
-
 const getSingleOrder = async (
 	{ storeDocInstance }: StoreContext,
 	id: string,
-): Promise<OrderType | undefined> => {
-	try {
-		const orderCollection = storeDocInstance?.collection(ORDERS_FIRESTORE);
-		const result = await orderCollection?.doc(id).get();
+): Promise<OrderType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
 
-		const order = result?.data() as OrderType;
-		console.log(order);
-		return order;
-	} catch (error) {
-		return;
-	}
+	const orderCollection = storeDocInstance.collection(ORDERS_FIRESTORE);
+	const result = await orderCollection.doc(id).get();
+
+	const order = result.data() as OrderType;
+	return order;
 };
 
 const getOrders = async ({ storeDocInstance }: StoreContext): Promise<OrderType[]> => {
@@ -68,4 +51,4 @@ const updateOrder = async (
 	return order;
 };
 
-export { addOrder, getOrders, getSingleOrder, updateOrder };
+export { getOrders, getSingleOrder, updateOrder };

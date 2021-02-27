@@ -1,12 +1,15 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Divider, Subheading, useTheme } from 'react-native-paper';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
+import { useQueryClient } from 'react-query';
+import { OrderStatusButtons } from '../../../../../components/OrderStatusButtons/OrderStatusButtons';
+import OrderStatus from '../../../../../constants/orderStatus';
+import { useUpdateOrderMutation } from '../../../../../hooks/mutations';
+import { useSingleOrder } from '../../../../../hooks/queries';
 import useStoreContext from '../../../../../hooks/useStoreContext';
-import { OrderType } from '../../../../../interfaces/Order';
-import { getSingleOrder } from '../../../../../services/orderService';
 import OrderStatusComp from '../../components/OrderStatus/OrderStatus';
 import { CustomerInfo } from './components/CustomerInfo/CustomerInfo';
 import ProductListing from './components/ProductListing';
@@ -15,29 +18,20 @@ import TotalOrderInfo from './components/TotalOrderInfo/TotalOrderInfo';
 type SingleOrderRouteProp = RouteProp<{ params: { id: string } }, 'params'>;
 
 function SingleOrderScreen(): JSX.Element {
-	const [order, setOrder] = React.useState<OrderType>();
+	const storeContext = useStoreContext();
+	const queryClient = useQueryClient();
+
+	const { params } = useRoute<SingleOrderRouteProp>();
+
+	const { ...queryInfo } = useSingleOrder(params.id, storeContext);
+
+	const mutation = useUpdateOrderMutation(storeContext, queryClient);
+
+	const order = queryInfo.isSuccess ? queryInfo.data : null;
+
 	const { colors } = useTheme();
 
 	const styles = useStyles(colors);
-
-	const { params } = useRoute<SingleOrderRouteProp>();
-	const storeContext = useStoreContext();
-
-	useEffect(() => {
-		async function fetchOrder() {
-			if (!params.id) return;
-			try {
-				const response = await getSingleOrder(storeContext, params?.id);
-
-				if (!response) return;
-
-				setOrder(response);
-			} catch (error) {
-				console.log(error);
-			}
-		}
-		void fetchOrder();
-	}, [params.id]);
 
 	if (!order)
 		return (
@@ -45,25 +39,36 @@ function SingleOrderScreen(): JSX.Element {
 				<Text>Cannot seem to fetch that order</Text>
 			</View>
 		);
-	return (
-		<ScrollView contentContainerStyle={styles.container}>
-			<View style={styles.row}>
-				<Subheading>Order Id #1</Subheading>
-				<OrderStatusComp status={order.status} />
-			</View>
-			<Divider />
 
-			<View style={styles.listOfItems}>
-				<Text>{order.products.length} items</Text>
-				{order.products.map((product) => (
-					<ProductListing key={product.id} product={product} />
-				))}
-			</View>
-			<Divider />
-			<TotalOrderInfo total={order.total} />
-			<Divider style={styles.divider} />
-			<CustomerInfo from={order.from} location={order.location} />
-		</ScrollView>
+	const handleStatusChange = (status: OrderStatus) => {
+		mutation.mutate({
+			...order,
+			status: status,
+		});
+	};
+
+	return (
+		<View>
+			<ScrollView contentContainerStyle={styles.container}>
+				<View style={styles.row}>
+					<Subheading>Order Id #1</Subheading>
+					<OrderStatusComp status={order.status} />
+				</View>
+				<Divider />
+
+				<View style={styles.listOfItems}>
+					<Text>{order.products.length} items</Text>
+					{order.products.map((product) => (
+						<ProductListing key={product.id} product={product} />
+					))}
+				</View>
+				<Divider />
+				<TotalOrderInfo total={order.total} />
+				<Divider style={styles.divider} />
+				<CustomerInfo from={order.from} location={order.location} />
+				<OrderStatusButtons status={order.status} handleStatusChange={handleStatusChange} />
+			</ScrollView>
+		</View>
 	);
 }
 
@@ -74,6 +79,7 @@ const useStyles = (colors: ReactNativePaper.ThemeColors) =>
 			justifyContent: 'space-evenly',
 			flexDirection: 'column',
 			backgroundColor: colors.surface,
+			height: heightPercentageToDP('80%'),
 		},
 		listOfItems: {
 			marginVertical: heightPercentageToDP('5%'),
