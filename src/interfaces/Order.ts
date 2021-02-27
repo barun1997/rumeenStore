@@ -10,3 +10,7 @@ export interface OrderType {
 	orderCreated: string;
 	products: ProductType[];
 }
+
+export interface Orders {
+	[id: string]: OrderType;
+}

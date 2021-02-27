@@ -6,13 +6,10 @@ import { OrderDashboardCard } from '../OrderDashboardCard/OrderDashboardCard';
 
 interface OrderDashboardListProps {
 	orders: OrderType[];
-	setOrders: React.Dispatch<React.SetStateAction<OrderType[]>>;
 }
 
-export const OrderDashboardList: React.FC<OrderDashboardListProps> = ({ orders, setOrders }) => {
-	const renderItem: ListRenderItem<OrderType> = ({ item }) => (
-		<OrderDashboardCard order={item} setOrders={setOrders} />
-	);
+export const OrderDashboardList: React.FC<OrderDashboardListProps> = ({ orders }) => {
+	const renderItem: ListRenderItem<OrderType> = ({ item }) => <OrderDashboardCard order={item} />;
 
 	return <FlatList data={orders} renderItem={renderItem} keyExtractor={(item) => item.id} />;
 };
