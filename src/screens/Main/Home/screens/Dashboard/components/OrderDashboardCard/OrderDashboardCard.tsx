@@ -2,11 +2,11 @@ import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Card, Paragraph, Subheading, useTheme } from 'react-native-paper';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { OrderStatusButtons } from '../../../../../components/OrderStatusButtons/OrderStatusButtons';
-import OrderStatus from '../../../../../constants/orderStatus';
-import useStoreContext from '../../../../../hooks/useStoreContext';
-import { OrderType } from '../../../../../interfaces/Order';
-import { updateOrder } from '../../../../../services/orderService';
+import { OrderStatusButtons } from '../../../../../../../components/OrderStatusButtons/OrderStatusButtons';
+import OrderStatus from '../../../../../../../constants/orderStatus';
+import useStoreContext from '../../../../../../../hooks/useStoreContext';
+import { OrderType } from '../../../../../../../interfaces/Order';
+import { updateOrder } from '../../../../../../../services/orderService';
 
 interface OrderDashboardCardProps {
 	order: OrderType;
