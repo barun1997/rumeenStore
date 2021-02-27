@@ -17,6 +17,7 @@ function Dashboard(): JSX.Element {
 	const storeContext = useStoreContext();
 
 	const [orders, setOrders] = useState<OrderType[]>([]);
+
 	useEffect(() => {
 		const fetchOrders = async () => {
 			const response = await getOrders(storeContext);
@@ -56,15 +57,9 @@ function Dashboard(): JSX.Element {
 						))}
 					</ScrollView>
 					{orders ? (
-						orders.map(({ from, id, total, orderCreated, products }) => (
-							<View key={id}>
-								<OrderDashboardCard
-									imageSource={products[0].photo as string}
-									price={total.toString()}
-									quantity={products.length}
-									orderCreated={orderCreated}
-									title={from}
-								/>
+						orders.map((order) => (
+							<View key={order.id}>
+								<OrderDashboardCard order={order} />
 							</View>
 						))
 					) : (
