@@ -27,6 +27,7 @@ function Dashboard(): JSX.Element {
 		};
 		void fetchOrders();
 	}, []);
+
 	return (
 		<SafeAreaView>
 			<ScrollView>
@@ -59,7 +60,7 @@ function Dashboard(): JSX.Element {
 					{orders ? (
 						orders.map((order) => (
 							<View key={order.id}>
-								<OrderDashboardCard order={order} />
+								<OrderDashboardCard order={order} setOrders={setOrders} />
 							</View>
 						))
 					) : (

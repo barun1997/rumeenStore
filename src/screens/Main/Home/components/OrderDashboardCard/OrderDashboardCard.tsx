@@ -10,9 +10,10 @@ import { updateOrder } from '../../../../../services/orderService';
 
 interface OrderDashboardCardProps {
 	order: OrderType;
+	setOrders: React.Dispatch<React.SetStateAction<OrderType[]>>;
 }
 
-export const OrderDashboardCard: React.FC<OrderDashboardCardProps> = ({ order }) => {
+export const OrderDashboardCard: React.FC<OrderDashboardCardProps> = ({ order, setOrders }) => {
 	const { total, products, status, orderCreated, from } = order;
 	const [title, quantity, imageSource, price] = [
 		from,
@@ -30,6 +31,17 @@ export const OrderDashboardCard: React.FC<OrderDashboardCardProps> = ({ order })
 				...order,
 				status: status,
 			});
+			setOrders((prevOrders) =>
+				prevOrders.map((prevOrder) => {
+					if (prevOrder.id === order.id)
+						return {
+							...prevOrder,
+							status: status,
+						};
+
+					return prevOrder;
+				}),
+			);
 		} catch (error) {
 			console.log(error);
 		}
