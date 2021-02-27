@@ -1,3 +1,3 @@
 const ORDERS_QUERY = 'ordersData';
-
-export { ORDERS_QUERY };
+const SINGLE_ORDER_QUERY = 'singleOrderData';
+export { ORDERS_QUERY, SINGLE_ORDER_QUERY };
