@@ -56,4 +56,20 @@ const getOrders = async ({ storeDocInstance }: StoreContext): Promise<OrderType[
 	}
 };
 
-export { addOrder, getOrders, getSingleOrder };
+const updateOrder = async (
+	{ storeDocInstance }: StoreContext,
+	order: OrderType,
+): Promise<OrderType | undefined> => {
+	try {
+		const orderCollection = storeDocInstance?.collection(ORDERS_FIRESTORE);
+
+		await orderCollection?.doc(order.id).update({
+			...order,
+		});
+		return order;
+	} catch (error) {
+		return;
+	}
+};
+
+export { addOrder, getOrders, getSingleOrder, updateOrder };

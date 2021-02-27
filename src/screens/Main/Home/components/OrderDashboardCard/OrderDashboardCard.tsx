@@ -1,25 +1,40 @@
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import { Button, Card, Paragraph, Subheading, useTheme } from 'react-native-paper';
+import { Card, Paragraph, Subheading, useTheme } from 'react-native-paper';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { OrderStatusButtons } from '../../../../../components/OrderStatusButtons/OrderStatusButtons';
+import OrderStatus from '../../../../../constants/orderStatus';
+import useStoreContext from '../../../../../hooks/useStoreContext';
+import { OrderType } from '../../../../../interfaces/Order';
+import { updateOrder } from '../../../../../services/orderService';
 
 interface OrderDashboardCardProps {
-	title: string;
-	price: string;
-	quantity: number;
-	orderCreated: string;
-	imageSource: string;
+	order: OrderType;
 }
 
-export const OrderDashboardCard: React.FC<OrderDashboardCardProps> = ({
-	imageSource,
-	title,
-	price,
-	quantity,
-	orderCreated,
-}) => {
+export const OrderDashboardCard: React.FC<OrderDashboardCardProps> = ({ order }) => {
+	const { total, products, status, orderCreated, from } = order;
+	const [title, quantity, imageSource, price] = [
+		from,
+		products.length,
+		products[0].photo as string,
+		total,
+	];
 	const { colors } = useTheme();
 	const styles = getStyles(colors);
+	const storeContext = useStoreContext();
+
+	const handleOrderStatusChange = async (status: OrderStatus) => {
+		try {
+			await updateOrder(storeContext, {
+				...order,
+				status: status,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<Card style={styles.container}>
 			<View style={styles.contentAlignment}>
@@ -34,14 +49,7 @@ export const OrderDashboardCard: React.FC<OrderDashboardCardProps> = ({
 						<Paragraph>{orderCreated}</Paragraph>
 					</View>
 				</View>
-				<View style={styles.rowView}>
-					<Button mode="outlined" onPress={() => console.log('cancel')}>
-						Cancel Order
-					</Button>
-					<Button mode="contained" onPress={() => console.log('Ship')}>
-						Ship Order
-					</Button>
-				</View>
+				<OrderStatusButtons status={status} handleStatusChange={handleOrderStatusChange} />
 			</View>
 		</Card>
 	);
