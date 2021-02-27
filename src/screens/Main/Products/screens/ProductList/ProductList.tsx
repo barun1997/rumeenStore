@@ -1,25 +1,17 @@
-import { useIsFocused } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FlatList, ListRenderItem, StyleSheet, View } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { useProducts } from '../../../../../hooks/queries';
 import useStoreContext from '../../../../../hooks/useStoreContext';
 import { ProductType } from '../../../../../interfaces/Product';
-import { getProducts } from '../../../../../services/productService';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 
 function ProductList(): JSX.Element {
-	const [products, setProducts] = useState<ProductType[]>([]);
-	const isFocused = useIsFocused();
 	const storeContext = useStoreContext();
 
-	useEffect(() => {
-		async function fetchProducts() {
-			const response = await getProducts(storeContext);
-			if (!response) return;
-			setProducts(response);
-		}
-		void fetchProducts();
-	}, [isFocused]);
+	const { ...queryInfo } = useProducts(storeContext);
+
+	const products = queryInfo.isSuccess ? queryInfo.data : [];
 
 	const renderItem: ListRenderItem<ProductType> = ({ item: { name, photo, price } }) => (
 		<ProductCard
