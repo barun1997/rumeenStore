@@ -34,42 +34,38 @@ const getSingleOrder = async (
 	}
 };
 
-const getOrders = async ({ storeDocInstance }: StoreContext): Promise<OrderType[] | undefined> => {
-	try {
-		const orderCollection = storeDocInstance?.collection(ORDERS_FIRESTORE);
-		const result = await orderCollection?.get();
+const getOrders = async ({ storeDocInstance }: StoreContext): Promise<OrderType[]> => {
+	if (!storeDocInstance) throw Error('Store is not present');
 
-		const orders = result?.docs.map((doc) => {
-			return {
-				id: doc.id,
-				from: doc.data().from as string,
-				location: doc.data().location as string,
-				status: doc.data().status as OrderStatus,
-				total: doc.data().total as number,
-				products: doc.data().products as ProductType[],
-			} as OrderType;
-		});
+	const orderCollection = storeDocInstance.collection(ORDERS_FIRESTORE);
+	const result = await orderCollection.get();
 
-		return orders;
-	} catch (error) {
-		return;
-	}
+	const orders = result.docs.map((doc) => {
+		return {
+			id: doc.id,
+			from: doc.data().from as string,
+			location: doc.data().location as string,
+			status: doc.data().status as OrderStatus,
+			total: doc.data().total as number,
+			products: doc.data().products as ProductType[],
+		} as OrderType;
+	});
+
+	return orders;
 };
 
 const updateOrder = async (
 	{ storeDocInstance }: StoreContext,
 	order: OrderType,
-): Promise<OrderType | undefined> => {
-	try {
-		const orderCollection = storeDocInstance?.collection(ORDERS_FIRESTORE);
+): Promise<OrderType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
 
-		await orderCollection?.doc(order.id).update({
-			...order,
-		});
-		return order;
-	} catch (error) {
-		return;
-	}
+	const orderCollection = storeDocInstance.collection(ORDERS_FIRESTORE);
+
+	await orderCollection.doc(order.id).update({
+		...order,
+	});
+	return order;
 };
 
 export { addOrder, getOrders, getSingleOrder, updateOrder };

@@ -3,17 +3,21 @@ import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Chip, Subheading, Title } from 'react-native-paper';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { OrderType } from '../../../../../../../interfaces/Order';
+import { getValuesForEnum } from '../../../../../../../constants/getValuesForEnum';
+import OrderStatus from '../../../../../../../constants/orderStatus';
+import { useOrders } from '../../../../../../../hooks/queries';
+import useStoreContext from '../../../../../../../hooks/useStoreContext';
 import { NoOrders } from '../NoOrders/NoOrders';
 import { OrderDashboardList } from '../OrderDashboardList/OrderDashboardList';
 
-interface ActiveOrdersProps {
-	orders: OrderType[];
-	orderStatuses: string[];
-	setOrders: React.Dispatch<React.SetStateAction<OrderType[]>>;
-}
+export const ActiveOrders: React.FC<Record<string, never>> = () => {
+	const storeContext = useStoreContext();
+	const orderStatuses = getValuesForEnum(OrderStatus);
 
-export const ActiveOrders: React.FC<ActiveOrdersProps> = ({ orderStatuses, orders, setOrders }) => {
+	const { ...queryInfo } = useOrders(storeContext);
+
+	const orders = queryInfo.isSuccess ? queryInfo.data : [];
+
 	return (
 		<View style={styles.activeOrdersContainer}>
 			<View style={styles.row}>
@@ -27,7 +31,7 @@ export const ActiveOrders: React.FC<ActiveOrdersProps> = ({ orderStatuses, order
 					</Chip>
 				))}
 			</ScrollView>
-			{orders ? <OrderDashboardList orders={orders} setOrders={setOrders} /> : <NoOrders />}
+			{orders ? <OrderDashboardList orders={orders} /> : <NoOrders />}
 		</View>
 	);
 };

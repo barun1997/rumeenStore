@@ -38,6 +38,7 @@
 		"react-native-screens": "^2.17.1",
 		"react-native-text-input-mask": "^2.0.1",
 		"react-native-vector-icons": "^8.0.0",
+		"react-query": "^3.12.0",
 		"yup": "^0.32.8"
 	},
 	"devDependencies": {
