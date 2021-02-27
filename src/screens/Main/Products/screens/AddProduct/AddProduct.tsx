@@ -2,11 +2,12 @@ import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import React from 'react';
 import { ImagePickerResponse } from 'react-native-image-picker';
+import { useQueryClient } from 'react-query';
+import { useAddProductMutation } from '../../../../../hooks/mutations';
 import useStoreContext from '../../../../../hooks/useStoreContext';
 import { ProductType } from '../../../../../interfaces/Product';
 import ProductSchema from '../../../../../schemas/Product';
 import { uploadCoverImage } from '../../../../../services/imageService';
-import { addProduct } from '../../../../../services/productService';
 import ProductForm from './components/ProductForm';
 
 const initialProduct: ProductType = {
@@ -20,25 +21,22 @@ const initialProduct: ProductType = {
 function AddProductScreen(): JSX.Element {
 	const navigation = useNavigation();
 	const storeContext = useStoreContext();
+	const queryClient = useQueryClient();
+
+	const mutation = useAddProductMutation(storeContext, queryClient);
 
 	const handleSubmit = async (values: ProductType): Promise<void> => {
-		try {
-			console.log(values);
-			const { photo } = values;
+		const { photo } = values;
 
-			if (!photo) return;
+		const image = await uploadCoverImage(storeContext, photo as ImagePickerResponse);
 
-			const image = await uploadCoverImage(storeContext, photo as ImagePickerResponse);
+		if (!image?.downloadUrl) return;
 
-			if (!image?.downloadUrl) return;
+		const productToBeUploaded: ProductType = { ...values, photo: image?.downloadUrl };
 
-			const productToBeUploaded: ProductType = { ...values, photo: image?.downloadUrl };
+		await mutation.mutateAsync(productToBeUploaded);
 
-			await addProduct(storeContext, productToBeUploaded);
-			navigation.goBack();
-		} catch (error) {
-			console.log(error);
-		}
+		navigation.goBack();
 	};
 	return (
 		<Formik initialValues={initialProduct} validationSchema={ProductSchema} onSubmit={handleSubmit}>
