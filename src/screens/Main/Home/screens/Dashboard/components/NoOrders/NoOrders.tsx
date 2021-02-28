@@ -1,22 +1,30 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { Card, Subheading } from 'react-native-paper';
+import { getValuesForEnum } from '../../../../../../../constants/getValuesForEnum';
+import OrderStatus from '../../../../../../../constants/orderStatus';
 
 interface NoOrdersProps {
 	style?: StyleProp<ViewStyle>;
+	status?: OrderStatus;
 }
 
-export const NoOrders: React.FC<NoOrdersProps> = ({ style }) => {
+export const NoOrders: React.FC<NoOrdersProps> = ({ style, status }) => {
 	return (
 		<Card
 			style={
 				style ?? {
-					height: 170,
+					marginVertical: 20,
+					height: 150,
+					flexDirection: 'column',
+					alignContent: 'center',
 					alignItems: 'center',
-					justifyContent: 'center',
 				}
 			}>
-			<Subheading> You donot have any active orders right now </Subheading>
+			<Subheading>
+				You donot have any {status !== undefined ? getValuesForEnum(OrderStatus)[status] : null}{' '}
+				orders right now
+			</Subheading>
 		</Card>
 	);
 };
