@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Chip, Subheading, Title } from 'react-native-paper';
@@ -14,7 +14,9 @@ export const ActiveOrders: React.FC<Record<string, never>> = () => {
 	const storeContext = useStoreContext();
 	const orderStatuses = getValuesForEnum(OrderStatus);
 
-	const { ...queryInfo } = useOrders(storeContext);
+	const [statusFilter, setStatusFilter] = useState(OrderStatus.Pending);
+
+	const { ...queryInfo } = useOrders(storeContext, statusFilter);
 
 	const orders = queryInfo.isSuccess ? queryInfo.data : [];
 
@@ -25,13 +27,21 @@ export const ActiveOrders: React.FC<Record<string, never>> = () => {
 				<Subheading>View All</Subheading>
 			</View>
 			<ScrollView horizontal contentContainerStyle={styles.chipRow}>
-				{orderStatuses.map((orderStatus) => (
-					<Chip key={orderStatus} style={{ marginHorizontal: 2 }}>
+				{orderStatuses.map((orderStatus, index) => (
+					<Chip
+						selected={statusFilter === index}
+						key={orderStatus}
+						style={{ marginHorizontal: 2 }}
+						onPress={() => setStatusFilter(index)}>
 						{orderStatus}
 					</Chip>
 				))}
 			</ScrollView>
-			{orders ? <OrderDashboardList orders={orders} /> : <NoOrders />}
+			{orders.length > 0 ? (
+				<OrderDashboardList orders={orders} />
+			) : (
+				<NoOrders status={statusFilter} />
+			)}
 		</View>
 	);
 };
@@ -52,6 +62,6 @@ const styles = StyleSheet.create({
 		padding: '5%',
 		flexDirection: 'column',
 		justifyContent: 'space-between',
-		minHeight: heightPercentageToDP('35%'),
+		minHeight: heightPercentageToDP('15%'),
 	},
 });

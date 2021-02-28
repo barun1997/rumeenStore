@@ -1,5 +1,6 @@
 import { ReactNativeFirebase } from '@react-native-firebase/app';
 import { QueryObserverResult, useQuery, UseQueryOptions } from 'react-query';
+import OrderStatus from '../constants/orderStatus';
 import {
 	CATEGORIES_QUERY,
 	ORDERS_QUERY,
@@ -16,9 +17,10 @@ import { getProducts } from '../services/productService';
 
 export function useOrders<TData = OrderType[]>(
 	context: StoreContext,
+	status: OrderStatus,
 	options?: UseQueryOptions<OrderType[], ReactNativeFirebase.NativeFirebaseError, TData>,
 ): QueryObserverResult<TData, ReactNativeFirebase.NativeFirebaseError> {
-	return useQuery(ORDERS_QUERY, () => getOrders(context), options);
+	return useQuery([ORDERS_QUERY, status], () => getOrders(context, status), options);
 }
 
 export function useSingleOrder<TData = OrderType>(

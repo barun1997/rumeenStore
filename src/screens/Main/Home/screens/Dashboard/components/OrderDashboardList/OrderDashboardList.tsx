@@ -10,6 +10,5 @@ interface OrderDashboardListProps {
 
 export const OrderDashboardList: React.FC<OrderDashboardListProps> = ({ orders }) => {
 	const renderItem: ListRenderItem<OrderType> = ({ item }) => <OrderDashboardCard order={item} />;
-
 	return <FlatList data={orders} renderItem={renderItem} keyExtractor={(item) => item.id} />;
 };
