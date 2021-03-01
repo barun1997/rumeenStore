@@ -70,4 +70,17 @@ const updateCategory = async (
 	return category;
 };
 
-export { addCategory, getCategories, getCategoryById, updateCategory };
+const deleteCategoryById = async (
+	id: string,
+	{ storeDocInstance }: StoreContext,
+): Promise<string> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
+
+	await categoryCollection.doc(id).delete();
+
+	return id;
+};
+
+export { addCategory, getCategories, getCategoryById, updateCategory, deleteCategoryById };

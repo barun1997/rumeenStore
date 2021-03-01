@@ -3,7 +3,10 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Card, Paragraph, Title, useTheme } from 'react-native-paper';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { useQueryClient } from 'react-query';
 import { MenuDropdown } from '../../../../../components/MenuDropdown/MenuDropdown';
+import { useDeleteCategoryMutation } from '../../../../../hooks/mutations';
+import useStoreContext from '../../../../../hooks/useStoreContext';
 
 interface CategoryCardProps {
 	title: string;
@@ -26,10 +29,19 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 
 	const navigation = useNavigation();
 
+	const storeContext = useStoreContext();
+	const queryClient = useQueryClient();
+
+	const deleteCategoryMutation = useDeleteCategoryMutation(storeContext, queryClient);
+
 	const handleEdit = () => {
 		navigation.navigate('AddCategory', {
 			id,
 		});
+	};
+
+	const handleDelete = () => {
+		deleteCategoryMutation.mutate(id);
 	};
 
 	return (
@@ -42,7 +54,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 				<MenuDropdown
 					openMenu={openMenu}
 					editAction={handleEdit}
-					deleteAction={() => closeMenu()}
+					deleteAction={handleDelete}
 					dismissMenu={closeMenu}
 					id={id}
 					visible={visible}
