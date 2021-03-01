@@ -13,16 +13,25 @@ function CategoriesList(): JSX.Element {
 
 	const categories = queryInfo.isSuccess ? queryInfo.data : [];
 
-	const renderItem: ListRenderItem<CategoryType> = ({ item: { name, count } }) => (
-		<CategoryCard title={name} numberOfProducts={count ?? 0} />
+	const [visible, setVisible] = React.useState('');
+
+	const openMenu = (id: string) => setVisible(id);
+
+	const closeMenu = () => setVisible('');
+
+	const renderItem: ListRenderItem<CategoryType> = ({ item: { id, name, count } }) => (
+		<CategoryCard
+			title={name}
+			numberOfProducts={count ?? 0}
+			id={id}
+			visible={visible}
+			openMenu={openMenu}
+			closeMenu={closeMenu}
+		/>
 	);
 	return (
 		<View style={styles.container}>
-			<FlatList
-				data={categories}
-				renderItem={renderItem}
-				keyExtractor={(item) => item.id as string}
-			/>
+			<FlatList data={categories} renderItem={renderItem} keyExtractor={(item) => item.id} />
 		</View>
 	);
 }

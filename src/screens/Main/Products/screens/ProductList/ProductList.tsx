@@ -25,7 +25,6 @@ function ProductList(): JSX.Element {
 			visible={visible}
 			openMenu={openMenu}
 			closeMenu={closeMenu}
-			key={name}
 			imageSource={photo as string}
 			price={price.toString()}
 			title={name}
