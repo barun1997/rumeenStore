@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Card, Paragraph, Subheading, Title, useTheme } from 'react-native-paper';
@@ -28,6 +29,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 	const { colors } = useTheme();
 	const styles = getStyles(colors);
 
+	const navigation = useNavigation();
+
+	const handleEdit = () => {
+		navigation.navigate('AddProductScreen', {
+			id,
+		});
+	};
+
 	return (
 		<Card style={styles.container}>
 			<View style={styles.rowView}>
@@ -40,6 +49,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 					</View>
 				</View>
 				<MenuDropdown
+					editAction={handleEdit}
+					deleteAction={() => console.log('d')}
 					buttonColor={colors.backdrop}
 					dismissMenu={closeMenu}
 					id={id}

@@ -7,6 +7,7 @@ import {
 	PRODUCTS_QUERY,
 	SINGLE_CATEGORY_QUERY,
 	SINGLE_ORDER_QUERY,
+	SINGLE_PRODUCT_QUERY,
 } from '../constants/queries';
 import { CategoryType } from '../interfaces/Category';
 import { OrderType } from '../interfaces/Order';
@@ -14,7 +15,7 @@ import { ProductType } from '../interfaces/Product';
 import { StoreContext } from '../interfaces/StoreSetting';
 import { getCategories, getCategoryById } from '../services/categoryService';
 import { getOrders, getSingleOrder } from '../services/orderService';
-import { getProducts } from '../services/productService';
+import { getProductById, getProducts } from '../services/productService';
 
 export function useOrders<TData = OrderType[]>(
 	context: StoreContext,
@@ -39,13 +40,13 @@ export function useProducts<TData = ProductType[]>(
 	return useQuery(PRODUCTS_QUERY, () => getProducts(context), options);
 }
 
-// export function useSingleProduct<TData = ProductType>(
-// 	id: string,
-// 	context: StoreContext,
-// 	options?: UseQueryOptions<ProductType, ReactNativeFirebase.NativeFirebaseError, TData>,
-// ): QueryObserverResult<TData, ReactNativeFirebase.NativeFirebaseError> {
-// 	return useQuery([SINGLE_PRODUCT_QUERY, id], () => getSingleProduct(context, id), options);
-// }
+export function useSingleProduct<TData = ProductType>(
+	id: string,
+	context: StoreContext,
+	options?: UseQueryOptions<ProductType, ReactNativeFirebase.NativeFirebaseError, TData>,
+): QueryObserverResult<TData, ReactNativeFirebase.NativeFirebaseError> {
+	return useQuery([SINGLE_PRODUCT_QUERY, id], () => getProductById(id, context), options);
+}
 
 export function useCategories<TData = CategoryType[]>(
 	context: StoreContext,

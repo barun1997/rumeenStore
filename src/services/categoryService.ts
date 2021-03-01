@@ -62,9 +62,9 @@ const updateCategory = async (
 ): Promise<CategoryType> => {
 	if (!storeDocInstance) throw Error('Store is not present');
 
-	const orderCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
+	const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
 
-	await orderCollection.doc(category.id).update({
+	await categoryCollection.doc(category.id).update({
 		...category,
 	});
 	return category;
