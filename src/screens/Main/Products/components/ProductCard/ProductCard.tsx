@@ -67,7 +67,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 					dismissMenu={closeMenu}
 					id={id}
 					openMenu={openMenu}
-					visible={visible}
+					visible={visible === id}
 				/>
 			</View>
 		</Card>

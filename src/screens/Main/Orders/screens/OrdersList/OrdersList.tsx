@@ -3,15 +3,23 @@ import React from 'react';
 import { ListRenderItem, StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
+import { getEnumValueFromString } from '../../../../../constants/getEnumValueFromString';
+import OrderStatus from '../../../../../constants/orderStatus';
 import { useOrders } from '../../../../../hooks/queries';
 import useStoreContext from '../../../../../hooks/useStoreContext';
 import { OrderType } from '../../../../../interfaces/Order';
 import { OrderCard } from '../../components/OrderCard/OrderCard';
 
-function OrdersScreen(): JSX.Element {
+interface OrdersListProps {
+	status: string;
+}
+
+function OrdersScreen({ status }: OrdersListProps): JSX.Element {
 	const storeContext = useStoreContext();
 
-	const { ...queryInfo } = useOrders(storeContext);
+	const statusNumber = getEnumValueFromString(status, OrderStatus);
+
+	const { ...queryInfo } = useOrders(storeContext, statusNumber);
 
 	const orders = queryInfo.isSuccess ? queryInfo.data : [];
 	const navigation = useNavigation();

@@ -4,7 +4,7 @@ import { IconButton, Menu } from 'react-native-paper';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 interface MenuDropdownProps {
-	visible: string;
+	visible: boolean;
 	buttonColor: string;
 	dismissMenu: () => void;
 	openMenu: (id: string) => void;
@@ -25,7 +25,7 @@ export const MenuDropdown: React.FC<MenuDropdownProps> = ({
 	return (
 		<View style={styles.optionMenu}>
 			<Menu
-				visible={visible === id}
+				visible={visible}
 				onDismiss={dismissMenu}
 				anchor={
 					<IconButton

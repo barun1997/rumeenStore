@@ -57,7 +57,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 					deleteAction={handleDelete}
 					dismissMenu={closeMenu}
 					id={id}
-					visible={visible}
+					visible={visible === id}
 					buttonColor={colors.backdrop}
 				/>
 			</View>
