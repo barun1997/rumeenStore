@@ -12,7 +12,7 @@ import { ProductType } from '../interfaces/Product';
 import { StoreContext } from '../interfaces/StoreSetting';
 import { addCategory, updateCategory } from '../services/categoryService';
 import { updateOrder } from '../services/orderService';
-import { addProduct } from '../services/productService';
+import { addProduct, updateProduct } from '../services/productService';
 
 export const useUpdateOrderMutation = (
 	storeContext: StoreContext,
@@ -30,6 +30,16 @@ export const useAddProductMutation = (
 	queryClient: QueryClient,
 ): UseMutationResult<ProductType, ReactNativeFirebase.NativeFirebaseError, ProductType, unknown> =>
 	useMutation((newProduct: ProductType) => addProduct(storeContext, newProduct), {
+		onSuccess: async () => {
+			await queryClient.invalidateQueries(PRODUCTS_QUERY);
+		},
+	});
+
+export const useUpdateProductMutation = (
+	storeContext: StoreContext,
+	queryClient: QueryClient,
+): UseMutationResult<ProductType, ReactNativeFirebase.NativeFirebaseError, ProductType, unknown> =>
+	useMutation((newProduct: ProductType) => updateProduct(storeContext, newProduct), {
 		onSuccess: async () => {
 			await queryClient.invalidateQueries(PRODUCTS_QUERY);
 		},

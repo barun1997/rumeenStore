@@ -44,4 +44,33 @@ const getProducts = async ({ storeDocInstance }: StoreContext): Promise<ProductT
 	return products;
 };
 
-export { addProduct, getProducts };
+const updateProduct = async (
+	{ storeDocInstance }: StoreContext,
+	product: ProductType,
+): Promise<ProductType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const productCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
+
+	await productCollection.doc(product.id).update({
+		...product,
+	});
+	return product;
+};
+
+const getProductById = async (
+	id: string,
+	{ storeDocInstance }: StoreContext,
+): Promise<ProductType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const productCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
+
+	const result = await productCollection.doc(id).get();
+
+	const product = result.data() as ProductType;
+
+	return product;
+};
+
+export { addProduct, getProducts, updateProduct, getProductById };
