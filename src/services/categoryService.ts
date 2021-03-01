@@ -41,4 +41,33 @@ const getCategories = async ({ storeDocInstance }: StoreContext): Promise<Catego
 	return categories;
 };
 
-export { addCategory, getCategories };
+const getCategoryById = async (
+	id: string,
+	{ storeDocInstance }: StoreContext,
+): Promise<CategoryType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
+
+	const result = await categoryCollection.doc(id).get();
+
+	const category = result.data() as CategoryType;
+
+	return category;
+};
+
+const updateCategory = async (
+	{ storeDocInstance }: StoreContext,
+	category: CategoryType,
+): Promise<CategoryType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const orderCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
+
+	await orderCollection.doc(category.id).update({
+		...category,
+	});
+	return category;
+};
+
+export { addCategory, getCategories, getCategoryById, updateCategory };
