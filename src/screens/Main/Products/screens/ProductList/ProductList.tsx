@@ -13,8 +13,18 @@ function ProductList(): JSX.Element {
 
 	const products = queryInfo.isSuccess ? queryInfo.data : [];
 
-	const renderItem: ListRenderItem<ProductType> = ({ item: { name, photo, price } }) => (
+	const [visible, setVisible] = React.useState('');
+
+	const openMenu = (id: string) => setVisible(id);
+
+	const closeMenu = () => setVisible('');
+
+	const renderItem: ListRenderItem<ProductType> = ({ item: { id, name, photo, price } }) => (
 		<ProductCard
+			id={id}
+			visible={visible}
+			openMenu={openMenu}
+			closeMenu={closeMenu}
 			key={name}
 			imageSource={photo as string}
 			price={price.toString()}
@@ -29,7 +39,7 @@ function ProductList(): JSX.Element {
 				initialNumToRender={7}
 				data={products}
 				renderItem={renderItem}
-				keyExtractor={(item) => item.id as string}
+				keyExtractor={(item) => item.id}
 			/>
 		</View>
 	);

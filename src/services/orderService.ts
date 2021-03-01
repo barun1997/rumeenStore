@@ -27,7 +27,7 @@ const getOrders = async (
 
 	let result: FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 
-	if (status) result = await orderCollection.where('status', '==', status).get();
+	if (status !== undefined) result = await orderCollection.where('status', '==', status).get();
 	else result = await orderCollection.get();
 
 	const orders = result.docs.map((doc) => {
