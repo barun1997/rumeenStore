@@ -20,7 +20,6 @@ const CategoryForm: React.FC<FormProps<CategoryType>> = ({
 		<View style={styles.container}>
 			<View>
 				<TextInput
-					textAlign="center"
 					onChangeText={handleChange('name')}
 					onBlur={handleBlur('name')}
 					label="Category Name"

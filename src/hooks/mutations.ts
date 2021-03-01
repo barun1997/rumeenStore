@@ -10,7 +10,7 @@ import { CategoryType } from '../interfaces/Category';
 import { OrderType } from '../interfaces/Order';
 import { ProductType } from '../interfaces/Product';
 import { StoreContext } from '../interfaces/StoreSetting';
-import { addCategory } from '../services/categoryService';
+import { addCategory, updateCategory } from '../services/categoryService';
 import { updateOrder } from '../services/orderService';
 import { addProduct } from '../services/productService';
 
@@ -45,6 +45,21 @@ export const useAddCategoryMutation = (
 	unknown
 > =>
 	useMutation((newCategory: CategoryType) => addCategory(storeContext, newCategory), {
+		onSuccess: async () => {
+			await queryClient.invalidateQueries(CATEGORIES_QUERY);
+		},
+	});
+
+export const useUpdateCategoryMutation = (
+	storeContext: StoreContext,
+	queryClient: QueryClient,
+): UseMutationResult<
+	CategoryType,
+	ReactNativeFirebase.NativeFirebaseError,
+	CategoryType,
+	unknown
+> =>
+	useMutation((newCategory: CategoryType) => updateCategory(storeContext, newCategory), {
 		onSuccess: async () => {
 			await queryClient.invalidateQueries(CATEGORIES_QUERY);
 		},

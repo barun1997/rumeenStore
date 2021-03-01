@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Card, Paragraph, Title, useTheme } from 'react-native-paper';
@@ -22,6 +23,15 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 	visible,
 }) => {
 	const { colors } = useTheme();
+
+	const navigation = useNavigation();
+
+	const handleEdit = () => {
+		navigation.navigate('AddCategory', {
+			id,
+		});
+	};
+
 	return (
 		<Card style={styles.container}>
 			<View style={styles.rowView}>
@@ -31,6 +41,8 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 				</View>
 				<MenuDropdown
 					openMenu={openMenu}
+					editAction={handleEdit}
+					deleteAction={() => closeMenu()}
 					dismissMenu={closeMenu}
 					id={id}
 					visible={visible}
