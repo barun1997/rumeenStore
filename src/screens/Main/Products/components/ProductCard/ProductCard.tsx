@@ -3,7 +3,10 @@ import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Card, Paragraph, Subheading, Title, useTheme } from 'react-native-paper';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
+import { useQueryClient } from 'react-query';
 import { MenuDropdown } from '../../../../../components/MenuDropdown/MenuDropdown';
+import { useDeleteProductMutation } from '../../../../../hooks/mutations';
+import useStoreContext from '../../../../../hooks/useStoreContext';
 
 interface ProductCardProps {
 	title: string;
@@ -31,10 +34,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
 	const navigation = useNavigation();
 
+	const storeContext = useStoreContext();
+	const queryClient = useQueryClient();
+
+	const deleteProductMutation = useDeleteProductMutation(storeContext, queryClient);
+
 	const handleEdit = () => {
 		navigation.navigate('AddProductScreen', {
 			id,
 		});
+	};
+
+	const handleDelete = () => {
+		deleteProductMutation.mutate(id);
 	};
 
 	return (
@@ -50,7 +62,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 				</View>
 				<MenuDropdown
 					editAction={handleEdit}
-					deleteAction={() => console.log('d')}
+					deleteAction={handleDelete}
 					buttonColor={colors.backdrop}
 					dismissMenu={closeMenu}
 					id={id}

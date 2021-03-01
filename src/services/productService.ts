@@ -73,4 +73,17 @@ const getProductById = async (
 	return product;
 };
 
-export { addProduct, getProducts, updateProduct, getProductById };
+const deleteProductById = async (
+	id: string,
+	{ storeDocInstance }: StoreContext,
+): Promise<string> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const productCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
+
+	await productCollection.doc(id).delete();
+
+	return id;
+};
+
+export { addProduct, getProducts, updateProduct, getProductById, deleteProductById };
