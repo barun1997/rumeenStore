@@ -15,6 +15,7 @@ import { CategoryType } from '../../../../../../interfaces/Category';
 import FormProps from '../../../../../../interfaces/FormProps';
 import { ProductType } from '../../../../../../interfaces/Product';
 import { getCategories } from '../../../../../../services/categoryService';
+import { uploadCoverImage } from '../../../../../../services/imageService';
 
 const ProductForm: React.FC<FormProps<ProductType>> = ({
 	handleBlur,
@@ -36,11 +37,13 @@ const ProductForm: React.FC<FormProps<ProductType>> = ({
 			mediaType: 'photo',
 			quality: 1,
 		};
-		launchImageLibrary(options, (response) => {
+		launchImageLibrary(options, async (response) => {
 			if (response.uri) {
-				console.log(response.uri);
+				const image = await uploadCoverImage(storeContext, response);
 
-				setFieldValue('photo', response);
+				if (!image) return;
+
+				setFieldValue('photo', image.downloadUrl);
 			}
 		});
 	};

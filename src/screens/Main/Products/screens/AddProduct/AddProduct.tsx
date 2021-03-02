@@ -1,20 +1,18 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Formik } from 'formik';
 import React from 'react';
-import { ImagePickerResponse } from 'react-native-image-picker';
 import { useQueryClient } from 'react-query';
 import { useAddProductMutation, useUpdateProductMutation } from '../../../../../hooks/mutations';
 import { useSingleProduct } from '../../../../../hooks/queries';
 import useStoreContext from '../../../../../hooks/useStoreContext';
 import { ProductType } from '../../../../../interfaces/Product';
 import ProductSchema from '../../../../../schemas/Product';
-import { uploadCoverImage } from '../../../../../services/imageService';
 import ProductForm from './components/ProductForm';
 
 const initialProduct: ProductType = {
 	id: '',
 	name: '',
-	photo: null,
+	photo: '',
 	price: 0.0,
 	description: '',
 	category: '',
@@ -41,17 +39,26 @@ function AddProductScreen(): JSX.Element {
 	const updateProductMutation = useUpdateProductMutation(storeContext, queryClient);
 
 	const handleSubmit = async (values: ProductType): Promise<void> => {
-		const { photo } = values;
+		/* 
+		TODO: currently, the logic checks if photo is a string. Photo is
+		a string only when it is already loaded from backend. I didn't want
+		photo to be downloaded into the mobile so thought this would be
+		a good way to do it. So, if the user changes photo, for example,
+		by uploading a new photo, it changes the type from 'string' to
+		ImagePicker response so we upload only when it's changed.
+		
+		The main purpose of this logic was to do two things: 
 
-		const image = await uploadCoverImage(storeContext, photo as ImagePickerResponse);
+		1. Upload a new photo only when a new image is loaded. 
+		2. Load an already uploaded image when editing. 
 
-		if (!image?.downloadUrl) return;
 
-		const productToBeUploaded: ProductType = { ...values, photo: image?.downloadUrl };
+		Any better implementation of these two things is WELCOME! To future
+		Barun and Anup, think of something better.
+		*/
 
-		if (params?.id)
-			await updateProductMutation.mutateAsync({ ...productToBeUploaded, id: params.id });
-		else await addProductMutation.mutateAsync(productToBeUploaded);
+		if (params?.id) await updateProductMutation.mutateAsync({ ...values, id: params.id });
+		else await addProductMutation.mutateAsync(values);
 
 		navigation.goBack();
 	};

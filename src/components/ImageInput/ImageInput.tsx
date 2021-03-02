@@ -1,13 +1,12 @@
 import React from 'react';
 import { Image, ImageSourcePropType, ImageStyle, StyleProp, ViewStyle } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import { ImagePickerResponse } from 'react-native-image-picker';
 import { HelperText } from 'react-native-paper';
 import placeholder from '../../../static/placeholder.png';
 
 interface ImageInputProps {
 	handleChoosePhoto: () => void;
-	photo: string | ImagePickerResponse | null;
+	photo: string;
 	error?: string;
 	touched?: boolean;
 	imageContainerStyle?: StyleProp<ViewStyle>;
@@ -25,10 +24,16 @@ export const ImageInput: React.FC<ImageInputProps> = ({
 	return (
 		<TouchableHighlight style={imageContainerStyle} onPress={handleChoosePhoto}>
 			<>
-				<Image
-					style={imageStyle}
-					source={(photo as ImagePickerResponse) ?? (placeholder as ImageSourcePropType)}
-				/>
+				{photo ? (
+					<Image
+						style={imageStyle}
+						source={{
+							uri: photo,
+						}}
+					/>
+				) : (
+					<Image style={imageStyle} source={placeholder as ImageSourcePropType} />
+				)}
 				{error && touched ? (
 					<HelperText type="error">{error}</HelperText>
 				) : (
