@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, ImageSourcePropType, ImageStyle, StyleProp, ViewStyle } from 'react-native';
+import FastImage, { ImageStyle as FastImageStyle } from 'react-native-fast-image';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import { HelperText } from 'react-native-paper';
 import placeholder from '../../../static/placeholder.png';
@@ -25,8 +26,8 @@ export const ImageInput: React.FC<ImageInputProps> = ({
 		<TouchableHighlight style={imageContainerStyle} onPress={handleChoosePhoto}>
 			<>
 				{photo ? (
-					<Image
-						style={imageStyle}
+					<FastImage
+						style={imageStyle as StyleProp<FastImageStyle>}
 						source={{
 							uri: photo,
 						}}

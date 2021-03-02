@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { Card, Paragraph, Subheading, Title, useTheme } from 'react-native-paper';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { useQueryClient } from 'react-query';
@@ -53,7 +54,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 		<Card style={styles.container}>
 			<View style={styles.rowView}>
 				<View style={styles.rowView}>
-					<Image style={styles.image} source={{ uri: imageSource }} />
+					<FastImage style={styles.image} source={{ uri: imageSource }} />
 					<View style={styles.description}>
 						<Title>{title}</Title>
 						<Subheading>Rs. {price}</Subheading>
