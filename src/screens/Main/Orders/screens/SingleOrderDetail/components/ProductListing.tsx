@@ -14,7 +14,7 @@ const ProductListing: React.FC<ProductListingProps> = ({ product }) => {
 	const styles = useStyles(colors);
 	return (
 		<View style={styles.rowView}>
-			<Image style={styles.image} source={{ uri: photo as string }} />
+			<Image style={styles.image} source={{ uri: photo }} />
 			<View style={styles.description}>
 				<Headline>{name}</Headline>
 				<Subheading style={styles.primary}>

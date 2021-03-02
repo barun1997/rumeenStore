@@ -25,7 +25,7 @@ function ProductList(): JSX.Element {
 			visible={visible}
 			openMenu={openMenu}
 			closeMenu={closeMenu}
-			imageSource={photo as string}
+			imageSource={photo}
 			price={price.toString()}
 			title={name}
 			type="Listed Online"

@@ -58,7 +58,7 @@ function AddProductScreen(): JSX.Element {
 		*/
 
 		if (params?.id) await updateProductMutation.mutateAsync({ ...values, id: params.id });
-		else await addProductMutation.mutateAsync(values);
+		else await addProductMutation.mutateAsync({ ...values, id: values.name });
 
 		navigation.goBack();
 	};
