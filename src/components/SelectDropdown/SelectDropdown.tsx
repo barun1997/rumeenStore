@@ -26,14 +26,20 @@ export const SelectDropdown: React.FC<SelectDropdownProps> = ({
 				onDismiss={dismissMenu}
 				anchor={<Appbar.Action disabled={false} color="white" icon="filter" onPress={openMenu} />}>
 				<Menu.Item
-					onPress={() => handleItemPress('')}
+					onPress={() => {
+						dismissMenu();
+						handleItemPress('');
+					}}
 					title="All"
 					icon={value === '' ? 'check' : undefined}
 				/>
 				{data.map((element) => (
 					<Menu.Item
 						key={element}
-						onPress={() => handleItemPress(element)}
+						onPress={() => {
+							dismissMenu();
+							handleItemPress(element);
+						}}
 						title={element}
 						icon={value === element ? 'check' : undefined}
 					/>

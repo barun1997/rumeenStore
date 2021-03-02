@@ -1,4 +1,4 @@
-import { PRODUCTS_FIRESTORE } from '../constants/firestoreConstants';
+import { CATEGORIES_FIRESTORE, PRODUCTS_FIRESTORE } from '../constants/firestoreConstants';
 import { ProductType } from '../interfaces/Product';
 import { StoreContext } from '../interfaces/StoreSetting';
 import { fieldIncrementByOne } from '../utils/firebase/fieldIncrementByOne';
@@ -10,7 +10,7 @@ const addProduct = async (
 	if (!storeDocInstance) throw Error('Store is not present');
 
 	const productCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
-	const categoryCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
+	const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
 
 	await productCollection.add(product);
 

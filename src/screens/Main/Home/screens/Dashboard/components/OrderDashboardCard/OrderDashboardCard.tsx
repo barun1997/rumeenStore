@@ -15,12 +15,7 @@ interface OrderDashboardCardProps {
 
 export const OrderDashboardCard: React.FC<OrderDashboardCardProps> = ({ order }) => {
 	const { total, products, status, orderCreated, from } = order;
-	const [title, quantity, imageSource, price] = [
-		from,
-		products.length,
-		products[0].photo as string,
-		total,
-	];
+	const [title, quantity, imageSource, price] = [from, products.length, products[0].photo, total];
 	const storeContext = useStoreContext();
 	const queryClient = useQueryClient();
 

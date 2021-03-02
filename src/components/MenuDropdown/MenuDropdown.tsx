@@ -36,8 +36,22 @@ export const MenuDropdown: React.FC<MenuDropdownProps> = ({
 						onPress={() => openMenu(id)}
 					/>
 				}>
-				<Menu.Item icon="pencil" onPress={editAction} title="Edit" />
-				<Menu.Item icon="delete" onPress={deleteAction} title="Delete" />
+				<Menu.Item
+					icon="pencil"
+					onPress={() => {
+						dismissMenu();
+						editAction();
+					}}
+					title="Edit"
+				/>
+				<Menu.Item
+					icon="delete"
+					onPress={() => {
+						dismissMenu();
+						deleteAction();
+					}}
+					title="Delete"
+				/>
 			</Menu>
 		</View>
 	);
