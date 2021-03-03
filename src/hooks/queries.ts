@@ -16,6 +16,14 @@ import { StoreContext } from '../interfaces/StoreSetting';
 import { getCategories, getCategoryById } from '../services/categoryService';
 import { getOrders, getSingleOrder } from '../services/orderService';
 import { getProductById, getProducts } from '../services/productService';
+import { getStoreName } from '../services/userService';
+
+export function useStorePref<TData = string | undefined>(
+	phoneNumber: string,
+	options?: UseQueryOptions<string | undefined, ReactNativeFirebase.NativeFirebaseError, TData>,
+): QueryObserverResult<TData, ReactNativeFirebase.NativeFirebaseError> {
+	return useQuery(['storeNameDetail', phoneNumber], () => getStoreName(phoneNumber), options);
+}
 
 export function useOrders<TData = OrderType[]>(
 	context: StoreContext,
