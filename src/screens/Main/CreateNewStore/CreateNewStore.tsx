@@ -1,51 +1,44 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import { Formik } from 'formik';
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { Button, Subheading, TextInput, useTheme } from 'react-native-paper';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
+import { useQueryClient } from 'react-query';
 import { ErrorHelperText } from '../../../components/ErrorHelperText/ErrorHelperText';
-import { STORE_NAME_STORAGE } from '../../../constants/storageConstants';
+import { STORE_DETAIL_QUERY } from '../../../constants/queries';
+import { useInitializeStoreMutation } from '../../../hooks/mutations';
 import { StoreDetail } from '../../../interfaces/StoreDetail';
-import { setNewStore } from '../../../services/userService';
-
-interface CreateNewStoreProps {
-	setStoreName: React.Dispatch<React.SetStateAction<string | null>>;
-	setInitializing: React.Dispatch<React.SetStateAction<boolean>>;
-	setCreateStoreSuccess: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 const initialStore: StoreDetail = {
 	storeName: '',
 	location: '',
 };
 
-export const CreateNewStore: React.FC<CreateNewStoreProps> = ({
-	setStoreName,
-	setInitializing,
-	setCreateStoreSuccess,
-}) => {
+export const CreateNewStore: React.FC<Record<string, never>> = () => {
 	const theme = useTheme();
 	const styles = useStyles(theme.colors);
+	const queryClient = useQueryClient();
 
 	const phoneNumber = auth().currentUser?.phoneNumber as string;
 
-	const [showFinalScreen, setShowFinalScreen] = React.useState(false);
+	const initializeStoreMutation = useInitializeStoreMutation(queryClient, phoneNumber);
+
+	const [storeInfo, setStoreInfo] = React.useState('');
 
 	const handleStoreSubmit = async ({ location, storeName }: StoreDetail) => {
-		await setNewStore(phoneNumber, { location, storeName });
-		await AsyncStorage.setItem(STORE_NAME_STORAGE, storeName);
-		setStoreName(storeName);
-		setInitializing(false);
-		setShowFinalScreen(true);
+		await initializeStoreMutation.mutateAsync({
+			location,
+			storeName,
+		});
+		setStoreInfo(storeName);
 	};
 
 	const handleFinalizeSubmit = () => {
-		setCreateStoreSuccess(true);
+		queryClient.setQueryData([STORE_DETAIL_QUERY, phoneNumber], () => storeInfo);
 	};
 
-	if (showFinalScreen)
+	if (storeInfo)
 		return (
 			<SafeAreaView>
 				<View style={styles.container}>
@@ -66,7 +59,6 @@ export const CreateNewStore: React.FC<CreateNewStoreProps> = ({
 								<Subheading>Enter your business details</Subheading>
 								<View>
 									<TextInput
-										textAlign="center"
 										onChangeText={handleChange('storeName')}
 										onBlur={handleBlur('storeName')}
 										label="Store Name"
@@ -77,7 +69,6 @@ export const CreateNewStore: React.FC<CreateNewStoreProps> = ({
 								</View>
 								<View>
 									<TextInput
-										textAlign="center"
 										onChangeText={handleChange('location')}
 										onBlur={handleBlur('location')}
 										label="Store Location"

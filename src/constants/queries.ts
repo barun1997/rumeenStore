@@ -7,8 +7,11 @@ const SINGLE_PRODUCT_QUERY = 'singleProductData';
 const CATEGORIES_QUERY = 'categoriesData';
 const SINGLE_CATEGORY_QUERY = 'singleCategoryData';
 
+const STORE_DETAIL_QUERY = 'storeNameDetail';
+
 export {
 	ORDERS_QUERY,
+	STORE_DETAIL_QUERY,
 	SINGLE_ORDER_QUERY,
 	PRODUCTS_QUERY,
 	SINGLE_PRODUCT_QUERY,

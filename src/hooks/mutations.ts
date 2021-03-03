@@ -7,14 +7,34 @@ import {
 	SINGLE_CATEGORY_QUERY,
 	SINGLE_ORDER_QUERY,
 	SINGLE_PRODUCT_QUERY,
+	STORE_DETAIL_QUERY,
 } from '../constants/queries';
 import { CategoryType } from '../interfaces/Category';
 import { OrderType } from '../interfaces/Order';
 import { ProductType } from '../interfaces/Product';
+import { StoreDetail } from '../interfaces/StoreDetail';
 import { StoreContext } from '../interfaces/StoreSetting';
 import { addCategory, deleteCategoryById, updateCategory } from '../services/categoryService';
 import { updateOrder } from '../services/orderService';
 import { addProduct, deleteProductById, updateProduct } from '../services/productService';
+import { setNewStore } from '../services/userService';
+
+export const useInitializeStoreMutation = (
+	queryClient: QueryClient,
+	phoneNumber: string,
+): UseMutationResult<StoreDetail, ReactNativeFirebase.NativeFirebaseError, StoreDetail, unknown> =>
+	useMutation(
+		({ location, storeName }: StoreDetail) => setNewStore(phoneNumber, { location, storeName }),
+		{
+			onSuccess: () => {
+				void queryClient.invalidateQueries(STORE_DETAIL_QUERY, {
+					exact: true,
+					refetchActive: false,
+					refetchInactive: false,
+				});
+			},
+		},
+	);
 
 export const useUpdateOrderMutation = (
 	storeContext: StoreContext,
