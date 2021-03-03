@@ -1,6 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+	ACCOUNT_ROUTE,
+	CATEGORIES_ROUTE,
+	HOME_ROUTE,
+	ORDERS_ROUTE,
+	PRODUCTS_ROUTE,
+} from '../../constants/routes';
 import { StoreSettingsProvider } from '../../providers/StoreSettingsProvider';
 import AccountScreen from './Account';
 import CategoriesScreen from './Categories';
@@ -21,25 +28,25 @@ export const MainTabNavigator: React.FC<MainTabNavigatorProps> = ({ storeName })
 					tabBarIcon: ({ focused, color, size }) => {
 						let iconName;
 						//TODO: refactor this code
-						if (route.name === 'Home') {
+						if (route.name === HOME_ROUTE) {
 							iconName = focused ? 'home-variant' : 'home-variant-outline';
-						} else if (route.name === 'Orders') {
+						} else if (route.name === ORDERS_ROUTE) {
 							iconName = focused ? 'ballot' : 'ballot-outline';
-						} else if (route.name === 'Products') {
+						} else if (route.name === PRODUCTS_ROUTE) {
 							iconName = focused ? 'shape' : 'shape-outline';
-						} else if (route.name === 'Categories') {
+						} else if (route.name === CATEGORIES_ROUTE) {
 							iconName = focused ? 'rhombus-split' : 'rhombus-split-outline';
-						} else if (route.name === 'Account') {
+						} else if (route.name === ACCOUNT_ROUTE) {
 							iconName = focused ? 'account' : 'account-outline';
 						}
 						return <MaterialIcons name={iconName as string} size={size} color={color} />;
 					},
 				})}>
-				<Tab.Screen name="Home" component={HomeScreen} />
-				<Tab.Screen name="Orders" component={Orders} />
-				<Tab.Screen name="Products" component={ProductsScreen} />
-				<Tab.Screen name="Categories" component={CategoriesScreen} />
-				<Tab.Screen name="Account" component={AccountScreen} />
+				<Tab.Screen name={HOME_ROUTE} component={HomeScreen} />
+				<Tab.Screen name={ORDERS_ROUTE} component={Orders} />
+				<Tab.Screen name={PRODUCTS_ROUTE} component={ProductsScreen} />
+				<Tab.Screen name={CATEGORIES_ROUTE} component={CategoriesScreen} />
+				<Tab.Screen name={ACCOUNT_ROUTE} component={AccountScreen} />
 			</Tab.Navigator>
 		</StoreSettingsProvider>
 	);

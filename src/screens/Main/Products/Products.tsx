@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { IconButton, useTheme } from 'react-native-paper';
 import NavigationBar from '../../../components/NavigationBar';
+import { ADD_PRODUCT_ROUTE, PRODUCT_LIST_ROUTE } from '../../../constants/routes';
 import AddProductScreen from './screens/AddProduct/AddProduct';
 import ProductListScreen from './screens/ProductList/ProductList';
 
@@ -13,12 +14,12 @@ function Products(): JSX.Element {
 	const { colors } = useTheme();
 	return (
 		<Stack.Navigator
-			initialRouteName="ProductListScreen"
+			initialRouteName={PRODUCT_LIST_ROUTE}
 			screenOptions={{
 				header: (props) => <NavigationBar {...props} />,
 			}}>
 			<Stack.Screen
-				name="ProductListScreen"
+				name={PRODUCT_LIST_ROUTE}
 				component={ProductListScreen}
 				options={{
 					title: 'Products',
@@ -32,7 +33,7 @@ function Products(): JSX.Element {
 				}}
 			/>
 			<Stack.Screen
-				name="AddProductScreen"
+				name={ADD_PRODUCT_ROUTE}
 				component={AddProductScreen}
 				options={{ title: 'Add a Product' }}
 			/>

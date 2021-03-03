@@ -1,0 +1,39 @@
+const SINGLE_ORDER_ROUTE = 'ordersScreen';
+const ORDER_LIST_ROUTE = 'ordersList';
+
+const ORDERS_ROUTE = 'Orders';
+const PRODUCTS_ROUTE = 'Products';
+const ACCOUNT_ROUTE = 'Account';
+const CATEGORIES_ROUTE = 'Categories';
+const HOME_ROUTE = 'Home';
+
+const DASHBOARD_ROUTE = 'Dashboard';
+
+const SETTINGS_LIST_ROUTE = 'SettingsList';
+const DELIVERY_SETTINGS_ROUTE = 'DeliverySettings';
+
+const PRODUCT_LIST_ROUTE = 'productsList';
+const ADD_PRODUCT_ROUTE = 'addProduct';
+
+const CATEGORY_LIST_ROUTE = 'categoryList';
+const ADD_CATEGORY_ROUTE = 'addCategory';
+
+const LOGIN_ROUTE = 'Login';
+
+export {
+	ADD_CATEGORY_ROUTE,
+	SETTINGS_LIST_ROUTE,
+	DELIVERY_SETTINGS_ROUTE,
+	DASHBOARD_ROUTE,
+	CATEGORY_LIST_ROUTE,
+	ADD_PRODUCT_ROUTE,
+	PRODUCT_LIST_ROUTE,
+	ORDER_LIST_ROUTE,
+	LOGIN_ROUTE,
+	SINGLE_ORDER_ROUTE,
+	ORDERS_ROUTE,
+	PRODUCTS_ROUTE,
+	ACCOUNT_ROUTE,
+	CATEGORIES_ROUTE,
+	HOME_ROUTE,
+};
