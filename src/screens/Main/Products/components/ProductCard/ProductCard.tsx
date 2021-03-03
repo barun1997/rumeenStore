@@ -6,6 +6,7 @@ import { Card, Paragraph, Subheading, Title, useTheme } from 'react-native-paper
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { useQueryClient } from 'react-query';
 import { MenuDropdown } from '../../../../../components/MenuDropdown/MenuDropdown';
+import { ADD_PRODUCT_ROUTE } from '../../../../../constants/routes';
 import { useDeleteProductMutation } from '../../../../../hooks/mutations';
 import useStoreContext from '../../../../../hooks/useStoreContext';
 
@@ -41,7 +42,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 	const deleteProductMutation = useDeleteProductMutation(storeContext, queryClient);
 
 	const handleEdit = () => {
-		navigation.navigate('AddProductScreen', {
+		navigation.navigate(ADD_PRODUCT_ROUTE, {
 			id,
 		});
 	};

@@ -27,7 +27,7 @@ function Products(): JSX.Element {
 						<IconButton
 							icon="plus"
 							color={colors.onPrimary}
-							onPress={() => navigation.navigate('AddProductScreen')}
+							onPress={() => navigation.navigate(ADD_PRODUCT_ROUTE)}
 						/>
 					),
 				}}

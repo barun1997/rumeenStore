@@ -5,6 +5,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { getEnumValueFromString } from '../../../../../constants/getEnumValueFromString';
 import OrderStatus from '../../../../../constants/orderStatus';
+import { SINGLE_ORDER_ROUTE } from '../../../../../constants/routes';
 import { useOrders } from '../../../../../hooks/queries';
 import useStoreContext from '../../../../../hooks/useStoreContext';
 import { OrderType } from '../../../../../interfaces/Order';
@@ -25,7 +26,7 @@ function OrdersScreen({ status }: OrdersListProps): JSX.Element {
 	const navigation = useNavigation();
 
 	const handleCardPress = (id: string): void => {
-		navigation.navigate('SingleOrder', {
+		navigation.navigate(SINGLE_ORDER_ROUTE, {
 			id: id,
 		});
 	};
