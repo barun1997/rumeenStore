@@ -1,10 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Chip, Subheading, Title } from 'react-native-paper';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { getValuesForEnum } from '../../../../../../../constants/getValuesForEnum';
 import OrderStatus from '../../../../../../../constants/orderStatus';
+import { ORDERS_ROUTE } from '../../../../../../../constants/routes';
 import { useOrders } from '../../../../../../../hooks/queries';
 import useStoreContext from '../../../../../../../hooks/useStoreContext';
 import { NoOrders } from '../NoOrders/NoOrders';
@@ -13,6 +15,7 @@ import { OrderDashboardList } from '../OrderDashboardList/OrderDashboardList';
 export const ActiveOrders: React.FC<Record<string, never>> = () => {
 	const storeContext = useStoreContext();
 	const orderStatuses = getValuesForEnum(OrderStatus);
+	const navigation = useNavigation();
 
 	const [statusFilter, setStatusFilter] = useState(OrderStatus.Pending);
 
@@ -24,7 +27,9 @@ export const ActiveOrders: React.FC<Record<string, never>> = () => {
 		<View style={styles.activeOrdersContainer}>
 			<View style={styles.row}>
 				<Title>Active Orders</Title>
-				<Subheading>View All</Subheading>
+				<TouchableHighlight onPress={() => navigation.navigate(ORDERS_ROUTE)}>
+					<Subheading>View All</Subheading>
+				</TouchableHighlight>
 			</View>
 			<ScrollView horizontal contentContainerStyle={styles.chipRow}>
 				{orderStatuses.map((orderStatus, index) => (
