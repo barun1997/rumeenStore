@@ -10,6 +10,7 @@ const HOME_ROUTE = 'Home';
 const DASHBOARD_ROUTE = 'Dashboard';
 
 const SETTINGS_LIST_ROUTE = 'SettingsList';
+const EDIT_STORE_DETAILS_ROUTE = 'editStoreDetails';
 const DELIVERY_SETTINGS_ROUTE = 'DeliverySettings';
 
 const PRODUCT_LIST_ROUTE = 'productsList';
@@ -22,6 +23,7 @@ const LOGIN_ROUTE = 'Login';
 
 export {
 	ADD_CATEGORY_ROUTE,
+	EDIT_STORE_DETAILS_ROUTE,
 	SETTINGS_LIST_ROUTE,
 	DELIVERY_SETTINGS_ROUTE,
 	DASHBOARD_ROUTE,

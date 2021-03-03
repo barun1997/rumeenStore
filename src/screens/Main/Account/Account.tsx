@@ -1,8 +1,13 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import NavigationBar from '../../../components/NavigationBar';
-import { DELIVERY_SETTINGS_ROUTE, SETTINGS_LIST_ROUTE } from '../../../constants/routes';
+import {
+	DELIVERY_SETTINGS_ROUTE,
+	EDIT_STORE_DETAILS_ROUTE,
+	SETTINGS_LIST_ROUTE,
+} from '../../../constants/routes';
 import DeliverySettingScreen from './screens/DeliverySettings/DeliverySettings';
+import { EditStoreDetails } from './screens/EditStoreDetails/EditStoreDetails';
 import SettingsList from './screens/SettingsList/SettingsList';
 
 const Stack = createStackNavigator();
@@ -25,6 +30,13 @@ function AccountScreen(): JSX.Element {
 				component={DeliverySettingScreen}
 				options={{
 					title: 'Delivery Settings',
+				}}
+			/>
+			<Stack.Screen
+				name={EDIT_STORE_DETAILS_ROUTE}
+				component={EditStoreDetails}
+				options={{
+					title: 'Edit store details',
 				}}
 			/>
 		</Stack.Navigator>

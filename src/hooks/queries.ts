@@ -8,21 +8,36 @@ import {
 	SINGLE_CATEGORY_QUERY,
 	SINGLE_ORDER_QUERY,
 	SINGLE_PRODUCT_QUERY,
+	STORE_DETAILS_QUERY,
+	STORE_INFO_FOR_USER_QUERY,
 } from '../constants/queries';
 import { CategoryType } from '../interfaces/Category';
 import { OrderType } from '../interfaces/Order';
 import { ProductType } from '../interfaces/Product';
+import { StoreDetail } from '../interfaces/StoreDetail';
 import { StoreContext } from '../interfaces/StoreSetting';
 import { getCategories, getCategoryById } from '../services/categoryService';
 import { getOrders, getSingleOrder } from '../services/orderService';
 import { getProductById, getProducts } from '../services/productService';
+import { getStoreDetails } from '../services/storeService';
 import { getStoreName } from '../services/userService';
 
 export function useStorePref<TData = string | undefined>(
 	phoneNumber: string,
 	options?: UseQueryOptions<string | undefined, ReactNativeFirebase.NativeFirebaseError, TData>,
 ): QueryObserverResult<TData, ReactNativeFirebase.NativeFirebaseError> {
-	return useQuery(['storeNameDetail', phoneNumber], () => getStoreName(phoneNumber), options);
+	return useQuery(
+		[STORE_INFO_FOR_USER_QUERY, phoneNumber],
+		() => getStoreName(phoneNumber),
+		options,
+	);
+}
+
+export function useStoreDetails<TData = StoreDetail>(
+	context: StoreContext,
+	options?: UseQueryOptions<StoreDetail, ReactNativeFirebase.NativeFirebaseError, TData>,
+): QueryObserverResult<TData, ReactNativeFirebase.NativeFirebaseError> {
+	return useQuery(STORE_DETAILS_QUERY, () => getStoreDetails(context), options);
 }
 
 export function useOrders<TData = OrderType[]>(

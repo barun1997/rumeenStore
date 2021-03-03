@@ -5,6 +5,7 @@ import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native
 import { Button, Divider, List, Subheading, useTheme } from 'react-native-paper';
 import { heightPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import placeholder from '../../../../../../static/placeholder.png';
+import { EDIT_STORE_DETAILS_ROUTE } from '../../../../../constants/routes';
 import { SettingsRow } from './components/SettingsRow/SettingsRow';
 function SettingsList(): JSX.Element {
 	const { colors } = useTheme();
@@ -20,7 +21,7 @@ function SettingsList(): JSX.Element {
 						compact
 						labelStyle={styles.labelStyle}
 						contentStyle={styles.labelStyle}
-						onPress={() => console.log('pressed')}>
+						onPress={() => navigation.navigate(EDIT_STORE_DETAILS_ROUTE)}>
 						<Text>Edit business details</Text>
 					</Button>
 				</View>
