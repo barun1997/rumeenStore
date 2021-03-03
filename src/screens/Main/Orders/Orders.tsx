@@ -4,6 +4,7 @@ import NavigationBar from '../../../components/NavigationBar';
 import { SelectDropdown } from '../../../components/SelectDropdown/SelectDropdown';
 import { getValuesForEnum } from '../../../constants/getValuesForEnum';
 import OrderStatus from '../../../constants/orderStatus';
+import { ORDER_LIST_ROUTE, SINGLE_ORDER_ROUTE } from '../../../constants/routes';
 import OrdersScreen from './screens/OrdersList/OrdersList';
 import SingleOrderScreen from './screens/SingleOrderDetail/SingleOrderDetail';
 
@@ -30,12 +31,12 @@ function Orders(): JSX.Element {
 
 	return (
 		<Stack.Navigator
-			initialRouteName="OrdersList"
+			initialRouteName={ORDER_LIST_ROUTE}
 			screenOptions={{
 				header: (props) => <NavigationBar {...props} />,
 			}}>
 			<Stack.Screen
-				name="OrdersList"
+				name={ORDER_LIST_ROUTE}
 				options={{
 					title: 'Orders',
 					headerRight: () => (
@@ -52,7 +53,7 @@ function Orders(): JSX.Element {
 				{(props) => <OrdersScreen status={status} {...props} />}
 			</Stack.Screen>
 			<Stack.Screen
-				name="SingleOrder"
+				name={SINGLE_ORDER_ROUTE}
 				component={SingleOrderScreen}
 				options={{
 					title: 'Single Order',
