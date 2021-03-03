@@ -6,7 +6,7 @@ import { Button, Subheading, TextInput, useTheme } from 'react-native-paper';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { useQueryClient } from 'react-query';
 import { ErrorHelperText } from '../../../components/ErrorHelperText/ErrorHelperText';
-import { STORE_DETAIL_QUERY } from '../../../constants/queries';
+import { STORE_INFO_FOR_USER_QUERY } from '../../../constants/queries';
 import { useInitializeStoreMutation } from '../../../hooks/mutations';
 import { StoreDetail } from '../../../interfaces/StoreDetail';
 
@@ -35,7 +35,7 @@ export const CreateNewStore: React.FC<Record<string, never>> = () => {
 	};
 
 	const handleFinalizeSubmit = () => {
-		queryClient.setQueryData([STORE_DETAIL_QUERY, phoneNumber], () => storeInfo);
+		queryClient.setQueryData([STORE_INFO_FOR_USER_QUERY, phoneNumber], () => storeInfo);
 	};
 
 	if (storeInfo)
