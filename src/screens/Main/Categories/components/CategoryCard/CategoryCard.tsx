@@ -5,6 +5,7 @@ import { Card, Paragraph, Title, useTheme } from 'react-native-paper';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useQueryClient } from 'react-query';
 import { MenuDropdown } from '../../../../../components/MenuDropdown/MenuDropdown';
+import { ADD_CATEGORY_ROUTE } from '../../../../../constants/routes';
 import { useDeleteCategoryMutation } from '../../../../../hooks/mutations';
 import useStoreContext from '../../../../../hooks/useStoreContext';
 
@@ -35,7 +36,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 	const deleteCategoryMutation = useDeleteCategoryMutation(storeContext, queryClient);
 
 	const handleEdit = () => {
-		navigation.navigate('AddCategory', {
+		navigation.navigate(ADD_CATEGORY_ROUTE, {
 			id,
 		});
 	};

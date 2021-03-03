@@ -5,7 +5,7 @@ import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native
 import { Button, Divider, List, Subheading, useTheme } from 'react-native-paper';
 import { heightPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import placeholder from '../../../../../../static/placeholder.png';
-import { EDIT_STORE_DETAILS_ROUTE } from '../../../../../constants/routes';
+import { DELIVERY_SETTINGS_ROUTE, EDIT_STORE_DETAILS_ROUTE } from '../../../../../constants/routes';
 import { SettingsRow } from './components/SettingsRow/SettingsRow';
 function SettingsList(): JSX.Element {
 	const { colors } = useTheme();
@@ -31,7 +31,7 @@ function SettingsList(): JSX.Element {
 				<List.Subheader>Account Settings</List.Subheader>
 				<SettingsRow
 					title="Delivery charges"
-					handlePress={() => navigation.navigate('DeliverySettings')}
+					handlePress={() => navigation.navigate(DELIVERY_SETTINGS_ROUTE)}
 					leftIcon="moped"
 					right
 				/>
