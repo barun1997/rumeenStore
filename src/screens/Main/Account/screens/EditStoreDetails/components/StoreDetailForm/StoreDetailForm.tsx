@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ErrorHelperText } from '../../../../../../../components/ErrorHelperText/ErrorHelperText';
@@ -17,7 +18,7 @@ const StoreDetailForm: React.FC<FormProps<StoreDetail>> = ({
 	const colors = useTheme().colors;
 	const styles = useStyles(colors);
 	return (
-		<View style={styles.container}>
+		<KeyboardAwareScrollView contentContainerStyle={styles.container}>
 			<View>
 				<View style={styles.input}>
 					<TextInput label="Location" value={location} onChangeText={handleChange('location')} />
@@ -27,7 +28,7 @@ const StoreDetailForm: React.FC<FormProps<StoreDetail>> = ({
 			<Button loading={isSubmitting} onPress={handleSubmit} mode="contained" style={styles.button}>
 				<Text>Save changes</Text>
 			</Button>
-		</View>
+		</KeyboardAwareScrollView>
 	);
 };
 
