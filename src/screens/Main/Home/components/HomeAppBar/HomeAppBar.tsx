@@ -28,13 +28,14 @@ const useStyles = (colors: ReactNativePaper.ThemeColors) =>
 	StyleSheet.create({
 		header: {
 			flexDirection: 'column',
+			justifyContent: 'center',
 		},
 		card: {
 			width: '90%',
 			paddingHorizontal: '5%',
 			paddingVertical: '2%',
 			position: 'absolute',
-			height: heightPercentageToDP('12%'),
+			height: heightPercentageToDP('15%'),
 		},
 		shareText: { color: colors.primary },
 		descriptionText: { color: colors.backdrop },
