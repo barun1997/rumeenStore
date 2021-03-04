@@ -43,7 +43,7 @@ export const ActiveOrders: React.FC<Record<string, never>> = () => {
 				))}
 			</ScrollView>
 			{orders.length > 0 ? (
-				<OrderDashboardList orders={orders} />
+				<OrderDashboardList style={styles.cardList} orders={orders} />
 			) : (
 				<NoOrders style={styles.noOrdersStyle} status={statusFilter} />
 			)}
@@ -64,12 +64,13 @@ const styles = StyleSheet.create({
 		alignContent: 'center',
 		alignItems: 'center',
 	},
+	cardList: {
+		marginVertical: '2%',
+	},
 	chipRow: {
 		flexDirection: 'row',
 		alignItems: 'center',
 	},
-	chip: { marginHorizontal: 2 },
-
 	activeOrdersContainer: {
 		padding: '5%',
 		flexDirection: 'column',
