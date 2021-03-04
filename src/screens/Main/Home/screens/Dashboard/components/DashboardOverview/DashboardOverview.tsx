@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { Subheading, Title } from 'react-native-paper';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { HomeCard } from '../HomeCard/HomeCard';
 
 interface DashboardOverviewProps {
@@ -37,6 +36,6 @@ const styles = StyleSheet.create({
 		padding: '5%',
 		flexDirection: 'column',
 		justifyContent: 'space-between',
-		height: heightPercentageToDP('32%'),
+		height: '40%',
 	},
 });

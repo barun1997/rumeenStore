@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Chip, Subheading, Title } from 'react-native-paper';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { getValuesForEnum } from '../../../../../../../constants/getValuesForEnum';
 import OrderStatus from '../../../../../../../constants/orderStatus';
 import { ORDERS_ROUTE } from '../../../../../../../constants/routes';
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
 	},
 	noOrdersStyle: {
 		marginVertical: '5%',
-		height: '70%',
+		height: '60%',
 		flexDirection: 'column',
 		alignContent: 'center',
 		alignItems: 'center',
@@ -75,6 +74,6 @@ const styles = StyleSheet.create({
 		padding: '5%',
 		flexDirection: 'column',
 		justifyContent: 'space-between',
-		height: heightPercentageToDP('40%'),
+		height: '50%',
 	},
 });
