@@ -11,16 +11,7 @@ interface NoOrdersProps {
 
 export const NoOrders: React.FC<NoOrdersProps> = ({ style, status }) => {
 	return (
-		<Card
-			style={
-				style ?? {
-					marginVertical: 20,
-					height: 150,
-					flexDirection: 'column',
-					alignContent: 'center',
-					alignItems: 'center',
-				}
-			}>
+		<Card style={style}>
 			<Subheading>
 				You donot have any {status !== undefined ? getValuesForEnum(OrderStatus)[status] : null}{' '}
 				orders right now
