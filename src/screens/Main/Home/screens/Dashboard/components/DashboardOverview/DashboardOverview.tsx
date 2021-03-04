@@ -10,7 +10,7 @@ interface DashboardOverviewProps {
 
 export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ containerStyle }) => {
 	return (
-		<View style={containerStyle ?? styles.overviewContainer}>
+		<View style={[containerStyle, styles.overviewContainer]}>
 			<View style={styles.row}>
 				<Title>Overview</Title>
 				<Subheading>Life Time</Subheading>
@@ -37,6 +37,6 @@ const styles = StyleSheet.create({
 		padding: '5%',
 		flexDirection: 'column',
 		justifyContent: 'space-between',
-		height: heightPercentageToDP('35%'),
+		height: heightPercentageToDP('32%'),
 	},
 });

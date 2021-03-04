@@ -11,7 +11,7 @@ interface HomeCardProps {
 
 export const HomeCard: React.FC<HomeCardProps> = ({ title, total, amount, style }) => {
 	return (
-		<Card style={style ?? { width: '45%', padding: '4%' }}>
+		<Card style={[style, { width: '45%', padding: '4%' }]}>
 			<Subheading>{title.toUpperCase()}</Subheading>
 			<Title>
 				{amount && 'Rs '}

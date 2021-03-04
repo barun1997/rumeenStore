@@ -1,7 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import NavigationBar from '../../../components/NavigationBar';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { DASHBOARD_ROUTE } from '../../../constants/routes';
+import HomeAppBar from './components/HomeAppBar/HomeAppBar';
 import Dashboard from './screens/Dashboard/Dashboard';
 
 const Stack = createStackNavigator();
@@ -11,8 +12,8 @@ function HomeScreen(): JSX.Element {
 		<Stack.Navigator
 			initialRouteName={DASHBOARD_ROUTE}
 			screenOptions={{
-				headerStatusBarHeight: 100,
-				header: (props) => <NavigationBar {...props} />,
+				headerStatusBarHeight: heightPercentageToDP('10%'),
+				header: (props) => <HomeAppBar {...props} />,
 			}}>
 			<Stack.Screen
 				name={DASHBOARD_ROUTE}
