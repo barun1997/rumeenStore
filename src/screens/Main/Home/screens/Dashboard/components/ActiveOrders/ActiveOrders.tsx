@@ -45,7 +45,7 @@ export const ActiveOrders: React.FC<Record<string, never>> = () => {
 			{orders.length > 0 ? (
 				<OrderDashboardList orders={orders} />
 			) : (
-				<NoOrders status={statusFilter} />
+				<NoOrders style={styles.noOrdersStyle} status={statusFilter} />
 			)}
 		</View>
 	);
@@ -55,6 +55,13 @@ const styles = StyleSheet.create({
 	row: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
+		alignItems: 'center',
+	},
+	noOrdersStyle: {
+		marginVertical: '5%',
+		height: '70%',
+		flexDirection: 'column',
+		alignContent: 'center',
 		alignItems: 'center',
 	},
 	chipRow: {
@@ -67,6 +74,6 @@ const styles = StyleSheet.create({
 		padding: '5%',
 		flexDirection: 'column',
 		justifyContent: 'space-between',
-		minHeight: heightPercentageToDP('15%'),
+		height: heightPercentageToDP('40%'),
 	},
 });
