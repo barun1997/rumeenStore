@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button, useTheme } from 'react-native-paper';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { ErrorHelperText } from '../../../../../../components/ErrorHelperText/ErrorHelperText';
@@ -19,7 +20,7 @@ const DeliverySettingForm: React.FC<FormProps<DeliverySetting>> = ({
 	const colors = useTheme().colors;
 	const styles = useStyles(colors);
 	return (
-		<View style={styles.container}>
+		<KeyboardAwareScrollView contentContainerStyle={styles.container}>
 			<View>
 				<View style={styles.input}>
 					<FormikNumInput
@@ -45,7 +46,7 @@ const DeliverySettingForm: React.FC<FormProps<DeliverySetting>> = ({
 			<Button loading={isSubmitting} onPress={handleSubmit} mode="contained" style={styles.button}>
 				<Text>Save changes</Text>
 			</Button>
-		</View>
+		</KeyboardAwareScrollView>
 	);
 };
 

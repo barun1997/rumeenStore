@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { CategoryType } from '../../../../../../interfaces/Category';
@@ -17,7 +18,7 @@ const CategoryForm: React.FC<FormProps<CategoryType>> = ({
 	const colors = useTheme().colors;
 	const styles = useStyles(colors);
 	return (
-		<View style={styles.container}>
+		<KeyboardAwareScrollView contentContainerStyle={styles.container}>
 			<View>
 				<TextInput
 					onChangeText={handleChange('name')}
@@ -31,7 +32,7 @@ const CategoryForm: React.FC<FormProps<CategoryType>> = ({
 			<Button loading={isSubmitting} onPress={handleSubmit} mode="contained" style={styles.button}>
 				<Text>Add category</Text>
 			</Button>
-		</View>
+		</KeyboardAwareScrollView>
 	);
 };
 

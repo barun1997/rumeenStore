@@ -2,6 +2,7 @@ import auth from '@react-native-firebase/auth';
 import { Formik } from 'formik';
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button, Subheading, TextInput, useTheme } from 'react-native-paper';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import { useQueryClient } from 'react-query';
@@ -54,7 +55,7 @@ export const CreateNewStore: React.FC<Record<string, never>> = () => {
 			<SafeAreaView>
 				<Formik initialValues={initialStore} onSubmit={handleStoreSubmit}>
 					{({ handleChange, handleBlur, handleSubmit, values, errors, touched, isSubmitting }) => (
-						<View style={styles.container}>
+						<KeyboardAwareScrollView contentContainerStyle={styles.container}>
 							<View style={styles.mainFormView}>
 								<Subheading>Enter your business details</Subheading>
 								<View>
@@ -85,7 +86,7 @@ export const CreateNewStore: React.FC<Record<string, never>> = () => {
 								style={styles.button}>
 								<Text>Create a store</Text>
 							</Button>
-						</View>
+						</KeyboardAwareScrollView>
 					)}
 				</Formik>
 			</SafeAreaView>
