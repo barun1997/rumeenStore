@@ -7,30 +7,25 @@ import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsi
 import { useQueryClient } from 'react-query';
 import { MenuDropdown } from '../../../../../components/MenuDropdown/MenuDropdown';
 import { ADD_PRODUCT_ROUTE } from '../../../../../constants/routes';
-import { useDeleteProductMutation } from '../../../../../hooks/mutations';
+import { useDeleteProductMutation, useUpdateProductMutation } from '../../../../../hooks/mutations';
 import useStoreContext from '../../../../../hooks/useStoreContext';
+import { ProductType } from '../../../../../interfaces/Product';
 
 interface ProductCardProps {
-	title: string;
-	price: string;
-	type: string;
-	imageSource: string;
+	product: ProductType;
 	openMenu: (id: string) => void;
 	closeMenu: () => void;
 	visible: string;
-	id: string;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
-	imageSource,
-	title,
-	id,
-	price,
-	type,
+	product,
 	visible,
 	closeMenu,
 	openMenu,
 }) => {
+	const { id, name, photo, price, listed } = product;
+
 	const { colors } = useTheme();
 	const styles = getStyles(colors);
 
@@ -40,6 +35,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 	const queryClient = useQueryClient();
 
 	const deleteProductMutation = useDeleteProductMutation(storeContext, queryClient);
+	const updateProductMutation = useUpdateProductMutation(storeContext, queryClient, id);
 
 	const handleEdit = () => {
 		navigation.navigate(ADD_PRODUCT_ROUTE, {
@@ -51,20 +47,30 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 		deleteProductMutation.mutate(id);
 	};
 
+	const handleDelist = () => {
+		updateProductMutation.mutate({
+			...product,
+			listed: false,
+		});
+	};
+
 	return (
 		<Card style={styles.container}>
 			<View style={styles.rowView}>
 				<View style={styles.rowView}>
-					<FastImage style={styles.image} source={{ uri: imageSource }} />
+					<FastImage style={styles.image} source={{ uri: photo }} />
 					<View style={styles.description}>
-						<Title>{title}</Title>
-						<Subheading>Rs. {price}</Subheading>
-						<Paragraph style={styles.productType}>{type}</Paragraph>
+						<Title>{name}</Title>
+						<Subheading>Rs. {price.toString()}</Subheading>
+						<Paragraph style={listed ? styles.productListed : styles.productNotListed}>
+							{listed ? 'Listed Online' : 'Not listed'}
+						</Paragraph>
 					</View>
 				</View>
 				<MenuDropdown
 					editAction={handleEdit}
 					deleteAction={handleDelete}
+					delistAction={handleDelist}
 					buttonColor={colors.backdrop}
 					dismissMenu={closeMenu}
 					id={id}
@@ -86,5 +92,6 @@ const getStyles = (colors: ReactNativePaper.ThemeColors) =>
 			alignSelf: 'center',
 		},
 		description: { padding: '5%' },
-		productType: { color: colors.primary },
+		productListed: { color: colors.primary },
+		productNotListed: { color: colors.error },
 	});
