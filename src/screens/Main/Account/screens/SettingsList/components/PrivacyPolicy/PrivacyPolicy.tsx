@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
@@ -26,7 +26,6 @@ export const PolicyModal: React.FC<PolicyModalProps> = ({
 				transparent={true}
 				visible={modalVisible}
 				onRequestClose={() => {
-					Alert.alert('Modal has been closed.');
 					setModalVisible('');
 				}}>
 				<SafeAreaView style={{ flex: 1 }}>
