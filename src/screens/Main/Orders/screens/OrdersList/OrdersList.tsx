@@ -9,6 +9,7 @@ import { SINGLE_ORDER_ROUTE } from '../../../../../constants/routes';
 import { useOrders } from '../../../../../hooks/queries';
 import useStoreContext from '../../../../../hooks/useStoreContext';
 import { OrderType } from '../../../../../interfaces/Order';
+import Loading from '../../../Loading';
 import { OrderCard } from '../../components/OrderCard/OrderCard';
 
 interface OrdersListProps {
@@ -21,6 +22,8 @@ function OrdersScreen({ status }: OrdersListProps): JSX.Element {
 	const statusNumber = getEnumValueFromString(status, OrderStatus);
 
 	const { ...queryInfo } = useOrders(storeContext, statusNumber);
+
+	const isLoading = queryInfo.isLoading;
 
 	const orders = queryInfo.isSuccess ? queryInfo.data : [];
 	const navigation = useNavigation();
@@ -42,6 +45,8 @@ function OrdersScreen({ status }: OrdersListProps): JSX.Element {
 			status={status}
 		/>
 	);
+
+	if (isLoading) return <Loading />;
 	return (
 		<View style={styles.container}>
 			<FlatList data={orders} renderItem={renderItem} keyExtractor={(item) => item.id} />

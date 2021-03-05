@@ -4,6 +4,7 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { useCategories } from '../../../../../hooks/queries';
 import useStoreContext from '../../../../../hooks/useStoreContext';
 import { CategoryType } from '../../../../../interfaces/Category';
+import Loading from '../../../Loading';
 import { CategoryCard } from '../../components/CategoryCard/CategoryCard';
 
 function CategoriesList(): JSX.Element {
@@ -12,6 +13,7 @@ function CategoriesList(): JSX.Element {
 	const { ...queryInfo } = useCategories(storeContext);
 
 	const categories = queryInfo.isSuccess ? queryInfo.data : [];
+	const isLoading = queryInfo.isLoading;
 
 	const [visible, setVisible] = React.useState('');
 
@@ -29,6 +31,9 @@ function CategoriesList(): JSX.Element {
 			closeMenu={closeMenu}
 		/>
 	);
+
+	if (isLoading) return <Loading />;
+
 	return (
 		<View style={styles.container}>
 			<FlatList data={categories} renderItem={renderItem} keyExtractor={(item) => item.id} />

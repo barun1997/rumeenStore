@@ -8,6 +8,7 @@ import OrderStatus from '../../../../../../../constants/orderStatus';
 import { ORDERS_ROUTE } from '../../../../../../../constants/routes';
 import { useOrders } from '../../../../../../../hooks/queries';
 import useStoreContext from '../../../../../../../hooks/useStoreContext';
+import Loading from '../../../../../Loading';
 import { NoOrders } from '../NoOrders/NoOrders';
 import { OrderDashboardList } from '../OrderDashboardList/OrderDashboardList';
 
@@ -21,6 +22,10 @@ export const ActiveOrders: React.FC<Record<string, never>> = () => {
 	const { ...queryInfo } = useOrders(storeContext, statusFilter);
 
 	const orders = queryInfo.isSuccess ? queryInfo.data : [];
+
+	const isLoading = queryInfo.isLoading;
+
+	if (isLoading) return <Loading />;
 
 	return (
 		<View style={styles.activeOrdersContainer}>

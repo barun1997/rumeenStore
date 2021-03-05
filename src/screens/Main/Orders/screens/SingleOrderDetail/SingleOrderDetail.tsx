@@ -10,6 +10,7 @@ import OrderStatus from '../../../../../constants/orderStatus';
 import { useUpdateOrderMutation } from '../../../../../hooks/mutations';
 import { useSingleOrder } from '../../../../../hooks/queries';
 import useStoreContext from '../../../../../hooks/useStoreContext';
+import Loading from '../../../Loading';
 import OrderStatusComp from '../../components/OrderStatus/OrderStatus';
 import { CustomerInfo } from './components/CustomerInfo/CustomerInfo';
 import ProductListing from './components/ProductListing';
@@ -29,9 +30,13 @@ function SingleOrderScreen(): JSX.Element {
 
 	const order = queryInfo.isSuccess ? queryInfo.data : null;
 
+	const isLoading = queryInfo.isLoading;
+
 	const { colors } = useTheme();
 
 	const styles = useStyles(colors);
+
+	if (isLoading) return <Loading />;
 
 	if (!order)
 		return (
