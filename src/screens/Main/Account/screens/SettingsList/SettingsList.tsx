@@ -6,8 +6,15 @@ import { Button, Divider, List, Subheading, useTheme } from 'react-native-paper'
 import { heightPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import placeholder from '../../../../../../static/placeholder.png';
 import { DELIVERY_SETTINGS_ROUTE, EDIT_STORE_DETAILS_ROUTE } from '../../../../../constants/routes';
+import { PolicyModal } from './components/PrivacyPolicy/PrivacyPolicy';
 import { SettingsRow } from './components/SettingsRow/SettingsRow';
+
+const PRIVACY_POLICY = 'PrivacyPolicy';
+
+const TERMS_OF_SERVICE = 'TermsOfService';
+
 function SettingsList(): JSX.Element {
+	const [modalVisible, setModalVisible] = React.useState('');
 	const { colors } = useTheme();
 	const styles = useStyles(colors);
 	const navigation = useNavigation();
@@ -29,29 +36,45 @@ function SettingsList(): JSX.Element {
 			<Divider />
 			<List.Section>
 				<List.Subheader>Account Settings</List.Subheader>
+
 				<SettingsRow
 					title="Delivery charges"
 					handlePress={() => navigation.navigate(DELIVERY_SETTINGS_ROUTE)}
 					leftIcon="moped"
 					right
 				/>
+
 				<SettingsRow
 					title="Tutorials"
 					handlePress={() => console.log('Tutorials')}
 					leftIcon="video"
 					right
 				/>
+
 				<SettingsRow title="Share" handlePress={() => console.log('Share')} leftIcon="share" />
-				<SettingsRow
-					title="Privacy Policy"
-					handlePress={() => console.log('Privacy Policy')}
-					leftIcon="lock"
-				/>
-				<SettingsRow
-					title="Terms of Service"
-					handlePress={() => console.log('Terms of Service')}
-					leftIcon="file"
-				/>
+
+				<PolicyModal
+					modalVisible={modalVisible === PRIVACY_POLICY}
+					setModalVisible={setModalVisible}
+					url="https://www.paana.news/privacy-policy">
+					<SettingsRow
+						title="Privacy Policy"
+						handlePress={() => setModalVisible(PRIVACY_POLICY)}
+						leftIcon="lock"
+					/>
+				</PolicyModal>
+
+				<PolicyModal
+					modalVisible={modalVisible === TERMS_OF_SERVICE}
+					setModalVisible={setModalVisible}
+					url="https://www.paana.news/terms-of-service">
+					<SettingsRow
+						title="Terms of Service"
+						handlePress={() => setModalVisible(TERMS_OF_SERVICE)}
+						leftIcon="file"
+					/>
+				</PolicyModal>
+
 				<SettingsRow title="Log out" handlePress={() => auth().signOut()} leftIcon="logout" />
 			</List.Section>
 		</View>
