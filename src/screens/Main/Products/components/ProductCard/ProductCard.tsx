@@ -47,10 +47,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 		deleteProductMutation.mutate(id);
 	};
 
-	const handleDelist = () => {
+	const handleListed = (listedValue: boolean) => {
 		updateProductMutation.mutate({
 			...product,
-			listed: false,
+			listed: !listedValue,
 		});
 	};
 
@@ -72,7 +72,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 				<MenuDropdown
 					editAction={handleEdit}
 					deleteAction={handleDelete}
-					delistAction={handleDelist}
+					listedValue={listed as boolean}
+					handleListed={handleListed}
 					buttonColor={colors.backdrop}
 					dismissMenu={closeMenu}
 					id={id}
