@@ -4,12 +4,15 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { useProducts } from '../../../../../hooks/queries';
 import useStoreContext from '../../../../../hooks/useStoreContext';
 import { ProductType } from '../../../../../interfaces/Product';
+import Loading from '../../../Loading';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 
 function ProductList(): JSX.Element {
 	const storeContext = useStoreContext();
 
 	const { ...queryInfo } = useProducts(storeContext);
+
+	const isLoading = queryInfo.isLoading;
 
 	const products = queryInfo.isSuccess ? queryInfo.data : [];
 
@@ -22,6 +25,8 @@ function ProductList(): JSX.Element {
 	const renderItem: ListRenderItem<ProductType> = ({ item }) => (
 		<ProductCard product={item} visible={visible} openMenu={openMenu} closeMenu={closeMenu} />
 	);
+
+	if (isLoading) return <Loading />;
 
 	return (
 		<View style={styles.container}>
