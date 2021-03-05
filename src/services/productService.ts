@@ -34,11 +34,7 @@ const getProducts = async ({ storeDocInstance }: StoreContext): Promise<ProductT
 	const products = result.docs.map((doc) => {
 		return {
 			id: doc.id,
-			description: doc.data().description as string,
-			category: doc.data().category as string,
-			name: doc.data().name as string,
-			photo: doc.data().photo as string,
-			price: doc.data().price as number,
+			...doc.data(),
 		} as ProductType;
 	});
 	return products;
@@ -47,12 +43,13 @@ const getProducts = async ({ storeDocInstance }: StoreContext): Promise<ProductT
 const updateProduct = async (
 	{ storeDocInstance }: StoreContext,
 	product: ProductType,
+	id: string,
 ): Promise<ProductType> => {
 	if (!storeDocInstance) throw Error('Store is not present');
 
 	const productCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
 
-	await productCollection.doc(product.id).update({
+	await productCollection.doc(id).update({
 		...product,
 	});
 	return product;

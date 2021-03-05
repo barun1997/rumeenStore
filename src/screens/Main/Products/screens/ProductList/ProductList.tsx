@@ -19,17 +19,8 @@ function ProductList(): JSX.Element {
 
 	const closeMenu = () => setVisible('');
 
-	const renderItem: ListRenderItem<ProductType> = ({ item: { id, name, photo, price } }) => (
-		<ProductCard
-			id={id}
-			visible={visible}
-			openMenu={openMenu}
-			closeMenu={closeMenu}
-			imageSource={photo}
-			price={price.toString()}
-			title={name}
-			type="Listed Online"
-		/>
+	const renderItem: ListRenderItem<ProductType> = ({ item }) => (
+		<ProductCard product={item} visible={visible} openMenu={openMenu} closeMenu={closeMenu} />
 	);
 
 	return (

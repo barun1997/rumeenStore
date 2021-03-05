@@ -72,8 +72,9 @@ export const useAddProductMutation = (
 export const useUpdateProductMutation = (
 	storeContext: StoreContext,
 	queryClient: QueryClient,
+	id: string,
 ): UseMutationResult<ProductType, ReactNativeFirebase.NativeFirebaseError, ProductType, unknown> =>
-	useMutation((newProduct: ProductType) => updateProduct(storeContext, newProduct), {
+	useMutation((newProduct: ProductType) => updateProduct(storeContext, newProduct, id), {
 		onSuccess: async () => {
 			await queryClient.invalidateQueries(PRODUCTS_QUERY);
 		},

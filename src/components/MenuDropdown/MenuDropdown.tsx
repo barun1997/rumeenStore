@@ -10,6 +10,7 @@ interface MenuDropdownProps {
 	openMenu: (id: string) => void;
 	editAction: () => void;
 	deleteAction: () => void;
+	delistAction: () => void;
 	id: string;
 }
 
@@ -19,6 +20,7 @@ export const MenuDropdown: React.FC<MenuDropdownProps> = ({
 	openMenu,
 	editAction,
 	deleteAction,
+	delistAction,
 	buttonColor,
 	visible,
 }) => {
@@ -43,6 +45,14 @@ export const MenuDropdown: React.FC<MenuDropdownProps> = ({
 						editAction();
 					}}
 					title="Edit"
+				/>
+				<Menu.Item
+					icon="close-circle"
+					onPress={() => {
+						dismissMenu();
+						delistAction();
+					}}
+					title="Delist"
 				/>
 				<Menu.Item
 					icon="delete"

@@ -36,7 +36,7 @@ function AddProductScreen(): JSX.Element {
 	}
 
 	const addProductMutation = useAddProductMutation(storeContext, queryClient);
-	const updateProductMutation = useUpdateProductMutation(storeContext, queryClient);
+	const updateProductMutation = useUpdateProductMutation(storeContext, queryClient, params.id);
 
 	const handleSubmit = async (values: ProductType): Promise<void> => {
 		if (params?.id) await updateProductMutation.mutateAsync({ ...values, id: params.id });
