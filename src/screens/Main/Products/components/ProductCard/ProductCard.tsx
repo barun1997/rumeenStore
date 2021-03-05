@@ -57,10 +57,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 	return (
 		<Card style={styles.container}>
 			<View style={styles.rowView}>
-				<View style={styles.rowView}>
+				<View style={[styles.rowView, styles.productInfoRow]}>
 					<FastImage style={styles.image} source={{ uri: photo }} />
 					<View style={styles.description}>
-						<Title>{name}</Title>
+						<Title allowFontScaling={false} style={styles.title}>
+							{name}
+						</Title>
 						<Subheading>Rs. {price.toString()}</Subheading>
 						<Paragraph style={listed ? styles.productListed : styles.productNotListed}>
 							{listed ? 'Listed Online' : 'Not listed'}
@@ -86,6 +88,14 @@ const getStyles = (colors: ReactNativePaper.ThemeColors) =>
 	StyleSheet.create({
 		container: { marginVertical: heightPercentageToDP('1%') },
 		rowView: { flexDirection: 'row', justifyContent: 'space-between' },
+		productInfoRow: {
+			maxWidth: '70%',
+			alignItems: 'flex-start',
+		},
+		title: {
+			flex: 1,
+			flexWrap: 'wrap',
+		},
 		image: {
 			width: widthPercentageToDP('20%'),
 			height: heightPercentageToDP('10%'),
