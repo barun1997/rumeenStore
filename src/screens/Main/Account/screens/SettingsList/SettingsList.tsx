@@ -44,15 +44,6 @@ function SettingsList(): JSX.Element {
 					right
 				/>
 
-				<SettingsRow
-					title="Tutorials"
-					handlePress={() => console.log('Tutorials')}
-					leftIcon="video"
-					right
-				/>
-
-				<SettingsRow title="Share" handlePress={() => console.log('Share')} leftIcon="share" />
-
 				<PolicyModal
 					modalVisible={modalVisible === PRIVACY_POLICY}
 					setModalVisible={setModalVisible}
