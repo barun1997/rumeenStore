@@ -1,4 +1,4 @@
-import { PRODUCTS_FIRESTORE } from '../constants/firestoreConstants';
+import { CATEGORIES_FIRESTORE, PRODUCTS_FIRESTORE } from '../constants/firestoreConstants';
 import { ProductType } from '../interfaces/Product';
 import { StoreContext } from '../interfaces/StoreSetting';
 import { fieldIncrementByOne } from '../utils/firebase/fieldIncrementByOne';
@@ -6,54 +6,81 @@ import { fieldIncrementByOne } from '../utils/firebase/fieldIncrementByOne';
 const addProduct = async (
 	{ storeDocInstance }: StoreContext,
 	product: ProductType,
-): Promise<ProductType | undefined> => {
-	try {
-		if (!storeDocInstance) return;
+): Promise<ProductType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
 
-		const productCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
-		const categoryCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
+	const productCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
+	const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
 
-		await productCollection.add(product);
+	await productCollection.add(product);
 
-		await storeDocInstance.update({
-			productCount: fieldIncrementByOne,
-		});
+	await storeDocInstance.update({
+		productCount: fieldIncrementByOne,
+	});
 
-		await categoryCollection.doc(product.category).update({
-			count: fieldIncrementByOne,
-		});
+	await categoryCollection.doc(product.category).update({
+		count: fieldIncrementByOne,
+	});
 
-		return product;
-	} catch (error) {
-		console.log(error);
-		//TODO: Handle all try catch errors
-		return;
-	}
+	return product;
 };
 
-const getProducts = async ({
-	storeDocInstance,
-}: StoreContext): Promise<ProductType[] | undefined> => {
-	try {
-		const productCollection = storeDocInstance?.collection(PRODUCTS_FIRESTORE);
-		const result = await productCollection?.get();
+const getProducts = async ({ storeDocInstance }: StoreContext): Promise<ProductType[]> => {
+	if (!storeDocInstance) throw Error('Store is not present');
 
-		const products = result?.docs.map((doc) => {
-			return {
-				id: doc?.id,
-				description: doc.data()?.description as string,
-				category: doc.data()?.category as string,
-				name: doc.data()?.name as string,
-				photo: doc.data()?.photo as string,
-				price: doc.data()?.price as number,
-			} as ProductType;
-		});
+	const productCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
+	const result = await productCollection.get();
 
-		return products;
-	} catch (error) {
-		console.log(error);
-		return;
-	}
+	const products = result.docs.map((doc) => {
+		return {
+			id: doc.id,
+			...doc.data(),
+		} as ProductType;
+	});
+	return products;
 };
 
-export { addProduct, getProducts };
+const updateProduct = async (
+	{ storeDocInstance }: StoreContext,
+	product: ProductType,
+	id: string,
+): Promise<ProductType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const productCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
+
+	await productCollection.doc(id).update({
+		...product,
+	});
+	return product;
+};
+
+const getProductById = async (
+	id: string,
+	{ storeDocInstance }: StoreContext,
+): Promise<ProductType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const productCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
+
+	const result = await productCollection.doc(id).get();
+
+	const product = result.data() as ProductType;
+
+	return product;
+};
+
+const deleteProductById = async (
+	id: string,
+	{ storeDocInstance }: StoreContext,
+): Promise<string> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const productCollection = storeDocInstance.collection(PRODUCTS_FIRESTORE);
+
+	await productCollection.doc(id).delete();
+
+	return id;
+};
+
+export { addProduct, getProducts, updateProduct, getProductById, deleteProductById };

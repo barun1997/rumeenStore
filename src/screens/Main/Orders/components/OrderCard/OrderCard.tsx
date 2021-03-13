@@ -1,34 +1,44 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import { Card, Paragraph, Title, useTheme } from 'react-native-paper';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { OrderStatusComp as OrderStatus } from '../OrderStatus/OrderStatus';
+import OrderStatusComp from '../OrderStatus/OrderStatus';
 
 interface OrderCardProps {
 	location: string;
 	status: number;
 	price: string;
 	title: string;
+	handleCardPress: () => void;
 }
 
-export const OrderCard: React.FC<OrderCardProps> = ({ title, price, status, location }) => {
+export const OrderCard: React.FC<OrderCardProps> = ({
+	title,
+	price,
+	status,
+	location,
+	handleCardPress,
+}) => {
 	const { colors } = useTheme();
 	const styles = getStyles(colors);
+
 	return (
-		<Card style={styles.container}>
-			<View style={styles.rowView}>
-				<View>
-					<Title>{title}</Title>
-					<View style={styles.locationView}>
-						<MaterialCommunityIcon name="map-marker" color={colors.primary} />
-						<Paragraph style={styles.location}>{location}</Paragraph>
+		<TouchableHighlight onPress={handleCardPress}>
+			<Card style={styles.container}>
+				<View style={styles.rowView}>
+					<View>
+						<Title>{title}</Title>
+						<View style={styles.locationView}>
+							<MaterialCommunityIcon name="map-marker" color={colors.primary} />
+							<Paragraph style={styles.location}>{location}</Paragraph>
+						</View>
+						<OrderStatusComp status={status} />
 					</View>
-					<OrderStatus status={status} />
+					<Title style={styles.price}>Rs {price}</Title>
 				</View>
-				<Title style={styles.price}>Rs {price}</Title>
-			</View>
-		</Card>
+			</Card>
+		</TouchableHighlight>
 	);
 };
 

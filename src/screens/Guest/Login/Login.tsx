@@ -83,7 +83,6 @@ const Login = (): JSX.Element => {
 								<Subheading style={{ marginBottom: '5%' }}>Enter your phone number</Subheading>
 								<TextInput
 									mode="outlined"
-									textAlign="center"
 									style={styles.input}
 									render={(props) => (
 										<TextInputMask

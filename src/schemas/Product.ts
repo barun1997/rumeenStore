@@ -10,11 +10,11 @@ const ProductSchema = Yup.object().shape({
 	category: Yup.string().required('You must choose a category'),
 	photo: Yup.mixed()
 		.required('An image is required')
-		.test(
-			'fileFormat',
-			'Unsupported format',
-			(value: { type: string }) => !!value && SUPPORTED_FORMATS.includes(value.type),
-		),
+		.test('fileFormat', 'Unsupported format', (value: { type: string } | string) => {
+			if (!value) return false;
+			if (typeof value === 'string') return true;
+			return SUPPORTED_FORMATS.includes(value.type);
+		}),
 });
 
 export default ProductSchema;

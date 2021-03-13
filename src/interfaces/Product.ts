@@ -1,10 +1,10 @@
-import { ImagePickerResponse } from 'react-native-image-picker';
-
 export interface ProductType {
-	id?: string;
+	id: string;
 	name: string;
-	photo: ImagePickerResponse | null | string;
+	photo: string;
 	price: number;
+	listed?: boolean;
 	description: string;
 	category: string;
+	quantity?: number;
 }

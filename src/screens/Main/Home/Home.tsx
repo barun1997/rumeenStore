@@ -1,15 +1,28 @@
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { DASHBOARD_ROUTE } from '../../../constants/routes';
+import HomeAppBar from './components/HomeAppBar/HomeAppBar';
+import Dashboard from './screens/Dashboard/Dashboard';
+
+const Stack = createStackNavigator();
 
 function HomeScreen(): JSX.Element {
 	return (
-		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-			<Text>Home!</Text>
-			<Button icon="camera" mode="contained">
-				helo
-			</Button>
-		</View>
+		<Stack.Navigator
+			initialRouteName={DASHBOARD_ROUTE}
+			screenOptions={{
+				headerStatusBarHeight: heightPercentageToDP('10%'),
+				header: (props) => <HomeAppBar {...props} />,
+			}}>
+			<Stack.Screen
+				name={DASHBOARD_ROUTE}
+				component={Dashboard}
+				options={{
+					title: 'Rumeen',
+				}}
+			/>
+		</Stack.Navigator>
 	);
 }
 

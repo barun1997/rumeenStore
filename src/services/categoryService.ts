@@ -6,50 +6,81 @@ import { fieldIncrementByOne } from '../utils/firebase/fieldIncrementByOne';
 const addCategory = async (
 	{ storeDocInstance }: StoreContext,
 	category: CategoryType,
-): Promise<CategoryType | undefined> => {
-	try {
-		if (!storeDocInstance) return;
+): Promise<CategoryType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
 
-		const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
+	const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
 
-		const categoryDoc = categoryCollection.doc(category.name);
+	const categoryDoc = categoryCollection.doc(category.name);
 
-		const categoryPresent = (await categoryDoc.get()).data();
+	const categoryPresent = (await categoryDoc.get()).data();
 
-		if (categoryPresent) throw Error('The category is already present');
+	if (categoryPresent) throw Error('The category is already present');
 
-		await categoryCollection.doc(category.name).set(category);
-		await storeDocInstance.update({
-			categoryCount: fieldIncrementByOne,
-		});
-		return category;
-	} catch (error) {
-		console.log(error);
-		return;
-	}
+	await categoryCollection.doc(category.name).set(category);
+	await storeDocInstance.update({
+		categoryCount: fieldIncrementByOne,
+	});
+	return category;
 };
 
-const getCategories = async ({
-	storeDocInstance,
-}: StoreContext): Promise<CategoryType[] | undefined> => {
-	try {
-		if (!storeDocInstance) return;
-		console.log(storeDocInstance);
-		const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
+const getCategories = async ({ storeDocInstance }: StoreContext): Promise<CategoryType[]> => {
+	if (!storeDocInstance) throw Error('Store is not present');
 
-		const result = await categoryCollection.get();
+	const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
 
-		const categories = result.docs.map((doc) => {
-			return {
-				id: doc.id,
-				name: doc.data()?.name as string,
-			} as CategoryType;
-		});
+	const result = await categoryCollection.get();
 
-		return categories;
-	} catch (error) {
-		console.log(error);
-	}
+	const categories = result.docs.map((doc) => {
+		return {
+			id: doc.id,
+			name: doc.data()?.name as string,
+		} as CategoryType;
+	});
+
+	return categories;
 };
 
-export { addCategory, getCategories };
+const getCategoryById = async (
+	id: string,
+	{ storeDocInstance }: StoreContext,
+): Promise<CategoryType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
+
+	const result = await categoryCollection.doc(id).get();
+
+	const category = result.data() as CategoryType;
+
+	return category;
+};
+
+const updateCategory = async (
+	{ storeDocInstance }: StoreContext,
+	category: CategoryType,
+): Promise<CategoryType> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
+
+	await categoryCollection.doc(category.id).update({
+		...category,
+	});
+	return category;
+};
+
+const deleteCategoryById = async (
+	id: string,
+	{ storeDocInstance }: StoreContext,
+): Promise<string> => {
+	if (!storeDocInstance) throw Error('Store is not present');
+
+	const categoryCollection = storeDocInstance.collection(CATEGORIES_FIRESTORE);
+
+	await categoryCollection.doc(id).delete();
+
+	return id;
+};
+
+export { addCategory, getCategories, getCategoryById, updateCategory, deleteCategoryById };

@@ -5,6 +5,7 @@ import {
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { useAuthNavigatorOptions } from './app.options';
 import AuthNavigator from './screens/AuthNavigator';
 
@@ -35,21 +36,24 @@ const theme = {
 };
 
 const Stack = createStackNavigator();
+const queryClient = new QueryClient();
 
 const App: React.FC<Record<string, never>> = () => {
 	const authNavigatorOptions = useAuthNavigatorOptions();
 	return (
-		<PaperProvider theme={theme}>
-			<NavigationContainer theme={theme}>
-				<Stack.Navigator>
-					<Stack.Screen
-						name="AuthNavigator"
-						component={AuthNavigator}
-						options={authNavigatorOptions}
-					/>
-				</Stack.Navigator>
-			</NavigationContainer>
-		</PaperProvider>
+		<QueryClientProvider client={queryClient}>
+			<PaperProvider theme={theme}>
+				<NavigationContainer theme={theme}>
+					<Stack.Navigator>
+						<Stack.Screen
+							name="AuthNavigator"
+							component={AuthNavigator}
+							options={authNavigatorOptions}
+						/>
+					</Stack.Navigator>
+				</NavigationContainer>
+			</PaperProvider>
+		</QueryClientProvider>
 	);
 };
 
